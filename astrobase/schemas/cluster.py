@@ -1,20 +1,25 @@
+from datetime import datetime
 from enum import Enum, unique
 from typing import Optional
+from uuid import UUID, uuid4
 
-from pydantic import UUID4, BaseModel, validator
+from pydantic import BaseModel, Field, validator
 
 from astrobase.helpers.name import NameHelper
 
 
 @unique
-class CloudPlatform(str, Enum):
+class CloudProvider(str, Enum):
     amazon = "amazon"
     google = "google"
 
 
 class ClusterBase(BaseModel):
+    id: UUID = Field(default_factory=uuid4)
     name: Optional[str]
-    cloud_platform: CloudPlatform
+    provider: CloudProvider
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+    updated_at: datetime = Field(default_factory=datetime.utcnow)
 
     @validator("name")
     def name_is_set(cls, name: str) -> str:
@@ -33,4 +38,4 @@ class ClusterUpdate(ClusterBase):
 
 
 class Cluster(ClusterBase):
-    id: UUID4
+    pass
