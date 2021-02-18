@@ -17,7 +17,7 @@ passlib = "^1.7.4"
 google-api-python-client = "^1.12.8"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
+pytest = "^6.2"
 flake8 = "^3.8.4"
 black = "^20.8b1"
 uvicorn = "^0.13.3"
