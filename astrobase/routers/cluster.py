@@ -1,13 +1,7 @@
-from typing import List
-
 from fastapi import APIRouter, Body
 
 from astrobase.providers.google import GoogleProvider
-from astrobase.schemas.cluster import (
-    GoogleCluster,
-    GoogleClusterCreate,
-    GoogleClusterUpdate,
-)
+from astrobase.schemas.cluster import GoogleClusterCreate, GoogleClusterUpdate
 from tests.factories import ClusterFactory
 
 google_provider = GoogleProvider()
@@ -15,30 +9,56 @@ router = APIRouter()
 tags = ["cluster"]
 
 
-@router.post("/google/cluster", tags=tags, response_model=GoogleCluster)
+@router.post("/google/cluster", tags=tags)
 def google_create_cluster(
     cluster_create: GoogleClusterCreate = Body(
-        ..., example=ClusterFactory.google_example
+        ..., example=ClusterFactory.google_create_example
     ),
 ):
     return google_provider.create_cluster(cluster_create)
 
 
-@router.get("/google/cluster", tags=tags, response_model=List[GoogleCluster])
-def google_get_clusters():
-    pass
+@router.get("/google/cluster", tags=tags)
+def google_get_clusters(project_id: str, zone: str):
+    return google_provider.get_clusters(project_id, zone)
 
 
-@router.get("/google/cluster/{cluster_name}", tags=tags, response_model=GoogleCluster)
-def google_describe_cluster(cluster_name: str):
-    pass
+@router.get("/google/cluster/{cluster_name}", tags=tags)
+def google_describe_cluster(
+    cluster_name: str,
+    project_id: str,
+    zone: str,
+):
+    return google_provider.describe_cluster(
+        project_id=project_id, zone=zone, cluster_name=cluster_name
+    )
 
 
-@router.patch("/google/cluster", tags=tags, response_model=GoogleCluster)
-def google_update_cluster(cluster_name: str, cluster: GoogleClusterUpdate):
-    pass
+@router.patch("/google/cluster/{cluster_name}", tags=tags)
+def google_update_cluster(
+    cluster_name: str,
+    project_id: str,
+    zone: str,
+    cluster_update: GoogleClusterUpdate = Body(
+        ..., example=ClusterFactory.google_update_example
+    ),
+):
+    return google_provider.update_cluster(
+        cluster_name=cluster_name,
+        project_id=project_id,
+        zone=zone,
+        cluster_update=cluster_update,
+    )
 
 
-@router.delete("/google/cluster", tags=tags)
-def google_delete_cluster(cluster_name: str):
-    pass
+@router.delete("/google/cluster/{cluster_name}", tags=tags)
+def google_delete_cluster(
+    cluster_name: str,
+    project_id: str,
+    zone: str,
+):
+    return google_provider.delete_cluster(
+        cluster_name=cluster_name,
+        project_id=project_id,
+        zone=zone,
+    )
