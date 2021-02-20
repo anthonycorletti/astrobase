@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field, validator
 from astrobase.helpers.name import random_name
 
 
-class GoogleClusterBase(BaseModel):
+class GoogleKubernetesClusterBase(BaseModel):
     name: Optional[str] = Field(default_factory=random_name)
     zone: str
     project_id: str
@@ -14,26 +14,56 @@ class GoogleClusterBase(BaseModel):
     @validator("name")
     def name_is_set(cls, name: str) -> str:
         if not name:
-            return random_name()
+            return random_name(component="cluster")
         return name
 
 
-class GoogleClusterCreate(GoogleClusterBase):
+class GoogleKubernetesClusterCreate(GoogleKubernetesClusterBase):
     pass
 
 
-class GoogleClusterUpdate(GoogleClusterBase):
+class GoogleKubernetesClusterUpdate(GoogleKubernetesClusterBase):
     pass
 
 
-class GoogleCluster(GoogleClusterBase):
+class GoogleKubernetesCluster(GoogleKubernetesClusterBase):
     pass
 
 
-class GoogleClusterCreateAPIFilter(BaseModel):
+class GoogleKubernetesClusterCreateAPIFilter(BaseModel):
     name: str
     initial_node_count: str
 
 
-class GoogleClusterUpdateAPIFilter(BaseModel):
+class GoogleKubernetesClusterUpdateAPIFilter(BaseModel):
+    pass
+
+
+class AmazonKubernetesClusterBase(BaseModel):
+    name: Optional[str] = Field(default_factory=random_name)
+
+    @validator("name")
+    def name_is_set(cls, name: str) -> str:
+        if not name:
+            return random_name()
+        return name
+
+
+class AmazonKubernetesClusterCreate(AmazonKubernetesClusterBase):
+    pass
+
+
+class AmazonKubernetesClusterUpdate(AmazonKubernetesClusterBase):
+    pass
+
+
+class AmazonKubernetesCluster(AmazonKubernetesClusterBase):
+    pass
+
+
+class AmazonKubernetesClusterCreateAPIFilter(BaseModel):
+    pass
+
+
+class AmazonKubernetesClusterUpdateAPIFilter(BaseModel):
     pass
