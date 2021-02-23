@@ -1,13 +1,9 @@
-from typing import Optional
-
-from pydantic import BaseModel, Field
-
-from astrobase.helpers.name import random_name
+from pydantic import BaseModel
 
 
 class KubernetesServiceBase(BaseModel):
     kubernetes_cluster_name: str
-    helm_chart_root: str = "astrobase"
+    kubernetes_resource_dir: str
 
 
 class KubernetesServiceCreate(KubernetesServiceBase):
