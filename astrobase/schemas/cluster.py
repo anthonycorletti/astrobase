@@ -5,7 +5,7 @@ from pydantic import BaseModel, Field, validator
 from astrobase.helpers.name import random_name
 
 
-class GoogleKubernetesClusterBase(BaseModel):
+class GKEBase(BaseModel):
     name: Optional[str] = Field(default_factory=random_name)
     zone: str
     project_id: str
@@ -18,28 +18,28 @@ class GoogleKubernetesClusterBase(BaseModel):
         return name
 
 
-class GoogleKubernetesClusterCreate(GoogleKubernetesClusterBase):
+class GKECreate(GKEBase):
     pass
 
 
-class GoogleKubernetesClusterUpdate(GoogleKubernetesClusterBase):
+class GKEUpdate(GKEBase):
     pass
 
 
-class GoogleKubernetesCluster(GoogleKubernetesClusterBase):
+class GKE(GKEBase):
     pass
 
 
-class GoogleKubernetesClusterCreateAPIFilter(BaseModel):
+class GKECreateAPIFilter(BaseModel):
     name: str
     initial_node_count: str
 
 
-class GoogleKubernetesClusterUpdateAPIFilter(BaseModel):
+class GKEUpdateAPIFilter(BaseModel):
     pass
 
 
-class AmazonKubernetesClusterBase(BaseModel):
+class EKSBase(BaseModel):
     name: Optional[str] = Field(default_factory=random_name)
 
     @validator("name")
@@ -49,21 +49,21 @@ class AmazonKubernetesClusterBase(BaseModel):
         return name
 
 
-class AmazonKubernetesClusterCreate(AmazonKubernetesClusterBase):
+class EKSCreate(EKSBase):
     pass
 
 
-class AmazonKubernetesClusterUpdate(AmazonKubernetesClusterBase):
+class EKSUpdate(EKSBase):
     pass
 
 
-class AmazonKubernetesCluster(AmazonKubernetesClusterBase):
+class EKS(EKSBase):
     pass
 
 
-class AmazonKubernetesClusterCreateAPIFilter(BaseModel):
+class EKSCreateAPIFilter(BaseModel):
     pass
 
 
-class AmazonKubernetesClusterUpdateAPIFilter(BaseModel):
+class EKSUpdateAPIFilter(BaseModel):
     pass

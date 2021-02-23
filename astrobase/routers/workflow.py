@@ -19,7 +19,7 @@ def get_workflow():
     pass
 
 
-@router.patch("/workflow/{workflow_name}", tags=tags)
+@router.put("/workflow/{workflow_name}", tags=tags)
 def update_workflow():
     pass
 

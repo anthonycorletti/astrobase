@@ -25,7 +25,7 @@ def kubernetes_get_service():
     pass
 
 
-@router.patch("/kubernetes/service/{service_name}", tags=tags)
+@router.put("/kubernetes/service/{service_name}", tags=tags)
 def kubernetes_update_service():
     pass
 

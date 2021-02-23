@@ -2,12 +2,8 @@ from typing import List
 
 from googleapiclient.discovery import build
 
-from astrobase.schemas.cluster import (
-    GoogleKubernetesClusterCreate,
-    GoogleKubernetesClusterCreateAPIFilter,
-    GoogleKubernetesClusterUpdate,
-    GoogleKubernetesClusterUpdateAPIFilter,
-)
+from astrobase.schemas.cluster import (GKECreate, GKECreateAPIFilter,
+                                       GKEUpdate, GKEUpdateAPIFilter)
 
 
 class GoogleProvider:
@@ -15,12 +11,8 @@ class GoogleProvider:
         self.client = build("container", "v1beta1")
         self.cluster_client = self.client.projects().zones().clusters()
 
-    def create_kubernetes_cluster(
-        self, cluster_create: GoogleKubernetesClusterCreate
-    ) -> dict:
-        filtered_cluster_create = GoogleKubernetesClusterCreateAPIFilter(
-            **cluster_create.dict()
-        )
+    def create_gke_cluster(self, cluster_create: GKECreate) -> dict:
+        filtered_cluster_create = GKECreateAPIFilter(**cluster_create.dict())
         body = {"cluster": filtered_cluster_create.dict()}
         req = self.cluster_client.create(
             body={"cluster": body},
@@ -30,12 +22,12 @@ class GoogleProvider:
         res = req.execute()
         return dict(res)
 
-    def get_clusters(self, project_id: str, zone: str) -> List[dict]:
+    def get_gke_clusters(self, project_id: str, zone: str) -> List[dict]:
         req = self.cluster_client.list(zone=zone, projectId=project_id)
         res = req.execute()
         return dict(res)
 
-    def describe_kubernetes_cluster(
+    def describe_gke_cluster(
         self, zone: str, project_id: str, cluster_name: str
     ) -> dict:
         req = self.cluster_client.get(
@@ -44,16 +36,14 @@ class GoogleProvider:
         res = req.execute()
         return dict(res)
 
-    def update_kubernetes_cluster(
+    def update_gke_cluster(
         self,
         zone: str,
         project_id: str,
         cluster_name: str,
-        cluster_update: GoogleKubernetesClusterUpdate,
+        cluster_update: GKEUpdate,
     ) -> dict:
-        filtered_cluster_update = GoogleKubernetesClusterUpdateAPIFilter(
-            **cluster_update.dict()
-        )
+        filtered_cluster_update = GKEUpdateAPIFilter(**cluster_update.dict())
         body = {"name": cluster_name, "update": filtered_cluster_update.dict()}
         req = self.cluster_client.update(
             zone=zone,
@@ -64,7 +54,7 @@ class GoogleProvider:
         res = req.execute()
         return dict(res)
 
-    def delete_kubernetes_cluster(
+    def delete_gke_cluster(
         self,
         zone: str,
         project_id: str,
