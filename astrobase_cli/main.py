@@ -28,6 +28,14 @@ def version():
 
 
 @app.command()
+def init():
+    """
+    Initialize a local astrobase server to create resources.
+    """
+    typer.echo("Initializing Astrobase!")
+
+
+@app.command()
 def plan(astrobase_yaml_path: str):
     """
     Preview changes to clusters, services, and workflows.
