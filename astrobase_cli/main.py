@@ -5,7 +5,6 @@ import yaml
 from astrobase_cli import __version__ as version
 from astrobase_cli import profile
 from utils.config import AstrobaseConfig
-from utils.formatter import json_out
 from utils.http import HTTPClient
 
 http_client = HTTPClient()
@@ -60,16 +59,6 @@ def init(astrobase_version: str = "latest"):
         detach=True,
     )
     typer.echo("Astrobase initialized")
-
-
-@app.command()
-def plan(astrobase_yaml_path: str):
-    """
-    Preview changes to clusters, services, and workflows.
-    """
-    with open(astrobase_yaml_path, "r") as f:
-        data = yaml.safe_load(f)
-        typer.echo(json_out(data))
 
 
 @app.command()
