@@ -15,8 +15,15 @@ def create(
     name: str,
     api_key: str = typer.Option(None),
     server: str = typer.Option(default="http://localhost:8787"),
+    google_application_credentials: str = typer.Option(None),
+    aws_credentials: str = typer.Option(None),
 ):
-    astrobase_config.config_dict[name] = {"server": server, "api_key": api_key}
+    astrobase_config.config_dict[name] = {
+        "server": server,
+        "api_key": api_key,
+        "google_application_credentials": google_application_credentials,
+        "aws_credentials": aws_credentials,
+    }
     astrobase_config.write_config(astrobase_config.config_dict)
     typer.echo(f"Created profile {name}.")
 
@@ -32,11 +39,21 @@ def get(name: Optional[str] = None):
 
 @app.command()
 def current():
-    profile_env = os.getenv(astrobase_config.ASTROBASE_PROFILE, "profile not set!!")
-    profile = typer.style(profile_env, fg=typer.colors.WHITE, bold=True)
-    typer.echo(f"Current Astrobase profile: {profile}")
     if astrobase_config.current_profile:
-        typer.echo(json_out(astrobase_config.current_profile))
+        typer.echo(
+            json_out(
+                {
+                    os.getenv(
+                        astrobase_config.ASTROBASE_PROFILE
+                    ): astrobase_config.current_profile
+                }
+            )
+        )
+    else:
+        typer.echo(
+            "no profile is set! set a profile with: export "
+            f"{astrobase_config.ASTROBASE_PROFILE}=<my-profile-name>"
+        )
 
 
 @app.command()

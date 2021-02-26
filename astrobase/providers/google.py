@@ -2,8 +2,12 @@ from typing import List
 
 from googleapiclient.discovery import build
 
-from astrobase.schemas.cluster import (GKECreate, GKECreateAPIFilter,
-                                       GKEUpdate, GKEUpdateAPIFilter)
+from astrobase.schemas.cluster import (
+    GKECreate,
+    GKECreateAPIFilter,
+    GKEUpdate,
+    GKEUpdateAPIFilter,
+)
 
 
 class GoogleProvider:
@@ -15,7 +19,7 @@ class GoogleProvider:
         filtered_cluster_create = GKECreateAPIFilter(**cluster_create.dict())
         body = {"cluster": filtered_cluster_create.dict()}
         req = self.cluster_client.create(
-            body={"cluster": body},
+            body=body,
             projectId=cluster_create.project_id,
             zone=cluster_create.zone,
         )

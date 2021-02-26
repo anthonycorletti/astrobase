@@ -15,11 +15,11 @@ class AstrobaseConfig:
             pass
 
         self.config_dict = self._load_config_file()
-        self.profile = os.getenv(self.ASTROBASE_PROFILE)
+        self.profile_name = os.getenv(self.ASTROBASE_PROFILE)
         self.current_profile = None
 
-        if self.config_dict and self.profile in self.config_dict:
-            self.current_profile = self.config_dict[self.profile]
+        if self.config_dict and self.profile_name in self.config_dict:
+            self.current_profile = self.config_dict[self.profile_name]
 
     def _setup_config_dir(self) -> None:
         os.makedirs(os.path.dirname(self.config))

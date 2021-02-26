@@ -11,6 +11,8 @@ astrobase = "main:app"
 [tool.poetry.dependencies]
 python = "^3.9"
 typer = {extras = ["all"], version = "^0.3.2"}
+docker = "^4.4.4"
+PyYAML = "^5.4.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
