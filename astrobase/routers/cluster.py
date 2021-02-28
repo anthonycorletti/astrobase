@@ -1,10 +1,10 @@
 from fastapi import APIRouter, Body
 
-from astrobase.providers.google import GoogleProvider
+from astrobase.apis.gke import GKEApi
 from astrobase.schemas.cluster import GKECreate, GKEUpdate
 from tests.factories import ClusterFactory
 
-google_provider = GoogleProvider()
+gke_api = GKEApi()
 router = APIRouter()
 tags = ["cluster"]
 
@@ -15,12 +15,12 @@ def create_gke_cluster(
         ..., example=ClusterFactory.google_kubernetes_create_example
     ),
 ):
-    return google_provider.create_gke_cluster(cluster_create)
+    return gke_api.create_gke_cluster(cluster_create)
 
 
 @router.get("/gke", tags=tags)
 def get_gke_clusters(project_id: str, zone: str):
-    return google_provider.get_gke_clusters(project_id, zone)
+    return gke_api.get_gke_clusters(project_id, zone)
 
 
 @router.get("/gke/{cluster_name}", tags=tags)
@@ -29,7 +29,7 @@ def describe_gke_cluster(
     project_id: str,
     zone: str,
 ):
-    return google_provider.describe_gke_cluster(
+    return gke_api.describe_gke_cluster(
         project_id=project_id, zone=zone, cluster_name=cluster_name
     )
 
@@ -43,7 +43,7 @@ def update_gke_cluster(
         ..., example=ClusterFactory.google_kubernetes_update_example
     ),
 ):
-    return google_provider.update_gke_cluster(
+    return gke_api.update_gke_cluster(
         cluster_name=cluster_name,
         project_id=project_id,
         zone=zone,
@@ -57,7 +57,7 @@ def delete_gke_cluster(
     project_id: str,
     zone: str,
 ):
-    return google_provider.delete_gke_cluster(
+    return gke_api.delete_gke_cluster(
         cluster_name=cluster_name,
         project_id=project_id,
         zone=zone,

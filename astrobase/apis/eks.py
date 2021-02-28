@@ -1,7 +1,7 @@
 from typing import List
 
 
-class AmazonProvider:
+class EKSApi:
     def __init__(self):
         pass
 

@@ -10,7 +10,7 @@ from astrobase.schemas.cluster import (
 )
 
 
-class GoogleProvider:
+class GKEApi:
     def __init__(self):
         self.client = build("container", "v1beta1")
         self.cluster_client = self.client.projects().zones().clusters()

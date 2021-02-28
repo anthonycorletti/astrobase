@@ -33,7 +33,7 @@ def version():
 
 
 @app.command()
-def init(astrobase_version: str = "latest"):
+def init(astrobase_container_version: str = "latest"):
     """
     Initialize Astrobase.
     """
@@ -46,7 +46,7 @@ def init(astrobase_version: str = "latest"):
     aws_creds_host = astrobase_config.current_profile.get("aws_credentials")
     aws_creds_container = "/aws-credentials"
     docker_client.containers.run(
-        f"astrobase/astrobase:{astrobase_version}",
+        f"astrobase/astrobase:{astrobase_container_version}",
         ports={"8787/tcp": "8787"},
         environment={
             "GOOGLE_APPLICATION_CREDENTIALS": "/google-credentials.json",
@@ -64,19 +64,35 @@ def init(astrobase_version: str = "latest"):
 @app.command()
 def apply(astrobase_yaml_path: str):
     """
-    Apply changes to clusters, services, and workflows.
+    Apply changes to clusters, resources, and workflows.
     """
+    server = astrobase_config.current_profile.get("server")
+    url = astrobase_config.current_profile.get("server")
     with open(astrobase_yaml_path, "r") as f:
         data = yaml.safe_load(f)
-        server = f"{astrobase_config.current_profile.get('server')}/gke"
-        for cluster in data.get("astrobase").get("clusters"):
-            http_client.post(server, cluster)
+
+        clusters = data.get("clusters") or []
+        for cluster in clusters:
+            provider = cluster.get("provider")
+            typer.echo(f"Deploying {provider} cluster {cluster.get('name')} ... ")
+            http_client.post(f"{url}/{provider}", cluster)
+
+        resources = data.get("resources") or []
+        for resource in resources:
+            provider = resource.get("provider")
+            typer.echo(f"Deploying {provider} resource {resource.get('name')} ... ")
+            http_client.post(f"{url}/{provider}", resource)
+
+        workflows = data.get("workflows") or []
+        for workflow in workflows:
+            typer.echo(f"Deploying workflow {workflow.get('name')} ... ")
+            http_client.post(f"{server}/workflows", workflow)
 
 
 @app.command()
 def destroy(astrobase_yaml_path: str):
     """
-    Destroy changes to clusters, services, and workflows.
+    Destroy changes to clusters, resources, and workflows.
     """
     typer.echo(f"Destroy the things at {astrobase_yaml_path}!")
 
@@ -84,7 +100,7 @@ def destroy(astrobase_yaml_path: str):
 @app.command()
 def state():
     """
-    View state across clusters, services, and workflows.
+    View state across clusters, resources, and workflows.
     """
     typer.echo("Pretty!")
 

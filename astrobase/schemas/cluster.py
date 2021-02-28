@@ -2,11 +2,11 @@ from typing import Optional
 
 from pydantic import BaseModel, Field, validator
 
-from astrobase.helpers.name import random_cluster_name
+from astrobase.helpers.name import random_name
 
 
 class GKEBase(BaseModel):
-    name: Optional[str] = Field(default_factory=random_cluster_name)
+    name: Optional[str] = Field(default_factory=random_name)
     zone: str
     project_id: str
     initial_node_count: int = 1
@@ -14,7 +14,7 @@ class GKEBase(BaseModel):
     @validator("name")
     def name_is_set(cls, name: str) -> str:
         if not name:
-            return random_cluster_name()
+            return random_name()
         return name
 
 
@@ -40,12 +40,12 @@ class GKEUpdateAPIFilter(BaseModel):
 
 
 class EKSBase(BaseModel):
-    name: Optional[str] = Field(default_factory=random_cluster_name)
+    name: Optional[str] = Field(default_factory=random_name)
 
     @validator("name")
     def name_is_set(cls, name: str) -> str:
         if not name:
-            return random_cluster_name()
+            return random_name()
         return name
 
 

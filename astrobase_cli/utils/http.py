@@ -1,3 +1,5 @@
+import json
+
 import requests
 import typer
 
@@ -14,4 +16,7 @@ class HTTPClient:
             return dict(res.json())
         else:
             typer.echo(f"Request failed with code {res.status_code}:")
-            typer.echo(res.json())
+            try:
+                typer.echo(res.json())
+            except json.decoder.JSONDecodeError:
+                typer.echo(res.text)
