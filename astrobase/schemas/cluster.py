@@ -5,11 +5,16 @@ from pydantic import BaseModel, Field, validator
 from astrobase.helpers.name import random_name
 
 
+class GKEAutopilotEnabled(BaseModel):
+    enabled: bool = True
+
+
 class GKEBase(BaseModel):
     name: Optional[str] = Field(default_factory=random_name)
-    zone: str
+    location: str
     project_id: str
-    initial_node_count: int = 1
+    parent: Optional[str]
+    autopilot: GKEAutopilotEnabled = GKEAutopilotEnabled(enabled=True)
 
     @validator("name")
     def name_is_set(cls, name: str) -> str:
@@ -17,12 +22,14 @@ class GKEBase(BaseModel):
             return random_name()
         return name
 
+    @validator("parent", pre=True, always=True)
+    def set_parent(cls, v, values) -> str:
+        if not v:
+            return f"projects/{values['project_id']}/locations/{values['location']}"
+        return v
+
 
 class GKECreate(GKEBase):
-    pass
-
-
-class GKEUpdate(GKEBase):
     pass
 
 
@@ -30,16 +37,21 @@ class GKE(GKEBase):
     pass
 
 
-class GKECreateAPIFilter(BaseModel):
+class GKECreateFilter(BaseModel):
     name: str
-    initial_node_count: str
+    location: str
+    autopilot: GKEAutopilotEnabled
 
 
-class GKEUpdateAPIFilter(BaseModel):
-    pass
+class GKECreateAPI(BaseModel):
+    cluster: GKECreateFilter
 
 
 class EKSBase(BaseModel):
+    """
+    todo!!!
+    """
+
     name: Optional[str] = Field(default_factory=random_name)
 
     @validator("name")
@@ -50,20 +62,24 @@ class EKSBase(BaseModel):
 
 
 class EKSCreate(EKSBase):
-    pass
+    """
+    todo!!!
+    """
 
-
-class EKSUpdate(EKSBase):
     pass
 
 
 class EKS(EKSBase):
+    """
+    todo!!!
+    """
+
     pass
 
 
-class EKSCreateAPIFilter(BaseModel):
-    pass
+class EKSCreateAPIBody(BaseModel):
+    """
+    todo!!!
+    """
 
-
-class EKSUpdateAPIFilter(BaseModel):
     pass

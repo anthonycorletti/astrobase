@@ -1,8 +1,7 @@
 class ClusterFactory:
     google_kubernetes_create_example = {
-        "provider": "google",
-        "zone": "us-central1-a",
-        "initial_node_count": 1,
+        "project_id": "astrobase-284118",
+        "location": "us-central1",
     }
 
     google_kubernetes_update_example = {}
