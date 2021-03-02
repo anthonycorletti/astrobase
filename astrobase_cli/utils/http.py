@@ -13,7 +13,7 @@ class HTTPClient:
     def post(self, url: str, data: dict) -> dict:
         res = requests.post(url, json=data)
         if res.ok:
-            return dict(res.json())
+            typer.echo(res.json())
         else:
             typer.echo(f"Request failed with code {res.status_code}:")
             try:

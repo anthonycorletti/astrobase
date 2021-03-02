@@ -67,7 +67,6 @@ def apply(astrobase_yaml_path: str):
     Apply changes to clusters, resources, and workflows.
     """
     server = astrobase_config.current_profile.get("server")
-    url = astrobase_config.current_profile.get("server")
     with open(astrobase_yaml_path, "r") as f:
         data = yaml.safe_load(f)
 
@@ -75,18 +74,20 @@ def apply(astrobase_yaml_path: str):
         for cluster in clusters:
             provider = cluster.get("provider")
             typer.echo(f"Deploying {provider} cluster {cluster.get('name')} ... ")
-            http_client.post(f"{url}/{provider}", cluster)
+            http_client.post(f"{server}/{provider}", cluster)
 
         resources = data.get("resources") or []
         for resource in resources:
             provider = resource.get("provider")
             typer.echo(f"Deploying {provider} resource {resource.get('name')} ... ")
-            http_client.post(f"{url}/{provider}", resource)
+            http_client.post(
+                f"{server}/{provider}/{resource.get('cluster_name')}/resource", resource
+            )
 
-        workflows = data.get("workflows") or []
-        for workflow in workflows:
-            typer.echo(f"Deploying workflow {workflow.get('name')} ... ")
-            http_client.post(f"{server}/workflows", workflow)
+        # workflows = data.get("workflows") or []
+        # for workflow in workflows:
+        #     typer.echo(f"Deploying workflow {workflow.get('name')} ... ")
+        #     http_client.post(f"{server}/workflows", workflow)
 
 
 @app.command()

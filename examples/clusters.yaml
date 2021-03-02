@@ -1,7 +1,6 @@
 apiVersion: v0.1.0
 clusters:
-    - name: astrobase-gke-cluster
+    - name: astrobase-test-gke
       provider: gke
-      zone: us-central1-a
-      initial_node_count: 1
+      location: us-central1
       project_id: astrobase-284118

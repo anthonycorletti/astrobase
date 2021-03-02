@@ -47,12 +47,10 @@ class GKECreateAPI(BaseModel):
     cluster: GKECreateFilter
 
 
-class EKSBase(BaseModel):
-    """
-    todo!!!
-    """
-
+class GKEResourceBase(BaseModel):
     name: Optional[str] = Field(default_factory=random_name)
+    resource_dir: str
+    cluster_name: str
 
     @validator("name")
     def name_is_set(cls, name: str) -> str:
@@ -61,25 +59,9 @@ class EKSBase(BaseModel):
         return name
 
 
-class EKSCreate(EKSBase):
-    """
-    todo!!!
-    """
-
+class GKEResourceCreate(GKEResourceBase):
     pass
 
 
-class EKS(EKSBase):
-    """
-    todo!!!
-    """
-
-    pass
-
-
-class EKSCreateAPIBody(BaseModel):
-    """
-    todo!!!
-    """
-
+class GKEResource(GKEResourceBase):
     pass
