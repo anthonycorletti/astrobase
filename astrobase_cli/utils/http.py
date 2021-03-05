@@ -13,14 +13,7 @@ class HTTPClient:
     def post(self, url: str, data: dict) -> None:
         res = requests.post(url, json=data)
         data = res.json()
-        if res.ok:
-            typer.echo(data)
-        else:
-            typer.echo(f"Request errored with code {res.status_code}:")
-            try:
-                typer.echo(data)
-            except json.decoder.JSONDecodeError:
-                typer.echo(res.text)
+        typer.echo(data)
 
     def get(self, url: str) -> dict:
         res = requests.get(url)
@@ -37,3 +30,8 @@ class HTTPClient:
             except json.decoder.JSONDecodeError:
                 typer.echo(res.text)
                 return {}
+
+    def delete(self, url: str) -> None:
+        res = requests.delete(url)
+        data = res.json()
+        typer.echo(data)

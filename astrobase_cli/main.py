@@ -74,7 +74,7 @@ def apply(astrobase_yaml_path: str):
         clusters = data.get("clusters") or []
         for cluster in clusters:
             provider = cluster.get("provider")
-            typer.echo(f"Deploying {provider} cluster {cluster.get('name')} ... ")
+            typer.echo(f"Applying {provider} cluster {cluster.get('name')} ... ")
             http_client.post(f"{server}/{provider}", cluster)
 
         resources = data.get("resources") or []
@@ -94,7 +94,7 @@ def apply(astrobase_yaml_path: str):
 
         workflows = data.get("workflows") or []
         for workflow in workflows:
-            typer.echo(f"Deploying workflow {workflow.get('name')} ... ")
+            typer.echo(f"Applying workflow {workflow.get('name')} ... ")
 
 
 @app.command()
@@ -102,7 +102,16 @@ def destroy(astrobase_yaml_path: str):
     """
     Destroy changes to clusters, resources, and workflows.
     """
-    typer.echo(f"Destroy the things at {astrobase_yaml_path}!")
+    server = astrobase_config.current_profile.get("server")
+    with open(astrobase_yaml_path, "r") as f:
+        data = yaml.safe_load(f)
+
+        clusters = data.get("clusters") or []
+        for cluster in clusters:
+            provider = cluster.get("provider")
+            cluster_name = cluster.get("name")
+            typer.echo(f"Destroying {provider} cluster {cluster.get('name')} ... ")
+            http_client.delete(f"{server}/{provider}/{cluster_name}")
 
 
 @app.command()
