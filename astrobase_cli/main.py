@@ -4,6 +4,7 @@ import yaml
 
 from astrobase_cli import __version__ as version
 from astrobase_cli import profile
+from astrobase_cli.resource import Resource
 from utils.config import AstrobaseConfig
 from utils.http import HTTPClient
 
@@ -79,15 +80,25 @@ def apply(astrobase_yaml_path: str):
         resources = data.get("resources") or []
         for resource in resources:
             provider = resource.get("provider")
-            typer.echo(f"Deploying {provider} resource {resource.get('name')} ... ")
-            http_client.post(
-                f"{server}/{provider}/{resource.get('cluster_name')}/resource", resource
+            cluster_name = resource.get("cluster_name")
+            res = http_client.get(f"{server}/{provider}/{cluster_name}")
+
+            if res.get("error"):
+                typer.echo(res)
+
+            resource_client = Resource(
+                kubernetes_host_address=f"https://{res.get('endpoint')}",
+                kubernetes_ssl_ca_cert=res.get("masterAuth", {}).get(
+                    "clusterCaCertificate"
+                ),
             )
 
-        # workflows = data.get("workflows") or []
-        # for workflow in workflows:
-        #     typer.echo(f"Deploying workflow {workflow.get('name')} ... ")
-        #     http_client.post(f"{server}/workflows", workflow)
+            if provider in ["gke", "eks"]:
+                resource_client.apply_kubernetes_resources(resource.get("resource_dir"))
+
+        workflows = data.get("workflows") or []
+        for workflow in workflows:
+            typer.echo(f"Deploying workflow {workflow.get('name')} ... ")
 
 
 @app.command()

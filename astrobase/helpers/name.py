@@ -5,7 +5,7 @@ VOWELS = "aeiou"
 CONSONANTS = "".join(set(string.ascii_lowercase) - set(VOWELS))
 
 
-def prefix_name(k: int = 7):
+def random_word(k: int = 7):
     word = ""
     for i in range(k):
         if i % 2 == 0:
@@ -17,6 +17,6 @@ def prefix_name(k: int = 7):
 
 def random_name(k: int = 7) -> str:
     alphabet = string.ascii_lowercase + string.digits
-    prefix = prefix_name(k)
+    prefix = random_word(k)
     suffix = "".join(random.choices(alphabet, k=k))
     return f"{prefix}-{suffix}"
