@@ -4,7 +4,7 @@ import yaml
 
 from astrobase_cli import __version__ as version
 from astrobase_cli import profile
-from astrobase_cli.resource import Resource
+from astrobase_cli.kubernetes import KubernetesClient
 from utils.config import AstrobaseConfig
 from utils.http import HTTPClient
 
@@ -85,16 +85,12 @@ def apply(astrobase_yaml_path: str):
 
             if res.get("error"):
                 typer.echo(res)
-
-            resource_client = Resource(
-                kubernetes_host_address=f"https://{res.get('endpoint')}",
-                kubernetes_ssl_ca_cert=res.get("masterAuth", {}).get(
-                    "clusterCaCertificate"
-                ),
-            )
-
-            if provider in ["gke", "eks"]:
-                resource_client.apply_kubernetes_resources(resource.get("resource_dir"))
+            else:
+                kubernetes_client = KubernetesClient()
+                if provider in ["gke", "eks"]:
+                    kubernetes_client.apply_kubernetes_resources(
+                        resource.get("resource_dir")
+                    )
 
         workflows = data.get("workflows") or []
         for workflow in workflows:

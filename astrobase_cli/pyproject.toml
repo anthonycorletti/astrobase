@@ -14,6 +14,7 @@ typer = {extras = ["all"], version = "^0.3.2"}
 docker = "^4.4.4"
 PyYAML = "^5.4.1"
 kubernetes = "^12.0.1"
+sh = "^1.14.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
