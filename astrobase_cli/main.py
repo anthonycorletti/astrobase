@@ -119,7 +119,7 @@ def state():
     """
     View state across clusters, resources, and workflows.
     """
-    typer.echo("Pretty!")
+    typer.echo("View your entire contol plane.")
 
 
 @app.command("import")
@@ -127,7 +127,7 @@ def _import():
     """
     Import resources not created by astrobase.
     """
-    typer.echo("Wahoo!")
+    typer.echo("Reference infrastructure and resources not provisioned by Astrobase.")
 
 
 if __name__ == "__main__":
