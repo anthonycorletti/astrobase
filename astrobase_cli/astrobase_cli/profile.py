@@ -28,8 +28,8 @@ def create(
     typer.echo(f"Created profile {name}.")
 
 
-@app.command()
-def get(name: Optional[str] = None):
+@app.command("list")
+def _list(name: Optional[str] = None):
     if name is not None:
         if name in astrobase_config.config_dict:
             typer.echo(json_out(astrobase_config.config_dict[name]))

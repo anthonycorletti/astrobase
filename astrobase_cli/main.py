@@ -39,25 +39,34 @@ def init(astrobase_container_version: str = "latest"):
     Initialize Astrobase.
     """
     typer.echo("Initializing Astrobase ... ")
-    typer.echo("Starting Astrobase server ... ")
+    if not astrobase_config.current_profile:
+        typer.echo(
+            "no profile is set! set a profile with: export "
+            f"{astrobase_config.ASTROBASE_PROFILE}=<my-profile-name>"
+        )
+        return
+    environment, volumes = {}, {}
+    google_creds_container = "/google-credentials.json"
+    aws_creds_container = "/aws-credentials"
     google_creds_host = astrobase_config.current_profile.get(
         "google_application_credentials"
     )
-    google_creds_container = "/google-credentials.json"
+    if google_creds_host:
+        environment["GOOGLE_APPLICATION_CREDENTIALS"] = google_creds_container
+        volumes[google_creds_host] = {"bind": google_creds_container, "mode": "ro"}
     aws_creds_host = astrobase_config.current_profile.get("aws_credentials")
-    aws_creds_container = "/aws-credentials"
+    if aws_creds_host:
+        environment["AWS_CREDENTIALS"] = aws_creds_container
+        volumes[aws_creds_host] = {"bind": aws_creds_container, "mode": "ro"}
+    typer.echo("Starting Astrobase server ... ")
     docker_client.containers.run(
         f"astrobase/astrobase:{astrobase_container_version}",
         ports={"8787/tcp": "8787"},
-        environment={
-            "GOOGLE_APPLICATION_CREDENTIALS": "/google-credentials.json",
-        },
-        volumes={
-            google_creds_host: {"bind": google_creds_container, "mode": "ro"},
-            aws_creds_host: {"bind": aws_creds_container, "mode": "ro"},
-        },
+        environment=environment,
+        volumes=volumes,
         auto_remove=True,
         detach=True,
+        name=f"astrobase-{astrobase_config.profile_name}",
     )
     typer.echo("Astrobase initialized")
 
@@ -100,7 +109,7 @@ def apply(astrobase_yaml_path: str):
 @app.command()
 def destroy(astrobase_yaml_path: str):
     """
-    Destroy changes to clusters, resources, and workflows.
+    Destroy sclusters, resources, and workflows.
     """
     server = astrobase_config.current_profile.get("server")
     with open(astrobase_yaml_path, "r") as f:
@@ -112,22 +121,6 @@ def destroy(astrobase_yaml_path: str):
             cluster_name = cluster.get("name")
             typer.echo(f"Destroying {provider} cluster {cluster.get('name')} ... ")
             http_client.delete(f"{server}/{provider}/{cluster_name}")
-
-
-@app.command()
-def state():
-    """
-    View state across clusters, resources, and workflows.
-    """
-    typer.echo("View your entire contol plane.")
-
-
-@app.command("import")
-def _import():
-    """
-    Import resources not created by astrobase.
-    """
-    typer.echo("Reference infrastructure and resources not provisioned by Astrobase.")
 
 
 if __name__ == "__main__":

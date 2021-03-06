@@ -2,15 +2,25 @@ import json
 from typing import List
 
 import googleapiclient
+from google.auth import exceptions as google_auth_exceptions
 from googleapiclient.discovery import build
 
 from astrobase.schemas.gke import GKECreate, GKECreateAPI, GKECreateFilter
+from config.logger import logger
 
 
 class GKEApi:
     def __init__(self):
-        self.client = build("container", "v1beta1")
-        self.cluster_client = self.client.projects().locations().clusters()
+        try:
+            self.client = build("container", "v1beta1")
+            self.cluster_client = self.client.projects().locations().clusters()
+        except google_auth_exceptions.DefaultCredentialsError as e:
+            logger.error(
+                "Missing credentials for GKEApi. "
+                "Make sure you've set your "
+                "GOOGLE_APPLICATION_CREDENTIALS environment variable.\n"
+                f"Full exception:\n{e}"
+            )
 
     def create(self, cluster_create: GKECreate) -> dict:
         body = GKECreateAPI(cluster=GKECreateFilter(**cluster_create.dict()))
