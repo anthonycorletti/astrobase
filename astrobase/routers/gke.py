@@ -18,8 +18,8 @@ def create_gke_cluster(
 
 @router.get("/gke", tags=tags)
 def get_gke_clusters(
-    project_id: str = "astrobase-284118",
-    location: str = "us-central1",
+    project_id: str,
+    location: str,
 ):
     return gke_api.get(project_id, location)
 
@@ -27,8 +27,8 @@ def get_gke_clusters(
 @router.get("/gke/{cluster_name}", tags=tags)
 def describe_gke_cluster(
     cluster_name: str,
-    project_id: str = "astrobase-284118",
-    location: str = "us-central1",
+    project_id: str,
+    location: str,
 ):
     return gke_api.describe(
         project_id=project_id,
@@ -40,8 +40,8 @@ def describe_gke_cluster(
 @router.delete("/gke/{cluster_name}", tags=tags)
 def delete_gke_cluster(
     cluster_name: str,
-    project_id: str = "astrobase-284118",
-    location: str = "us-central1",
+    project_id: str,
+    location: str,
 ):
     return gke_api.delete(
         cluster_name=cluster_name,

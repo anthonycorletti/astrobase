@@ -1,6 +1,7 @@
 apiVersion: v0.1.0
 resources:
     - name: simple-nginx
-      provider: gke
       resource_dir: ../examples/kubernetes
+      provider: gke
       cluster_name: astrobase-test-gke
+      cluster_location: us-central1

@@ -4,7 +4,7 @@ from contextlib import contextmanager
 
 import typer
 from kubernetes import client, config
-from sh import kubectl
+from sh import gcloud, kubectl
 
 
 class KubernetesClient:
@@ -13,7 +13,20 @@ class KubernetesClient:
         config.load_kube_config()
         yield client.ApiClient()
 
-    def apply_kubernetes_resources(self, kubernetes_resource_dir: str) -> dict:
+    def apply_kubernetes_resources(
+        self,
+        kubernetes_resource_dir: str,
+        cluster_name: str,
+        cluster_location: str,
+    ) -> dict:
+        gcloud(
+            "container",
+            "clusters",
+            "get-credentials",
+            cluster_name,
+            "--region",
+            cluster_location,
+        )
         with self.kube_api_client() as kube_api_client:
             if not kube_api_client:
                 typer.echo("no kubernetes api client provisioned")

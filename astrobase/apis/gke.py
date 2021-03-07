@@ -1,8 +1,8 @@
 import json
 from typing import List
 
-import googleapiclient
 from google.auth import exceptions as google_auth_exceptions
+from googleapiclient import errors as google_api_client_errors
 from googleapiclient.discovery import build
 
 from astrobase.schemas.gke import GKECreate, GKECreateAPI, GKECreateFilter
@@ -40,7 +40,7 @@ class GKEApi:
         try:
             res = req.execute()
             return dict(res)
-        except googleapiclient.errors.HttpError as e:
+        except google_api_client_errors.HttpError as e:
             content = e.content.decode("utf8")
             return json.loads(content)
 
@@ -50,6 +50,6 @@ class GKEApi:
         try:
             res = req.execute()
             return dict(res)
-        except googleapiclient.errors.HttpError as e:
+        except google_api_client_errors.HttpError as e:
             content = e.content.decode("utf8")
             return json.loads(content)

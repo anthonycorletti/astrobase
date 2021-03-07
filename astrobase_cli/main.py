@@ -72,7 +72,7 @@ def init(astrobase_container_version: str = "latest"):
 
 
 @app.command()
-def apply(astrobase_yaml_path: str):
+def apply(astrobase_yaml_path: str = typer.Option(..., "--files", "-f")):
     """
     Apply changes to clusters, resources, and workflows.
     """
@@ -90,6 +90,7 @@ def apply(astrobase_yaml_path: str):
         for resource in resources:
             provider = resource.get("provider")
             cluster_name = resource.get("cluster_name")
+            cluster_location = resource.get("cluster_location")
             res = http_client.get(f"{server}/{provider}/{cluster_name}")
 
             if res.get("error"):
@@ -98,7 +99,9 @@ def apply(astrobase_yaml_path: str):
                 kubernetes_client = KubernetesClient()
                 if provider in ["gke", "eks"]:
                     kubernetes_client.apply_kubernetes_resources(
-                        resource.get("resource_dir")
+                        kubernetes_resource_dir=resource.get("resource_dir"),
+                        cluster_name=cluster_name,
+                        cluster_location=cluster_location,
                     )
 
         workflows = data.get("workflows") or []
