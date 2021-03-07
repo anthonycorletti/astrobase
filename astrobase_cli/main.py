@@ -110,7 +110,7 @@ def apply(astrobase_yaml_path: str = typer.Option(..., "--files", "-f")):
 
 
 @app.command()
-def destroy(astrobase_yaml_path: str):
+def destroy(astrobase_yaml_path: str = typer.Option(..., "--files", "-f")):
     """
     Destroy sclusters, resources, and workflows.
     """
