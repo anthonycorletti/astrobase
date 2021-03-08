@@ -47,7 +47,7 @@ def init(astrobase_container_version: str = "latest"):
         return
     environment, volumes = {}, {}
     google_creds_container = "/google-credentials.json"
-    aws_creds_container = "/aws-credentials"
+    aws_creds_container = "~/.aws/credentials"
     google_creds_host = astrobase_config.current_profile.get(
         "google_application_credentials"
     )
@@ -56,8 +56,10 @@ def init(astrobase_container_version: str = "latest"):
         volumes[google_creds_host] = {"bind": google_creds_container, "mode": "ro"}
     aws_creds_host = astrobase_config.current_profile.get("aws_credentials")
     if aws_creds_host:
-        environment["AWS_CREDENTIALS"] = aws_creds_container
         volumes[aws_creds_host] = {"bind": aws_creds_container, "mode": "ro"}
+    aws_profile_name = astrobase_config.current_profile.get("aws_profile_name")
+    if aws_profile_name:
+        environment["AWS_PROFILE"] = aws_profile_name
     typer.echo("Starting Astrobase server ... ")
     docker_client.containers.run(
         f"astrobase/astrobase:{astrobase_container_version}",
@@ -83,8 +85,8 @@ def apply(astrobase_yaml_path: str = typer.Option(..., "--files", "-f")):
         clusters = data.get("clusters") or []
         for cluster in clusters:
             provider = cluster.get("provider")
-            typer.echo(f"Applying {provider} cluster {cluster.get('name')} ... ")
-            http_client.post(f"{server}/{provider}", cluster)
+            typer.echo(f"Creating {provider} cluster {cluster.get('name')} ... ")
+            # http_client.post(f"{server}/{provider}", cluster)
 
         resources = data.get("resources") or []
         for resource in resources:

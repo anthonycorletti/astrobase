@@ -16,6 +16,7 @@ PyJWT = "^2.0.1"
 passlib = "^1.7.4"
 google-api-python-client = "^2.0.2"
 uvicorn = "^0.13.3"
+boto3 = "^1.17.22"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2"

@@ -45,23 +45,3 @@ class GKECreateFilter(BaseModel):
 
 class GKECreateAPI(BaseModel):
     cluster: GKECreateFilter
-
-
-class GKEResourceBase(BaseModel):
-    name: Optional[str] = Field(default_factory=random_name)
-    resource_dir: str
-    cluster_name: str
-
-    @validator("name")
-    def name_is_set(cls, name: str) -> str:
-        if not name:
-            return random_name()
-        return name
-
-
-class GKEResourceCreate(GKEResourceBase):
-    pass
-
-
-class GKEResource(GKEResourceBase):
-    pass

@@ -17,12 +17,14 @@ def create(
     server: str = typer.Option(default="http://localhost:8787"),
     google_application_credentials: str = typer.Option(None),
     aws_credentials: str = typer.Option(None),
+    aws_profile_name: str = typer.Option(None),
 ):
     astrobase_config.config_dict[name] = {
         "server": server,
         "api_key": api_key,
         "google_application_credentials": google_application_credentials,
         "aws_credentials": aws_credentials,
+        "aws_profile_name": aws_profile_name,
     }
     astrobase_config.write_config(astrobase_config.config_dict)
     typer.echo(f"Created profile {name}.")

@@ -4,3 +4,23 @@ clusters:
       provider: gke
       location: us-central1
       project_id: astrobase-284118
+    - name: astrobase-test-eks
+      provider: eks
+      roleArn: arn:aws:iam::541181908229:role/AstrobaseEKSRole
+      resourcesVpcConfig:
+          subnetIds:
+              - subnet-a023bbff
+              - subnet-987d53d5
+          securityGroupIds:
+              - sg-67306a6a
+          endpointPublicAccess: true
+          endpointPrivateAccess: true
+      logging:
+          clusterLogging:
+              - types:
+                    - api
+                    - audit
+                    - authenticator
+                    - controllerManager
+                    - scheduler
+                enabled: true
