@@ -7,6 +7,7 @@ class ClusterFactory:
 
     eks_create_example = {
         "name": "astrobase-test-eks-2",
+        "region": "us-east-1",
         "roleArn": "arn:aws:iam::541181908229:role/AstrobaseEKSRole",
         "resourcesVpcConfig": {
             "subnetIds": ["subnet-a023bbff", "subnet-987d53d5"],

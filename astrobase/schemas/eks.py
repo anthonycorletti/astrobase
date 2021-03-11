@@ -29,6 +29,7 @@ class ClusterLogging(BaseModel):
 
 class EKSBase(BaseModel):
     name: Optional[str] = Field(default_factory=random_name)
+    region: str
     roleArn: str
     resourcesVpcConfig: ResourcesVpcConfig
     tags: Optional[Dict[str, str]] = {}
@@ -43,6 +44,14 @@ class EKSBase(BaseModel):
 
 class EKSCreate(EKSBase):
     pass
+
+
+class EKSCreateAPIFilter(BaseModel):
+    name: str
+    roleArn: str
+    resourcesVpcConfig: ResourcesVpcConfig
+    tags: Optional[Dict[str, str]] = {}
+    logging: Optional[ClusterLogging] = {}
 
 
 class EKS(EKSBase):

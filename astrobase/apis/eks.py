@@ -2,14 +2,15 @@ from typing import List
 
 import boto3
 
-from astrobase.schemas.eks import EKSCreate
+from astrobase.schemas.eks import EKSCreate, EKSCreateAPIFilter
 from config.logger import logger
 
 
 class EKSApi:
-    def __init__(self):
+    def __init__(self, region: str):
+        self.region = region
         try:
-            self.client = boto3.client("eks")
+            self.client = boto3.client("eks", region_name=self.region)
         except Exception as e:
             logger.error("Exception: ", e)
             logger.error(
@@ -20,7 +21,8 @@ class EKSApi:
             )
 
     def create(self, cluster_create: EKSCreate) -> dict:
-        return self.client.create_cluster(**cluster_create.dict())
+        cluster_data = EKSCreateAPIFilter(**cluster_create.dict())
+        return self.client.create_cluster(**cluster_data.dict())
 
     def get(self) -> List[str]:
         return self.client.list_clusters().get("clusters", [])

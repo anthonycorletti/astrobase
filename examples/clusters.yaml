@@ -6,6 +6,7 @@ clusters:
       project_id: astrobase-284118
     - name: astrobase-test-eks
       provider: eks
+      region: us-east-1
       roleArn: arn:aws:iam::541181908229:role/AstrobaseEKSRole
       resourcesVpcConfig:
           subnetIds:
