@@ -13,7 +13,6 @@ astrobase_config = AstrobaseConfig()
 @app.command()
 def create(
     name: str,
-    api_key: str = typer.Option(None),
     server: str = typer.Option(default="http://localhost:8787"),
     google_application_credentials: str = typer.Option(None),
     aws_credentials: str = typer.Option(None),
@@ -21,7 +20,6 @@ def create(
 ):
     astrobase_config.config_dict[name] = {
         "server": server,
-        "api_key": api_key,
         "google_application_credentials": google_application_credentials,
         "aws_credentials": aws_credentials,
         "aws_profile_name": aws_profile_name,
