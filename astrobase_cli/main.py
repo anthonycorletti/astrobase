@@ -126,7 +126,20 @@ def destroy(astrobase_yaml_path: str = typer.Option(..., "--files", "-f")):
             provider = cluster.get("provider")
             cluster_name = cluster.get("name")
             typer.echo(f"Destroying {provider} cluster {cluster.get('name')} ... ")
-            http_client.delete(f"{server}/{provider}/{cluster_name}")
+            if provider == "eks":
+                region = cluster.get("region")
+                http_client.delete(
+                    f"{server}/{provider}/{cluster_name}?region={region}"
+                )
+            elif provider == "gke":
+                project_id = cluster.get("project_id")
+                location = cluster.get("location")
+                http_client.delete(
+                    f"{server}/{provider}/{cluster_name}"
+                    f"?project_id={project_id}&location={location}"
+                )
+            else:
+                typer.echo(f"unsupported provider:{provider}")
 
 
 if __name__ == "__main__":
