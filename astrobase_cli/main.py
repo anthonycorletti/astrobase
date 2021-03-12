@@ -94,18 +94,22 @@ def apply(astrobase_yaml_path: str = typer.Option(..., "--files", "-f")):
             provider = resource.get("provider")
             cluster_name = resource.get("cluster_name")
             cluster_location = resource.get("cluster_location")
-            res = http_client.get(f"{server}/{provider}/{cluster_name}")
 
-            if res.get("error"):
-                typer.echo(res)
+            kubernetes_client = KubernetesClient()
+            if provider == "eks":
+                kubernetes_client.apply_eks_kubernetes_resources(
+                    kubernetes_resource_dir=resource.get("resource_dir"),
+                    cluster_name=cluster_name,
+                    cluster_location=cluster_location,
+                )
+            elif provider == "gke":
+                kubernetes_client.apply_gke_kubernetes_resources(
+                    kubernetes_resource_dir=resource.get("resource_dir"),
+                    cluster_name=cluster_name,
+                    cluster_location=cluster_location,
+                )
             else:
-                kubernetes_client = KubernetesClient()
-                if provider in ["gke", "eks"]:
-                    kubernetes_client.apply_kubernetes_resources(
-                        kubernetes_resource_dir=resource.get("resource_dir"),
-                        cluster_name=cluster_name,
-                        cluster_location=cluster_location,
-                    )
+                typer.echo(f"unsupported provider {provider}")
 
         workflows = data.get("workflows") or []
         for workflow in workflows:
