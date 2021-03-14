@@ -22,7 +22,19 @@ class EKSApi:
 
     def create(self, cluster_create: EKSCreate) -> dict:
         cluster_data = EKSCreateAPIFilter(**cluster_create.dict())
-        return self.client.create_cluster(**cluster_data.dict())
+        try:
+            cluster = self.client.create_cluster(**cluster_data.dict())
+        except Exception as e:
+            logger.error(e.response)
+            cluster = e.response
+        nodegroups = []
+        for nodegroup in cluster_create.nodegroups:
+            try:
+                nodegroup = self.client.create_nodegroup(**nodegroup.dict())
+                nodegroups.append(nodegroup)
+            except Exception as e:
+                nodegroups.append(e.response)
+        return {"cluster_response": cluster, "nodegroups_response": nodegroups}
 
     def get(self) -> List[str]:
         return self.client.list_clusters().get("clusters", [])
@@ -33,8 +45,19 @@ class EKSApi:
         except Exception as e:
             return e.response
 
-    def delete(self, cluster_name: str) -> dict:
+    def delete(self, cluster_name: str, nodegroup_names: List[str]) -> dict:
+        for nodegroup_name in nodegroup_names:
+            try:
+                self.client.delete_nodegroup(
+                    clusterName=cluster_name, nodegroupName=nodegroup_name
+                )
+            except Exception as e:
+                logger.error(e.response)
         try:
-            return self.client.delete_cluster(name=cluster_name)
+            self.client.delete_cluster(name=cluster_name)
         except Exception as e:
-            return e.response
+            logger.error(e.response)
+        return {
+            "cluster_name": cluster_name,
+            "nodegroup_names": nodegroup_names,
+        }

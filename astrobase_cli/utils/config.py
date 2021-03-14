@@ -20,6 +20,7 @@ class AstrobaseConfig:
 
         if self.config_dict and self.profile_name in self.config_dict:
             self.current_profile = self.config_dict[self.profile_name]
+            self.server = self.current_profile.get("server")
 
     def _setup_config_dir(self) -> None:
         os.makedirs(os.path.dirname(self.config))

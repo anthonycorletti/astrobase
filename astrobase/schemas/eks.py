@@ -6,6 +6,38 @@ from pydantic import BaseModel, Field, validator
 from astrobase.helpers.name import random_name
 
 
+class EKSNodegroupScalingConfig(BaseModel):
+    minSize: int = 1
+    maxSize: int = 3
+    desiredSize: int = 1
+
+
+@unique
+class EKSNodegroupAmiType(str, Enum):
+    al2_x86_64 = "AL2_x86_64"
+    al2_x86_64_gpu = "AL2_x86_64_GPU"
+    al2_arm_64 = "AL2_ARM_64"
+
+
+@unique
+class EKSNodegroupCapacityType(str, Enum):
+    on_demand = "ON_DEMAND"
+    spot = "SPOT"
+
+
+class EKSNodegroup(BaseModel):
+    clusterName: str
+    nodegroupName: str
+    scalingConfig: EKSNodegroupScalingConfig
+    subnets: List[str]
+    instanceTypes: List[str] = ["t3.medium"]
+    amiType: EKSNodegroupAmiType = EKSNodegroupAmiType.al2_x86_64
+    nodeRole: str
+    labels: Optional[Dict[str, str]] = {}
+    tags: Optional[Dict[str, str]] = {}
+    capacityType: EKSNodegroupCapacityType = EKSNodegroupCapacityType.spot
+
+
 class ResourcesVpcConfig(BaseModel):
     subnetIds: List[str]
     securityGroupIds: List[str]
@@ -34,6 +66,7 @@ class EKSBase(BaseModel):
     resourcesVpcConfig: ResourcesVpcConfig
     tags: Optional[Dict[str, str]] = {}
     logging: Optional[ClusterLogging] = {}
+    nodegroups: List[EKSNodegroup]
 
     @validator("name")
     def name_is_set(cls, name: str) -> str:
@@ -56,11 +89,3 @@ class EKSCreateAPIFilter(BaseModel):
 
 class EKS(EKSBase):
     pass
-
-
-class EKSCreateFilter(BaseModel):
-    name: str
-
-
-class EKSCreateAPI(BaseModel):
-    cluster: EKSCreateFilter

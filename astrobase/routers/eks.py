@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Body
 
 from astrobase.apis.eks import EKSApi
@@ -29,6 +31,13 @@ def describe_eks_cluster(cluster_name: str, region: str):
 
 
 @router.delete("/eks/{cluster_name}", tags=tags)
-def delete_eks_cluster(cluster_name: str, region: str):
+def delete_eks_cluster(
+    cluster_name: str,
+    region: str,
+    nodegroup_names: List[str] = Body(..., example=[]),
+):
     eks_api = EKSApi(region=region)
-    return eks_api.delete(cluster_name=cluster_name)
+    return eks_api.delete(
+        cluster_name=cluster_name,
+        nodegroup_names=nodegroup_names,
+    )

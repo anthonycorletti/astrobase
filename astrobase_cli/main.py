@@ -3,12 +3,11 @@ import typer
 import yaml
 
 from astrobase_cli import __version__ as version
-from astrobase_cli import profile
-from astrobase_cli.kubernetes import KubernetesClient
+from astrobase_cli import apply, destroy, profile
 from utils.config import AstrobaseConfig
-from utils.http import HTTPClient
 
-http_client = HTTPClient()
+astrobase_apply = apply.Apply()
+astrobase_destroy = destroy.Destroy()
 docker_client = docker.from_env()
 astrobase_config = AstrobaseConfig()
 name = f"🚀 Astrobase CLI {version} 🧑‍🚀"
@@ -75,75 +74,37 @@ def init(astrobase_container_version: str = "latest"):
 
 
 @app.command()
-def apply(astrobase_yaml_path: str = typer.Option(..., "--files", "-f")):
+def apply(astrobase_yaml_path: str = typer.Option(..., "-f")):
     """
-    Apply changes to clusters, resources, and workflows.
+    Apply clusters, resources, and workflows.
     """
-    server = astrobase_config.current_profile.get("server")
     with open(astrobase_yaml_path, "r") as f:
         data = yaml.safe_load(f)
 
         clusters = data.get("clusters") or []
-        for cluster in clusters:
-            provider = cluster.get("provider")
-            typer.echo(f"Creating {provider} cluster {cluster.get('name')} ... ")
-            http_client.post(f"{server}/{provider}", cluster)
-
         resources = data.get("resources") or []
-        for resource in resources:
-            provider = resource.get("provider")
-            cluster_name = resource.get("cluster_name")
-            cluster_location = resource.get("cluster_location")
+        workflows = data.get("workflows") or []  # TODO!
 
-            kubernetes_client = KubernetesClient()
-            if provider == "eks":
-                kubernetes_client.apply_eks_kubernetes_resources(
-                    kubernetes_resource_dir=resource.get("resource_dir"),
-                    cluster_name=cluster_name,
-                    cluster_location=cluster_location,
-                )
-            elif provider == "gke":
-                kubernetes_client.apply_gke_kubernetes_resources(
-                    kubernetes_resource_dir=resource.get("resource_dir"),
-                    cluster_name=cluster_name,
-                    cluster_location=cluster_location,
-                )
-            else:
-                typer.echo(f"unsupported provider {provider}")
-
-        workflows = data.get("workflows") or []
-        for workflow in workflows:
-            typer.echo(f"Applying workflow {workflow.get('name')} ... ")
+        astrobase_apply.apply_clusters(clusters)
+        astrobase_apply.apply_resources(resources)
+        astrobase_apply.apply_workflows(workflows)
 
 
 @app.command()
-def destroy(astrobase_yaml_path: str = typer.Option(..., "--files", "-f")):
+def destroy(astrobase_yaml_path: str = typer.Option(..., "-f")):
     """
-    Destroy sclusters, resources, and workflows.
+    Destroy clusters, resources, and workflows.
     """
-    server = astrobase_config.current_profile.get("server")
     with open(astrobase_yaml_path, "r") as f:
         data = yaml.safe_load(f)
 
         clusters = data.get("clusters") or []
-        for cluster in clusters:
-            provider = cluster.get("provider")
-            cluster_name = cluster.get("name")
-            typer.echo(f"Destroying {provider} cluster {cluster.get('name')} ... ")
-            if provider == "eks":
-                region = cluster.get("region")
-                http_client.delete(
-                    f"{server}/{provider}/{cluster_name}?region={region}"
-                )
-            elif provider == "gke":
-                project_id = cluster.get("project_id")
-                location = cluster.get("location")
-                http_client.delete(
-                    f"{server}/{provider}/{cluster_name}"
-                    f"?project_id={project_id}&location={location}"
-                )
-            else:
-                typer.echo(f"unsupported provider:{provider}")
+        resources = data.get("resources") or []
+        workflows = data.get("workflows") or []  # TODO!
+
+        astrobase_destroy.destroy_clusters(clusters)
+        astrobase_destroy.destroy_resources(resources)
+        astrobase_destroy.destroy_workflows(workflows)
 
 
 if __name__ == "__main__":
