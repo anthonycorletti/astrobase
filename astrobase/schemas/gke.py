@@ -18,6 +18,7 @@ class GKEReleaseChannel(BaseModel):
 
 class GKEAutoscaling(BaseModel):
     enabled: bool = True
+    minNodeCount: int = 1
     maxNodeCount: int = 3
 
 

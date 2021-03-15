@@ -27,14 +27,16 @@ class EKSClient:
             nodegroup["subnets"] = cluster.get("resourcesVpcConfig", {}).get(
                 "subnetIds", []
             )
-        requests.post(self.url, json=cluster)
+        res = requests.post(self.url, json=cluster)
+        typer.echo(res.json())
 
     def destroy(self, cluster: dict) -> None:
         cluster_url = f"{self.url}/{cluster.get('name')}"
         nodegroup_names = [ng.get("nodegroupName") for ng in cluster.get("nodegroups")]
-        requests.delete(
+        res = requests.delete(
             f"{cluster_url}?region={cluster.get('region')}", json=nodegroup_names
         )
+        typer.echo(res.json())
 
     def apply_kubernetes_resources(
         self,

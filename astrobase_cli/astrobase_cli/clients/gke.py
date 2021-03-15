@@ -23,7 +23,8 @@ class GKEClient:
         yield client.ApiClient()
 
     def create(self, cluster: dict) -> None:
-        requests.post(self.url, json=cluster)
+        res = requests.post(self.url, json=cluster)
+        typer.echo(res.json())
 
     def destroy(self, cluster: dict) -> None:
         params = {
@@ -31,7 +32,8 @@ class GKEClient:
             "project_id": cluster.get("project_id"),
         }
         cluster_url = f"{self.url}/{cluster.get('name')}?{query_str(params)}"
-        requests.delete(cluster_url)
+        res = requests.delete(cluster_url)
+        typer.echo(res.json())
 
     def apply_kubernetes_resources(
         self,

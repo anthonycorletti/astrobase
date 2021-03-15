@@ -41,8 +41,8 @@ class EKSNodegroup(BaseModel):
 class ResourcesVpcConfig(BaseModel):
     subnetIds: List[str]
     securityGroupIds: List[str]
-    endpointPublicAccess: bool
-    endpointPrivateAccess: bool
+    endpointPublicAccess: bool = True
+    endpointPrivateAccess: bool = True
     publicAccessCidrs: List[str] = ["0.0.0.0/0"]
 
 
@@ -55,8 +55,13 @@ class ClusterLoggingType(str, Enum):
     scheduler = "scheduler"
 
 
+class ClusterLoggingConfig(BaseModel):
+    types: List[ClusterLoggingType] = []
+    enabled: bool = True
+
+
 class ClusterLogging(BaseModel):
-    clusterLogging: List[Dict[str, Union[List[ClusterLoggingType], bool]]]
+    clusterLogging: ClusterLoggingConfig = ClusterLoggingConfig()
 
 
 class EKSBase(BaseModel):
@@ -65,7 +70,7 @@ class EKSBase(BaseModel):
     roleArn: str
     resourcesVpcConfig: ResourcesVpcConfig
     tags: Optional[Dict[str, str]] = {}
-    logging: Optional[ClusterLogging] = {}
+    logging: ClusterLogging = ClusterLogging()
     nodegroups: List[EKSNodegroup]
 
     @validator("name")

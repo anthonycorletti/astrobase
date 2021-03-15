@@ -3,11 +3,14 @@ clusters:
     - name: astrobase-test-gke
       provider: gke
       location: us-central1
-      project_id: astrobase-astrobase-284118
+      project_id: astrobase-284118
       nodePools:
           - name: astrobase-test-pool
             initialNodeCount: 1
-
+            autoscaling:
+                enabled: true
+                minNodeCount: 1
+                maxNodeCount: 3
     - name: astrobase-test-eks
       provider: eks
       region: us-east-1
@@ -18,21 +21,10 @@ clusters:
               - subnet-987d53d5
           securityGroupIds:
               - sg-67306a6a
-          endpointPublicAccess: true
-          endpointPrivateAccess: true
-      logging:
-          clusterLogging:
-              - types:
-                    - api
-                    - audit
-                    - authenticator
-                    - controllerManager
-                    - scheduler
-                enabled: true
       nodegroups:
           - nodegroupName: test-nodegroup-cpu
             scalingConfig:
                 minSize: 1
-                maxSize: 1
+                maxSize: 3
                 desiredSize: 1
             nodeRole: arn:aws:iam::541181908229:role/AstrobaseEKSNodegroupRole
