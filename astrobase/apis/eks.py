@@ -1,3 +1,4 @@
+import time
 from typing import List
 
 import boto3
@@ -25,16 +26,37 @@ class EKSApi:
         try:
             cluster = self.client.create_cluster(**cluster_data.dict())
         except Exception as e:
-            logger.error(e.response)
-            cluster = e.response
-        nodegroups = []
+            logger.error(e)
+            logger.info(f"Looking for cluster: {cluster_data.name}")
+            cluster = self.describe(cluster_name=cluster_data.name)
+
+        if cluster:
+            count = 0
+            cluster_status = (
+                self.describe(cluster_name=cluster_data.name)
+                .get("cluster", {})
+                .get("status")
+            )
+            while cluster_status != "ACTIVE":
+                if count > 13:
+                    raise Exception(
+                        "Something doesn't seem right "
+                        f"with cluster {cluster_data.name}"
+                    )
+                time.sleep(60)
+                cluster_status = (
+                    self.describe(cluster_name=cluster_data.name)
+                    .get("cluster", {})
+                    .get("status")
+                )
+                count += 1
+
         for nodegroup in cluster_create.nodegroups:
             try:
-                nodegroup = self.client.create_nodegroup(**nodegroup.dict())
-                nodegroups.append(nodegroup)
+                self.client.create_nodegroup(**nodegroup.dict())
             except Exception as e:
-                nodegroups.append(e.response)
-        return {"cluster_response": cluster, "nodegroups_response": nodegroups}
+                logger.error(e)
+        return
 
     def get(self) -> List[str]:
         return self.client.list_clusters().get("clusters", [])
@@ -43,7 +65,7 @@ class EKSApi:
         try:
             return self.client.describe_cluster(name=cluster_name)
         except Exception as e:
-            return e.response
+            logger.error(e)
 
     def delete(self, cluster_name: str, nodegroup_names: List[str]) -> dict:
         for nodegroup_name in nodegroup_names:
@@ -53,11 +75,18 @@ class EKSApi:
                 )
             except Exception as e:
                 logger.error(e.response)
-        try:
-            self.client.delete_cluster(name=cluster_name)
-        except Exception as e:
-            logger.error(e.response)
-        return {
-            "cluster_name": cluster_name,
-            "nodegroup_names": nodegroup_names,
-        }
+        count = 0
+        while True:
+            if count > 13:
+                raise Exception("Timed out waiting for node groups to delete.")
+            try:
+                self.client.delete_cluster(name=cluster_name)
+                return {
+                    "cluster_name": cluster_name,
+                    "nodegroup_names": nodegroup_names,
+                }
+            except Exception as e:
+                logger.error(e.response)
+            count += 1
+            logger.info("waiting before trying to delete cluster again")
+            time.sleep(60)

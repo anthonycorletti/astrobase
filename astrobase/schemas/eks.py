@@ -57,11 +57,11 @@ class ClusterLoggingType(str, Enum):
 
 class ClusterLoggingConfig(BaseModel):
     types: List[ClusterLoggingType] = []
-    enabled: bool = True
+    enabled: bool = False
 
 
 class ClusterLogging(BaseModel):
-    clusterLogging: ClusterLoggingConfig = ClusterLoggingConfig()
+    clusterLogging: List[ClusterLoggingConfig] = [ClusterLoggingConfig()]
 
 
 class EKSBase(BaseModel):
