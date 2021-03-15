@@ -1,19 +1,40 @@
+import json
 import os
 import sys
 from contextlib import contextmanager
 
+import requests
 import typer
 from kubernetes import client, config
 from sh import gcloud, kubectl
 
+from utils.config import AstrobaseConfig
+from utils.http import query_str
+
+astrobase_config = AstrobaseConfig()
+
 
 class GKEClient:
+    def __init__(self):
+        self.url = f"{astrobase_config.server}/gke"
+
     @contextmanager
     def kube_api_client(self) -> None:
         config.load_kube_config()
         yield client.ApiClient()
 
-    def apply_gke_kubernetes_resources(
+    def create(self, cluster: dict) -> None:
+        requests.post(self.url, json=cluster)
+
+    def destroy(self, cluster: dict) -> None:
+        params = {
+            "location": cluster.get("location"),
+            "project_id": cluster.get("project_id"),
+        }
+        cluster_url = f"{self.url}/{cluster.get('name')}?{query_str(params)}"
+        requests.delete(cluster_url)
+
+    def apply_kubernetes_resources(
         self,
         kubernetes_resource_dir: str,
         cluster_name: str,

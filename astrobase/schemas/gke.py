@@ -1,12 +1,62 @@
-from typing import Optional
+from enum import Enum, unique
+from typing import List, Optional
 
 from pydantic import BaseModel, Field, validator
 
 from astrobase.helpers.name import random_name
 
 
-class GKEAutopilotEnabled(BaseModel):
+@unique
+class ReleaseChannel(str, Enum):
+    regular = "REGULAR"
+    rapid = "RAPID"
+
+
+class GKEReleaseChannel(BaseModel):
+    channel: ReleaseChannel = ReleaseChannel.regular
+
+
+class GKEAutoscaling(BaseModel):
     enabled: bool = True
+    maxNodeCount: int = 3
+
+
+class GKEManagement(BaseModel):
+    autoUpgrade: bool = True
+    autoRepair: bool = True
+
+
+class GKEUpgradeSettings(BaseModel):
+    maxSurge: int = 1
+
+
+class GKEShieldedInstanceConfig(BaseModel):
+    enableIntegrityMonitoring: bool = True
+
+
+class GKENodePoolConfig(BaseModel):
+    machineType: str = "e2-medium"
+    diskSizeGb: int = 100
+    imageType: str = "COS"
+    diskType: str = "pd-ssd"
+    shieldedInstanceConfig: GKEShieldedInstanceConfig = GKEShieldedInstanceConfig()
+    oauthScopes: List[str] = [
+        "https://www.googleapis.com/auth/devstorage.read_only",
+        "https://www.googleapis.com/auth/logging.write",
+        "https://www.googleapis.com/auth/monitoring",
+        "https://www.googleapis.com/auth/servicecontrol",
+        "https://www.googleapis.com/auth/service.management.readonly",
+        "https://www.googleapis.com/auth/trace.append",
+    ]
+
+
+class GKENodePool(BaseModel):
+    name: str
+    initialNodeCount: int
+    config: GKENodePoolConfig = GKENodePoolConfig()
+    autoscaling: GKEAutoscaling = GKEAutoscaling()
+    management: GKEManagement = GKEManagement()
+    upgradeSettings: GKEUpgradeSettings = GKEUpgradeSettings()
 
 
 class GKEBase(BaseModel):
@@ -14,7 +64,8 @@ class GKEBase(BaseModel):
     location: str
     project_id: str
     parent: Optional[str]
-    autopilot: GKEAutopilotEnabled = GKEAutopilotEnabled(enabled=True)
+    nodePools: List[GKENodePool]
+    releaseChannel: GKEReleaseChannel = GKEReleaseChannel()
 
     @validator("name")
     def name_is_set(cls, name: str) -> str:
@@ -37,11 +88,12 @@ class GKE(GKEBase):
     pass
 
 
-class GKECreateFilter(BaseModel):
+class GKECreateAPIFilter(BaseModel):
     name: str
     location: str
-    autopilot: GKEAutopilotEnabled
+    nodePools: List[GKENodePool]
+    releaseChannel: GKEReleaseChannel
 
 
 class GKECreateAPI(BaseModel):
-    cluster: GKECreateFilter
+    cluster: GKECreateAPIFilter
