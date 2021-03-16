@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from astrobase import __version__ as version
 from astrobase.routers import eks, gke, health, workflow
 
+os.environ["TZ"] = "UTC"
 api = FastAPI(title="Astrobase API Server", version=os.getenv("SHORT_SHA", version))
 
 api.include_router(health.router)

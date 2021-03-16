@@ -38,11 +38,12 @@ class EKSApi:
                 .get("status")
             )
             while cluster_status != "ACTIVE":
-                if count > 13:
+                if count > 17:
                     raise Exception(
                         "Something doesn't seem right "
                         f"with cluster {cluster_data.name}"
                     )
+                logger.info("waiting before trying to create node group again")
                 time.sleep(60)
                 cluster_status = (
                     self.describe(cluster_name=cluster_data.name)
@@ -77,7 +78,7 @@ class EKSApi:
                 logger.error(e.response)
         count = 0
         while True:
-            if count > 13:
+            if count > 17:
                 raise Exception("Timed out waiting for node groups to delete.")
             try:
                 self.client.delete_cluster(name=cluster_name)
