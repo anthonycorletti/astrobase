@@ -4,14 +4,12 @@
 [**Installation and Usage**](#installation-and-usage) |
 [**Roadmap**](./docs/ROADMAP.md) |
 [**Contributing**](./CONTRIBUTING.md) |
-[**Resources**](#resources) |
+[**Docs**](https://docs.astrobase.co) |
 [**Credits**](#credits) |
 [**Who uses Astrobase?**](./docs/who-uses-astrobase.md)
 
 ## Why Astrobase?
 
 ## Installation and Usage
-
-## Resources
 
 ## Credits
