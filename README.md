@@ -7,7 +7,7 @@
 [**Docs**](https://docs.astrobase.co) |
 [**Credits**](#credits) |
 [**Who uses Astrobase?**](./docs/who-uses-astrobase.md) |
-[**Get in touch**](mailto:anthony@astrobase.co)
+[**Get in touch**](https://astrobase.co)
 
 ## Why Astrobase?
 
