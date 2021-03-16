@@ -32,6 +32,20 @@ def describe_eks_cluster(cluster_name: str, region: str):
     return eks_api.describe(cluster_name=cluster_name)
 
 
+@router.get("/eks/{cluster_name}/nodegroups", tags=tags)
+def list_eks_cluster_nodegroups(cluster_name: str, region: str):
+    eks_api = EKSApi(region=region)
+    return eks_api.list_cluster_nodegroups(cluster_name=cluster_name)
+
+
+@router.get("/eks/{cluster_name}/nodegroups/{nodegroup_name}", tags=tags)
+def describe_eks_cluster_nodegroup(cluster_name: str, nodegroup_name: str, region: str):
+    eks_api = EKSApi(region=region)
+    return eks_api.describe_cluster_nodegroup(
+        cluster_name=cluster_name, nodegroup_name=nodegroup_name
+    )
+
+
 @router.delete("/eks/{cluster_name}", tags=tags)
 def delete_eks_cluster(
     cluster_name: str,

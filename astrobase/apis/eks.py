@@ -68,6 +68,22 @@ class EKSApi:
         except Exception as e:
             logger.error(e)
 
+    def list_cluster_nodegroups(self, cluster_name: str) -> List[dict]:
+        try:
+            return self.client.list_nodegroups(clusterName=cluster_name)
+        except Exception as e:
+            logger.error(e)
+
+    def describe_cluster_nodegroup(
+        self, cluster_name: str, nodegroup_name: str
+    ) -> List[dict]:
+        try:
+            return self.client.describe_nodegroup(
+                clusterName=cluster_name, nodegroupName=nodegroup_name
+            )
+        except Exception as e:
+            logger.error(e)
+
     def delete(self, cluster_name: str, nodegroup_names: List[str]) -> dict:
         for nodegroup_name in nodegroup_names:
             try:
