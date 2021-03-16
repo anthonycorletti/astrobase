@@ -2,7 +2,7 @@
 
 [**Why Astrobase**](#why-astrobase) |
 [**Installation and Usage**](#installation-and-usage) |
-[**Roadmap**](#./docs/ROADMAP.md) |
+[**Roadmap**](./docs/ROADMAP.md) |
 [**Contributing**](./CONTRIBUTING.md) |
 [**Resources**](#resources) |
 [**Credits**](#credits) |
