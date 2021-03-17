@@ -1,0 +1,13 @@
+apiVersion: v0.1.0
+clusters:
+    - name: astrobase-test-gke
+      provider: gke
+      location: us-central1
+      project_id: astrobase-284118
+      nodePools:
+          - name: astrobase-test-pool
+            initialNodeCount: 1
+            autoscaling:
+                enabled: true
+                minNodeCount: 1
+                maxNodeCount: 3
