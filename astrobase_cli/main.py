@@ -4,15 +4,14 @@ import yaml
 
 from astrobase_cli import __version__ as version
 from astrobase_cli import apply, destroy, profile
-from utils.config import AstrobaseConfig
+from utils.config import AstrobaseConfig, AstrobaseDockerConfig
 
 astrobase_apply = apply.Apply()
 astrobase_destroy = destroy.Destroy()
 docker_client = docker.from_env()
-astrobase_config = AstrobaseConfig()
 name = f"🚀 Astrobase CLI {version} 🧑‍🚀"
-app = typer.Typer(name=name)
 
+app = typer.Typer(name=name)
 app.add_typer(profile.app, name="profile")
 
 
@@ -37,38 +36,27 @@ def init(astrobase_container_version: str = "latest"):
     """
     Initialize Astrobase.
     """
+    astrobase_config = AstrobaseConfig()
     typer.echo("Initializing Astrobase ... ")
     if not astrobase_config.current_profile:
         typer.echo(
-            "no profile is set! set a profile with: export "
+            "No profile is set! set a profile with: export "
             f"{astrobase_config.ASTROBASE_PROFILE}=<my-profile-name>"
         )
         return
-    environment, volumes = {}, {}
-    google_creds_container = "/google-credentials.json"
-    aws_creds_container = "/aws-credentials"
-    google_creds_host = astrobase_config.current_profile.get(
-        "google_application_credentials"
+    astrobase_docker_config = AstrobaseDockerConfig(
+        container_version=astrobase_container_version,
+        astrobase_config=astrobase_config,
     )
-    if google_creds_host:
-        environment["GOOGLE_APPLICATION_CREDENTIALS"] = google_creds_container
-        volumes[google_creds_host] = {"bind": google_creds_container, "mode": "ro"}
-    aws_creds_host = astrobase_config.current_profile.get("aws_credentials")
-    if aws_creds_host:
-        volumes[aws_creds_host] = {"bind": aws_creds_container, "mode": "ro"}
-    aws_profile_name = astrobase_config.current_profile.get("aws_profile_name")
-    if aws_profile_name:
-        environment["AWS_SHARED_CREDENTIALS_FILE"] = aws_creds_container
-        environment["AWS_PROFILE"] = aws_profile_name
     typer.echo("Starting Astrobase server ... ")
     docker_client.containers.run(
-        f"astrobase/astrobase:{astrobase_container_version}",
-        ports={"8787/tcp": "8787"},
-        environment=environment,
-        volumes=volumes,
-        auto_remove=True,
-        detach=True,
-        name=f"astrobase-{astrobase_config.profile_name}",
+        image=astrobase_docker_config.image,
+        ports=astrobase_docker_config.ports,
+        environment=astrobase_docker_config.environment,
+        volumes=astrobase_docker_config.volumes,
+        auto_remove=astrobase_docker_config.auto_remove,
+        detach=astrobase_docker_config.detach,
+        name=astrobase_docker_config.name,
     )
     typer.echo("Astrobase initialized")
 

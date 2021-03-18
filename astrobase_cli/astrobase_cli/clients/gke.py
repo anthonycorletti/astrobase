@@ -15,7 +15,8 @@ astrobase_config = AstrobaseConfig()
 
 class GKEClient:
     def __init__(self):
-        self.url = f"{astrobase_config.server}/gke"
+        server = astrobase_config.current_profile.server
+        self.url = f"{server}/gke"
 
     @contextmanager
     def kube_api_client(self) -> None:

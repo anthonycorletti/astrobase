@@ -14,7 +14,8 @@ astrobase_config = AstrobaseConfig()
 
 class EKSClient:
     def __init__(self):
-        self.url = f"{astrobase_config.server}/eks"
+        server = astrobase_config.current_profile.server
+        self.url = f"{server}/eks"
 
     @contextmanager
     def kube_api_client(self) -> None:
