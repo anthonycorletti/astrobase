@@ -29,6 +29,7 @@ class EKSNodegroup(BaseModel):
     clusterName: str
     nodegroupName: str
     scalingConfig: EKSNodegroupScalingConfig
+    diskSize: int = 100
     subnets: List[str]
     instanceTypes: List[str] = ["t3.medium"]
     amiType: EKSNodegroupAmiType = EKSNodegroupAmiType.al2_x86_64
