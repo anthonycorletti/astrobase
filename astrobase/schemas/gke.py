@@ -52,7 +52,7 @@ class GKEShieldedInstanceConfig(BaseModel):
 
 class GKENodePoolConfig(BaseModel):
     machineType: str = "e2-medium"
-    diskSizeGb: int = 100
+    diskSizeGb: int = 20
     imageType: str = "COS"
     diskType: str = "pd-ssd"
     accelerators: List[Accelerator] = []
@@ -110,20 +110,6 @@ class GKECreateAPIFilter(BaseModel):
 
 class GKECreateAPI(BaseModel):
     cluster: GKECreateAPIFilter
-
-
-class GKEClusterResponse(BaseModel):
-    name: str
-    location: str
-    locations: List[str]
-    currentNodeCount: int
-    network: str
-    nodeConfig: dict
-    nodePools: List[dict]
-
-
-class GKEClustersResponse(BaseModel):
-    clusters: List[GKEClusterResponse] = []
 
 
 class GKEError(BaseModel):

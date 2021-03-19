@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Body
 
 from astrobase.apis.gke import GKEApi
-from astrobase.schemas.gke import GKEClusterResponse, GKEClustersResponse, GKECreate
+from astrobase.schemas.gke import GKECreate
 from tests.factories import ClusterFactory
 
 cluster_examples = ClusterFactory()
@@ -10,14 +10,14 @@ router = APIRouter()
 tags = ["cluster"]
 
 
-@router.post("/gke", tags=tags)
+@router.post("/gke", response_model=dict, tags=tags)
 def create_gke_cluster(
     cluster_create: GKECreate = Body(..., example=cluster_examples.gke_example()),
 ):
     return gke_api.create(cluster_create)
 
 
-@router.get("/gke", response_model=GKEClustersResponse, tags=tags)
+@router.get("/gke", response_model=dict, tags=tags)
 def get_gke_clusters(
     project_id: str,
     location: str,
@@ -25,7 +25,7 @@ def get_gke_clusters(
     return gke_api.get(project_id, location)
 
 
-@router.get("/gke/{cluster_name}", response_model=GKEClusterResponse, tags=tags)
+@router.get("/gke/{cluster_name}", response_model=dict, tags=tags)
 def describe_gke_cluster(
     cluster_name: str,
     project_id: str,
@@ -38,7 +38,7 @@ def describe_gke_cluster(
     )
 
 
-@router.delete("/gke/{cluster_name}", tags=tags)
+@router.delete("/gke/{cluster_name}", response_model=dict, tags=tags)
 def delete_gke_cluster(
     cluster_name: str,
     project_id: str,

@@ -1,4 +1,5 @@
 import json
+from typing import List
 
 from fastapi import HTTPException
 from google.auth import exceptions as google_auth_exceptions
@@ -6,7 +7,6 @@ from googleapiclient import errors as google_api_client_errors
 from googleapiclient.discovery import build
 
 from astrobase.schemas.gke import (
-    GKEClustersResponse,
     GKECreate,
     GKECreateAPI,
     GKECreateAPIFilter,
@@ -41,7 +41,7 @@ class GKEApi:
             err = GKEErrorResponse(**json.loads(content))
             raise HTTPException(status_code=err.error.code, detail=err.error.message)
 
-    def get(self, project_id: str, location: str) -> GKEClustersResponse:
+    def get(self, project_id: str, location: str) -> List[dict]:
         parent = f"projects/{project_id}/locations/{location}"
         req = self.cluster_client.list(parent=parent)
         try:

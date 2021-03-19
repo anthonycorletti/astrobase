@@ -91,7 +91,3 @@ class EKSCreateAPIFilter(BaseModel):
     resourcesVpcConfig: ResourcesVpcConfig
     tags: Optional[Dict[str, str]] = {}
     logging: Optional[ClusterLogging] = {}
-
-
-class EKS(EKSBase):
-    pass

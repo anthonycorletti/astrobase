@@ -2,6 +2,7 @@ import time
 from typing import List
 
 import boto3
+from fastapi import HTTPException
 
 from astrobase.schemas.eks import EKSCreate, EKSCreateAPIFilter
 from config.logger import logger
@@ -41,9 +42,10 @@ class EKSApi:
             )
             while cluster_status != "ACTIVE":
                 if count > self.RETRY_COUNT:
-                    raise Exception(
-                        "Something doesn't seem right "
-                        f"with cluster {cluster_data.name}"
+                    raise HTTPException(
+                        status_code=400,
+                        detail="Something doesn't seem right "
+                        f"with cluster {cluster_data.name}",
                     )
                 logger.info("waiting before trying to create node group again")
                 time.sleep(60)
@@ -62,19 +64,25 @@ class EKSApi:
         return
 
     def get(self) -> List[str]:
-        return self.client.list_clusters().get("clusters", [])
+        try:
+            return self.client.list_clusters().get("clusters", [])
+        except Exception as e:
+            logger.error(e)
+            raise HTTPException(status_code=400, detail=str(e))
 
     def describe(self, cluster_name: str) -> dict:
         try:
             return self.client.describe_cluster(name=cluster_name)
         except Exception as e:
             logger.error(e)
+            raise HTTPException(status_code=400, detail=str(e))
 
     def list_cluster_nodegroups(self, cluster_name: str) -> List[dict]:
         try:
             return self.client.list_nodegroups(clusterName=cluster_name)
         except Exception as e:
             logger.error(e)
+            raise HTTPException(status_code=400, detail=str(e))
 
     def describe_cluster_nodegroup(
         self, cluster_name: str, nodegroup_name: str
@@ -85,6 +93,7 @@ class EKSApi:
             )
         except Exception as e:
             logger.error(e)
+            raise HTTPException(status_code=400, detail=str(e))
 
     def delete(self, cluster_name: str, nodegroup_names: List[str]) -> dict:
         for nodegroup_name in nodegroup_names:
@@ -97,7 +106,10 @@ class EKSApi:
         count = 0
         while True:
             if count > self.RETRY_COUNT:
-                raise Exception("Timed out waiting for node groups to delete.")
+                raise HTTPException(
+                    status_code=400,
+                    detail="Timed out waiting for node groups to delete.",
+                )
             try:
                 self.client.delete_cluster(name=cluster_name)
                 return {
