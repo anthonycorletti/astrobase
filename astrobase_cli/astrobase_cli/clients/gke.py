@@ -1,4 +1,3 @@
-import os
 import sys
 from contextlib import contextmanager
 
@@ -17,6 +16,18 @@ class GKEClient:
     def __init__(self):
         server = astrobase_config.current_profile.server
         self.url = f"{server}/gke"
+
+    def get_kubeconfig_credentials(
+        self, cluster_name: str, cluster_location: str
+    ) -> None:
+        gcloud(
+            "container",
+            "clusters",
+            "get-credentials",
+            cluster_name,
+            "--region",
+            cluster_location,
+        )
 
     @contextmanager
     def kube_api_client(self) -> None:
@@ -38,29 +49,28 @@ class GKEClient:
 
     def apply_kubernetes_resources(
         self,
-        kubernetes_resource_dir: str,
+        kubernetes_resource_location: str,
         cluster_name: str,
         cluster_location: str,
-    ) -> dict:
-        gcloud(
-            "container",
-            "clusters",
-            "get-credentials",
-            cluster_name,
-            "--region",
-            cluster_location,
-        )
+    ) -> None:
+        self.get_kubeconfig_credentials(cluster_name, cluster_location)
+        typer.echo(f"applying resources to {cluster_name}@{cluster_location}")
         with self.kube_api_client() as kube_api_client:
             if not kube_api_client:
                 typer.echo("no kubernetes api client provisioned")
-                return {}
-            resource_yaml_files = [
-                f for f in os.listdir(kubernetes_resource_dir) if f.endswith(".yaml")
-            ]
-            for yaml_file in resource_yaml_files:
-                kubectl(
-                    "apply",
-                    "-f",
-                    f"{kubernetes_resource_dir}/{yaml_file}",
-                    _out=sys.stdout,
-                )
+                raise typer.Exit(1)
+            kubectl("apply", "-f", f"{kubernetes_resource_location}", _out=sys.stdout)
+
+    def destroy_kubernetes_resources(
+        self,
+        kubernetes_resource_location: str,
+        cluster_name: str,
+        cluster_location: str,
+    ) -> None:
+        self.get_kubeconfig_credentials(cluster_name, cluster_location)
+        typer.echo(f"destroying resources in {cluster_name}@{cluster_location}")
+        with self.kube_api_client() as kube_api_client:
+            if not kube_api_client:
+                typer.echo("no kubernetes api client provisioned")
+                raise typer.Exit(1)
+            kubectl("delete", "-f", f"{kubernetes_resource_location}", _out=sys.stdout)

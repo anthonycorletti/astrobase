@@ -45,7 +45,7 @@ def current():
                 {
                     os.getenv(
                         astrobase_config.ASTROBASE_PROFILE
-                    ): astrobase_config.current_profile
+                    ): astrobase_config.current_profile.dict()
                 }
             )
         )

@@ -4,6 +4,9 @@ import yaml
 
 from astrobase_cli import __version__ as version
 from astrobase_cli import apply, destroy, profile
+from schemas.cluster import Clusters
+from schemas.resource import ResourceList
+from schemas.workflow import Workflows
 from utils.config import AstrobaseConfig, AstrobaseDockerConfig
 
 astrobase_apply = apply.Apply()
@@ -69,13 +72,13 @@ def apply(astrobase_yaml_path: str = typer.Option(..., "-f")):
     with open(astrobase_yaml_path, "r") as f:
         data = yaml.safe_load(f)
 
-        clusters = data.get("clusters") or []
-        resources = data.get("resources") or []
-        workflows = data.get("workflows") or []  # TODO!
+        clusters = Clusters(**data)
+        resources = ResourceList(**data)
+        workflows = Workflows(**data)  # TODO!
 
-        astrobase_apply.apply_clusters(clusters)
-        astrobase_apply.apply_resources(resources)
-        astrobase_apply.apply_workflows(workflows)
+        astrobase_apply.apply_clusters(clusters.clusters)
+        astrobase_apply.apply_resources(resources.resources)
+        astrobase_apply.apply_workflows(workflows.workflows)
 
 
 @app.command()
@@ -86,13 +89,13 @@ def destroy(astrobase_yaml_path: str = typer.Option(..., "-f")):
     with open(astrobase_yaml_path, "r") as f:
         data = yaml.safe_load(f)
 
-        clusters = data.get("clusters") or []
-        resources = data.get("resources") or []
-        workflows = data.get("workflows") or []  # TODO!
+        clusters = Clusters(**data)
+        resources = ResourceList(**data)
+        workflows = Workflows(**data)  # TODO!
 
-        astrobase_destroy.destroy_clusters(clusters)
-        astrobase_destroy.destroy_resources(resources)
-        astrobase_destroy.destroy_workflows(workflows)
+        astrobase_destroy.destroy_clusters(clusters.clusters)
+        astrobase_destroy.destroy_resources(resources.resources)
+        astrobase_destroy.destroy_workflows(workflows.workflows)
 
 
 if __name__ == "__main__":

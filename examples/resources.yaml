@@ -1,12 +1,25 @@
-apiVersion: v0.1.0
+apiVersion: 0.1.0
 resources:
-    - name: simple-nginx
-      resource_dir: ../examples/kubernetes
+    - name: kubernetes-dashboard
       provider: eks
       cluster_name: astrobase-test-eks
       cluster_location: us-east-1
+      resource_location: https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
+
     - name: simple-nginx
-      resource_dir: ../examples/kubernetes
+      provider: eks
+      cluster_name: astrobase-test-eks
+      cluster_location: us-east-1
+      resource_location: ../examples/kubernetes
+
+    - name: kubernetes-dashboard
       provider: gke
       cluster_name: astrobase-test-gke
       cluster_location: us-central1
+      resource_location: https://raw.githubusercontent.com/kubernetes/dashboard/v2.2.0/aio/deploy/recommended.yaml
+
+    - name: simple-nginx
+      provider: gke
+      cluster_name: astrobase-test-gke
+      cluster_location: us-central1
+      resource_location: ../examples/kubernetes
