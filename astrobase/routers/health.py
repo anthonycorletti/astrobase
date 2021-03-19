@@ -11,6 +11,6 @@ tags = ["health"]
 @router.get("/healthcheck", tags=tags)
 def healthcheck():
     return {
-        "message": "healthy",
-        "version": os.getenv("SHORT_SHA", version),
+        "message": "We're on the air.",
+        "apiVersion": os.getenv("SHORT_SHA", version),
     }

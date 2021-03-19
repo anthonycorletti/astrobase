@@ -19,11 +19,6 @@ def get_workflow():
     pass
 
 
-@router.put("/workflow/{workflow_name}", tags=tags)
-def update_workflow():
-    pass
-
-
 @router.delete("/workflow/{workflow_name}", tags=tags)
 def delete_workflow():
     pass

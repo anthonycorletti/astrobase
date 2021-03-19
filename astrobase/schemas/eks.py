@@ -1,5 +1,5 @@
 from enum import Enum, unique
-from typing import Dict, List, Optional, Union
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field, validator
 

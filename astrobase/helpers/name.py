@@ -5,7 +5,7 @@ VOWELS = "aeiou"
 CONSONANTS = "".join(set(string.ascii_lowercase) - set(VOWELS))
 
 
-def random_word(k: int = 7):
+def random_word(k: int = 7) -> str:
     word = ""
     for i in range(k):
         if i % 2 == 0:
@@ -16,7 +16,6 @@ def random_word(k: int = 7):
 
 
 def random_name(k: int = 7) -> str:
-    alphabet = string.ascii_lowercase + string.digits
-    prefix = random_word(k)
-    suffix = "".join(random.choices(alphabet, k=k))
-    return f"{prefix}-{suffix}"
+    characters = string.ascii_lowercase + string.digits
+    suffix = "".join(random.choices(characters, k=k))
+    return f"{random_word(k)}-{suffix}"

@@ -8,6 +8,8 @@ from config.logger import logger
 
 
 class EKSApi:
+    RETRY_COUNT = 23
+
     def __init__(self, region: str):
         self.region = region
         try:
@@ -38,7 +40,7 @@ class EKSApi:
                 .get("status")
             )
             while cluster_status != "ACTIVE":
-                if count > 17:
+                if count > self.RETRY_COUNT:
                     raise Exception(
                         "Something doesn't seem right "
                         f"with cluster {cluster_data.name}"
@@ -94,7 +96,7 @@ class EKSApi:
                 logger.error(e.response)
         count = 0
         while True:
-            if count > 17:
+            if count > self.RETRY_COUNT:
                 raise Exception("Timed out waiting for node groups to delete.")
             try:
                 self.client.delete_cluster(name=cluster_name)

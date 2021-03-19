@@ -6,6 +6,7 @@ from astrobase.apis.eks import EKSApi
 from astrobase.schemas.eks import EKSCreate
 from tests.factories import ClusterFactory
 
+cluster_examples = ClusterFactory()
 router = APIRouter()
 tags = ["cluster"]
 
@@ -13,7 +14,7 @@ tags = ["cluster"]
 @router.post("/eks", tags=tags)
 def create_eks_cluster(
     background_tasks: BackgroundTasks,
-    cluster_create: EKSCreate = Body(..., example=ClusterFactory.eks_create_example),
+    cluster_create: EKSCreate = Body(..., example=cluster_examples.eks_example()),
 ):
     eks_api = EKSApi(region=cluster_create.region)
     background_tasks.add_task(eks_api.create, cluster_create)

@@ -31,6 +31,21 @@ class GKEUpgradeSettings(BaseModel):
     maxSurge: int = 1
 
 
+@unique
+class AcceleratorType(str, Enum):
+    nvidia_tesla_a100 = "nvidia-tesla-a100"
+    nvidia_tesla_k80 = "nvidia-tesla-k80"
+    nvidia_tesla_p100 = "nvidia-tesla-p100"
+    nvidia_tesla_p4 = "nvidia-tesla-p4"
+    nvidia_tesla_t4 = "nvidia-tesla-t4"
+    nvidia_tesla_v100 = "nvidia-tesla-v100"
+
+
+class Accelerator(BaseModel):
+    acceleratorCount: int = 1
+    acceleratorType: AcceleratorType = AcceleratorType.nvidia_tesla_a100
+
+
 class GKEShieldedInstanceConfig(BaseModel):
     enableIntegrityMonitoring: bool = True
 
@@ -40,6 +55,7 @@ class GKENodePoolConfig(BaseModel):
     diskSizeGb: int = 100
     imageType: str = "COS"
     diskType: str = "pd-ssd"
+    accelerators: List[Accelerator] = []
     shieldedInstanceConfig: GKEShieldedInstanceConfig = GKEShieldedInstanceConfig()
     oauthScopes: List[str] = [
         "https://www.googleapis.com/auth/devstorage.read_only",
@@ -85,10 +101,6 @@ class GKECreate(GKEBase):
     pass
 
 
-class GKE(GKEBase):
-    pass
-
-
 class GKECreateAPIFilter(BaseModel):
     name: str
     location: str
@@ -98,3 +110,27 @@ class GKECreateAPIFilter(BaseModel):
 
 class GKECreateAPI(BaseModel):
     cluster: GKECreateAPIFilter
+
+
+class GKEClusterResponse(BaseModel):
+    name: str
+    location: str
+    locations: List[str]
+    currentNodeCount: int
+    network: str
+    nodeConfig: dict
+    nodePools: List[dict]
+
+
+class GKEClustersResponse(BaseModel):
+    clusters: List[GKEClusterResponse] = []
+
+
+class GKEError(BaseModel):
+    code: int
+    message: str
+    status: str
+
+
+class GKEErrorResponse(BaseModel):
+    error: GKEError
