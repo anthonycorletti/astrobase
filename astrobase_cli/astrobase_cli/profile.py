@@ -3,10 +3,10 @@ from typing import Optional
 
 import typer
 
-from utils.config import ASTROBASE_HOST_PORT, AstrobaseConfig
+from utils.config import ASTROBASE_HOST_PORT, AstrobaseConfig, AstrobaseProfile
 from utils.formatter import json_out
 
-app = typer.Typer(help="""Manage Astrobase profiles across environments.""")
+app = typer.Typer(help="""Manage Astrobase profiles.""")
 astrobase_config = AstrobaseConfig()
 
 
@@ -14,16 +14,17 @@ astrobase_config = AstrobaseConfig()
 def create(
     name: str,
     server: str = typer.Option(default=f"http://localhost:{ASTROBASE_HOST_PORT}"),
-    google_application_credentials: str = typer.Option(None),
-    aws_credentials: str = typer.Option(None),
+    gcp_creds: str = typer.Option(None),
+    aws_creds: str = typer.Option(None),
     aws_profile_name: str = typer.Option(None),
 ):
-    astrobase_config.config_dict[name] = {
-        "server": server,
-        "google_application_credentials": google_application_credentials,
-        "aws_credentials": aws_credentials,
-        "aws_profile_name": aws_profile_name,
-    }
+    new_profile = AstrobaseProfile(
+        server=server,
+        gcp_creds=gcp_creds,
+        aws_creds=aws_creds,
+        aws_profile_name=aws_profile_name,
+    )
+    astrobase_config.config_dict[name] = new_profile.dict()
     astrobase_config.write_config(astrobase_config.config_dict)
     typer.echo(f"Created profile {name}.")
 
@@ -40,15 +41,9 @@ def _list(name: Optional[str] = None):
 @app.command()
 def current():
     if astrobase_config.current_profile:
-        typer.echo(
-            json_out(
-                {
-                    os.getenv(
-                        astrobase_config.ASTROBASE_PROFILE
-                    ): astrobase_config.current_profile.dict()
-                }
-            )
-        )
+        profile_name = os.getenv(astrobase_config.ASTROBASE_PROFILE)
+        profile_data = astrobase_config.current_profile.dict()
+        typer.echo(json_out({profile_name: profile_data}))
     else:
         typer.echo(
             "no profile is set! set a profile with: export "

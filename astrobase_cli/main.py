@@ -74,7 +74,7 @@ def apply(astrobase_yaml_path: str = typer.Option(..., "-f")):
 
         clusters = Clusters(**data)
         resources = ResourceList(**data)
-        workflows = Workflows(**data)  # TODO!
+        workflows = Workflows(**data)
 
         astrobase_apply.apply_clusters(clusters.clusters)
         astrobase_apply.apply_resources(resources.resources)
@@ -91,7 +91,7 @@ def destroy(astrobase_yaml_path: str = typer.Option(..., "-f")):
 
         clusters = Clusters(**data)
         resources = ResourceList(**data)
-        workflows = Workflows(**data)  # TODO!
+        workflows = Workflows(**data)
 
         astrobase_destroy.destroy_clusters(clusters.clusters)
         astrobase_destroy.destroy_resources(resources.resources)

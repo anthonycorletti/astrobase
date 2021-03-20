@@ -16,9 +16,14 @@ class AstrobaseProfile(BaseModel):
 
 class AstrobaseConfig:
     ASTROBASE_PROFILE = "ASTROBASE_PROFILE"
+    ASTROBASE_HOME_DIR = ".astrobase"
+    ASTROBASE_CONFIG_FILENAME = "config.json"
+    ASTROBASE_CONFIG_FULLPATH = (
+        f"{os.getenv('HOME')}/{ASTROBASE_HOME_DIR}/{ASTROBASE_CONFIG_FILENAME}"
+    )
 
     def __init__(self):
-        self.config = "/".join([os.getenv("HOME"), ".astrobase", "config.json"])
+        self.config = self.ASTROBASE_CONFIG_FULLPATH
 
         try:
             self._setup_config_dir()

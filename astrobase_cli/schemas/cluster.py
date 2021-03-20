@@ -5,10 +5,10 @@ from pydantic import BaseModel
 
 class Clusters(BaseModel):
     """
-    The majority of cluster schema validation happens on
-    the astrobase api as it orchestrates a few asynchronous
-    api calls to cloud providers. Here, we only confirm that
-    we have a leading `clusters` key.
+    Cluster schema validation happens on the astrobase api because
+    the api has to orchestrate a asynchronous api calls to cloud providers.
+
+    Here, we only confirm that we atleast have a leading `clusters` key.
     """
 
     clusters: List[dict] = []
