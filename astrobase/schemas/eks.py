@@ -51,9 +51,9 @@ class ResourcesVpcConfig(BaseModel):
 class ClusterLoggingType(str, Enum):
     api = "api"
     audit = "audit"
+    scheduler = "scheduler"
     authenticator = "authenticator"
     controllerManager = "controllerManager"
-    scheduler = "scheduler"
 
 
 class ClusterLoggingConfig(BaseModel):

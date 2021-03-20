@@ -4,9 +4,11 @@ from typing import Optional
 
 from pydantic import BaseModel
 
+ASTROBASE_HOST_PORT = os.getenv("ASTROBASE_HOST_PORT", "8787")
+
 
 class AstrobaseProfile(BaseModel):
-    server: str = "http://localhost:8787"
+    server: str = f"http://localhost:{ASTROBASE_HOST_PORT}"
     gcp_creds: Optional[str]
     aws_creds: Optional[str]
     aws_profile_name: Optional[str]
@@ -67,7 +69,7 @@ class AstrobaseDockerConfig:
         volumes: dict = {},
         auto_remove: bool = True,
         detach: bool = True,
-        host_port: int = 8787,
+        host_port: str = ASTROBASE_HOST_PORT,
     ):
         self.image = (
             f"{self.DOCKER_GROUP}/{self.DOCKER_CONTAINER_NAME}:{container_version}"

@@ -3,7 +3,7 @@ from typing import Optional
 
 import typer
 
-from utils.config import AstrobaseConfig
+from utils.config import ASTROBASE_HOST_PORT, AstrobaseConfig
 from utils.formatter import json_out
 
 app = typer.Typer(help="""Manage Astrobase profiles across environments.""")
@@ -13,7 +13,7 @@ astrobase_config = AstrobaseConfig()
 @app.command()
 def create(
     name: str,
-    server: str = typer.Option(default="http://localhost:8787"),
+    server: str = typer.Option(default=f"http://localhost:{ASTROBASE_HOST_PORT}"),
     google_application_credentials: str = typer.Option(None),
     aws_credentials: str = typer.Option(None),
     aws_profile_name: str = typer.Option(None),
