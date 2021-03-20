@@ -1,5 +1,12 @@
 import logging
+import os
 import time
+
+from pydantic import BaseModel
+
+
+class AstrobaseDebug(BaseModel):
+    set_debug: bool = os.environ.get("ASTROBASE_DEBUG") or False
 
 
 def create_logger(level: int = logging.INFO) -> logging.Logger:
@@ -17,4 +24,8 @@ def create_logger(level: int = logging.INFO) -> logging.Logger:
     return logger
 
 
-logger = create_logger()
+astrobase_debug = AstrobaseDebug()
+if astrobase_debug.set_debug:
+    logger = create_logger(level=logging.DEBUG)
+else:
+    logger = create_logger()
