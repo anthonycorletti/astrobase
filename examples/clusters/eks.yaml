@@ -3,17 +3,17 @@ clusters:
     - name: astrobase-test-eks
       provider: eks
       region: us-east-1
-      roleArn: arn:aws:iam::541181908229:role/AstrobaseEKSRole
+      roleArn: $CLUSTER_ROLE_ARN
       resourcesVpcConfig:
           subnetIds:
-              - subnet-a023bbff
-              - subnet-987d53d5
+              - $SUBNET_ID_0
+              - $SUBNET_ID_1
           securityGroupIds:
-              - sg-67306a6a
+              - $SECURITY_GROUP
       nodegroups:
           - nodegroupName: test-nodegroup-cpu
             scalingConfig:
                 minSize: 1
                 maxSize: 3
                 desiredSize: 1
-            nodeRole: arn:aws:iam::541181908229:role/AstrobaseEKSNodegroupRole
+            nodeRole: $NODE_ROLE_ARN

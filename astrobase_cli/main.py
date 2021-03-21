@@ -8,6 +8,7 @@ from schemas.cluster import Clusters
 from schemas.resource import ResourceList
 from schemas.workflow import Workflows
 from utils.config import AstrobaseConfig, AstrobaseDockerConfig
+from utils.params import YamlParams
 
 astrobase_apply = apply.Apply()
 astrobase_destroy = destroy.Destroy()
@@ -65,34 +66,52 @@ def init(astrobase_container_version: str = "latest"):
 
 
 @app.command()
-def apply(astrobase_yaml_path: str = typer.Option(..., "-f")):
+def apply(
+    astrobase_yaml_path: str = typer.Option(..., "-f"),
+    yaml_params: str = typer.Option(
+        None,
+        "-v",
+        help="Parameters to pass into your yaml. "
+        "Format: key=value<space>key2=value2<space>key3=value3<space>...",
+    ),
+):
     """
     Apply clusters, resources, and workflows.
     """
+    params = YamlParams(params=yaml_params)
+
     with open(astrobase_yaml_path, "r") as f:
         data = yaml.safe_load(f)
-
+        data = params.update_data_with_values(str(data))
         clusters = Clusters(**data)
         resources = ResourceList(**data)
         workflows = Workflows(**data)
-
         astrobase_apply.apply_clusters(clusters.clusters)
         astrobase_apply.apply_resources(resources.resources)
         astrobase_apply.apply_workflows(workflows.workflows)
 
 
 @app.command()
-def destroy(astrobase_yaml_path: str = typer.Option(..., "-f")):
+def destroy(
+    astrobase_yaml_path: str = typer.Option(..., "-f"),
+    yaml_params: str = typer.Option(
+        None,
+        "-v",
+        help="Parameters to pass into your yaml."
+        "Format: key=value<space>key2=value2<space>key3=value3<space>...",
+    ),
+):
     """
     Destroy clusters, resources, and workflows.
     """
+    params = YamlParams(params=yaml_params)
+
     with open(astrobase_yaml_path, "r") as f:
         data = yaml.safe_load(f)
-
+        data = params.update_data_with_values(str(data))
         clusters = Clusters(**data)
         resources = ResourceList(**data)
         workflows = Workflows(**data)
-
         astrobase_destroy.destroy_clusters(clusters.clusters)
         astrobase_destroy.destroy_resources(resources.resources)
         astrobase_destroy.destroy_workflows(workflows.workflows)

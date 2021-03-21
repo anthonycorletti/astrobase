@@ -3,9 +3,9 @@ clusters:
     - name: astrobase-test-gke
       provider: gke
       location: us-central1
-      project_id: astrobase-284118
+      project_id: $PROJECT_ID
       nodePools:
-          - name: astrobase-test-pool
+          - name: cpu-test-nodepool
             initialNodeCount: 1
             autoscaling:
                 enabled: true
