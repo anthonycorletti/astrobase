@@ -11,7 +11,7 @@ class Destroy:
 
     def destroy_clusters(self, clusters: Clusters) -> None:
         for cluster in clusters:
-            client = self.clients.get(cluster.provider)
+            client = self.clients.get(cluster.get("provider"))
             client.destroy(cluster)
 
     def destroy_resources(self, resources: ResourceList) -> None:

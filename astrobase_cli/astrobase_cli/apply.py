@@ -11,7 +11,7 @@ class Apply:
 
     def apply_clusters(self, clusters: Clusters) -> None:
         for cluster in clusters:
-            client = self.clients.get(cluster.provider)
+            client = self.clients.get(cluster.get("provider"))
             client.create(cluster)
 
     def apply_resources(self, resources: ResourceList) -> None:
