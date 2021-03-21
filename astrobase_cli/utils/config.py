@@ -84,6 +84,8 @@ class AstrobaseDockerConfig:
         self.detach = detach
         self.name = f"astrobase-{astrobase_config.profile_name}"
         self.astrobase_config = astrobase_config
+        self.volumes = volumes
+        self.environment = environment
 
         self._configure_aws()
         self._configure_gcp()
