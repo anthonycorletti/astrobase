@@ -105,7 +105,7 @@ class AstrobaseDockerConfig:
         host_aws_creds = self.astrobase_config.current_profile.aws_creds
         if host_aws_creds:
             self.volumes[host_aws_creds] = {
-                "bind": self.GOOGLE_CREDS_CONTAINER,
+                "bind": self.AWS_CREDS_CONTAINER,
                 "mode": "ro",
             }
         aws_profile_name = self.astrobase_config.current_profile.aws_profile_name
