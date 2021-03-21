@@ -41,7 +41,7 @@ class EKSClient:
                 "subnetIds", []
             )
         res = requests.post(self.url, json=cluster)
-       typer.echo(json_out(res.json()))
+        typer.echo(json_out(res.json()))
 
     def destroy(self, cluster: dict) -> None:
         cluster_url = f"{self.url}/{cluster.get('name')}"
@@ -49,7 +49,7 @@ class EKSClient:
         res = requests.delete(
             f"{cluster_url}?region={cluster.get('region')}", json=nodegroup_names
         )
-       typer.echo(json_out(res.json()))
+        typer.echo(json_out(res.json()))
 
     def apply_kubernetes_resources(
         self,
