@@ -62,7 +62,9 @@ def init(astrobase_container_version: str = "latest"):
         detach=astrobase_docker_config.detach,
         name=astrobase_docker_config.name,
     )
-    typer.echo("Astrobase initialized")
+    typer.echo(
+        "Astrobase initialized and running at ", astrobase_config.current_profile.server
+    )
 
 
 @app.command()
