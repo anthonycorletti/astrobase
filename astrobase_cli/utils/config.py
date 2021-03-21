@@ -83,6 +83,7 @@ class AstrobaseDockerConfig:
         self.auto_remove = auto_remove
         self.detach = detach
         self.name = f"astrobase-{astrobase_config.profile_name}"
+        self.astrobase_config = astrobase_config
 
         self._configure_aws()
         self._configure_gcp()
