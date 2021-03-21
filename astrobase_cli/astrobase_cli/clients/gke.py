@@ -7,6 +7,7 @@ from kubernetes import client, config
 from sh import gcloud, kubectl
 
 from utils.config import AstrobaseConfig
+from utils.formatter import json_out
 from utils.http import query_str
 
 astrobase_config = AstrobaseConfig()
@@ -36,7 +37,7 @@ class GKEClient:
 
     def create(self, cluster: dict) -> None:
         res = requests.post(self.url, json=cluster)
-        typer.echo(res.json())
+        typer.echo(json_out(res.json()))
 
     def destroy(self, cluster: dict) -> None:
         params = {
@@ -45,7 +46,7 @@ class GKEClient:
         }
         cluster_url = f"{self.url}/{cluster.get('name')}?{query_str(params)}"
         res = requests.delete(cluster_url)
-        typer.echo(res.json())
+        typer.echo(json_out(res.json()))
 
     def apply_kubernetes_resources(
         self,
