@@ -4,6 +4,9 @@ clusters:
       provider: gke
       location: us-central1
       project_id: $PROJECT_ID
+      resourceLabels:
+          resource_label_key: resource_label_value
+          resource_env: dev
       nodePools:
           - name: cpu-test-nodepool
             initialNodeCount: 1
@@ -11,3 +14,7 @@ clusters:
                 enabled: true
                 minNodeCount: 1
                 maxNodeCount: 3
+            metadata:
+                gce_key: gce_value
+            labels:
+                kube_node_key: kube_node_value

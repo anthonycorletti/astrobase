@@ -1,5 +1,5 @@
 from enum import Enum, unique
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field, validator
 
@@ -57,6 +57,8 @@ class GKENodePoolConfig(BaseModel):
     diskType: str = "pd-ssd"
     accelerators: List[Accelerator] = []
     shieldedInstanceConfig: GKEShieldedInstanceConfig = GKEShieldedInstanceConfig()
+    metadata: Optional[Dict[str, str]] = {}
+    labels: Optional[Dict[str, str]] = {}
     oauthScopes: List[str] = [
         "https://www.googleapis.com/auth/devstorage.read_only",
         "https://www.googleapis.com/auth/logging.write",
@@ -83,6 +85,7 @@ class GKEBase(BaseModel):
     parent: Optional[str]
     nodePools: List[GKENodePool]
     releaseChannel: GKEReleaseChannel = GKEReleaseChannel()
+    resourceLabels: Optional[Dict[str, str]] = {}
 
     @validator("name")
     def name_is_set(cls, name: str) -> str:

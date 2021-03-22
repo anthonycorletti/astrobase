@@ -10,6 +10,9 @@ clusters:
               - $SUBNET_ID_1
           securityGroupIds:
               - $SECURITY_GROUP
+      tags:
+          cluster_key: cluster_value
+          cluster_key_2: cluster_value_2
       nodegroups:
           - nodegroupName: test-nodegroup-cpu
             scalingConfig:
@@ -17,3 +20,6 @@ clusters:
                 maxSize: 3
                 desiredSize: 1
             nodeRole: $NODE_ROLE_ARN
+            tags:
+                cluster_key: cluster_value
+                cluster_key_2: cluster_value_2
