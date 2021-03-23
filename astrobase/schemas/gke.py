@@ -109,6 +109,7 @@ class GKECreateAPIFilter(BaseModel):
     location: str
     nodePools: List[GKENodePool]
     releaseChannel: GKEReleaseChannel
+    resourceLabels: Dict
 
 
 class GKECreateAPI(BaseModel):
