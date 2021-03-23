@@ -14,7 +14,8 @@ clusters:
                 enabled: true
                 minNodeCount: 1
                 maxNodeCount: 3
-            metadata:
-                gce_key: gce_value
-            labels:
-                kube_node_key: kube_node_value
+            config:
+                metadata:
+                    gce_key: gce_value
+                labels:
+                    kube_node_key: kube_node_value
