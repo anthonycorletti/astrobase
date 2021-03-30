@@ -23,7 +23,7 @@ Replace each part with your own scenario:
 # code goes here
 ```
 
-* Call it with:
+* Run the code with:
 
 ```bash
 # command goes here

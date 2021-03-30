@@ -6,7 +6,6 @@ from astrobase_cli import __version__ as version
 from astrobase_cli import apply, destroy, profile
 from schemas.cluster import Clusters
 from schemas.resource import ResourceList
-from schemas.workflow import Workflows
 from utils.config import AstrobaseConfig, AstrobaseDockerConfig
 from utils.params import YamlParams
 
@@ -79,7 +78,7 @@ def apply(
     ),
 ):
     """
-    Apply clusters, resources, and workflows.
+    Apply clusters and resources.
     """
     params = YamlParams(params=yaml_params)
 
@@ -88,10 +87,8 @@ def apply(
         data = params.update_data_with_values(str(data))
         clusters = Clusters(**data)
         resources = ResourceList(**data)
-        workflows = Workflows(**data)
         astrobase_apply.apply_clusters(clusters.clusters)
         astrobase_apply.apply_resources(resources.resources)
-        astrobase_apply.apply_workflows(workflows.workflows)
 
 
 @app.command()
@@ -105,7 +102,7 @@ def destroy(
     ),
 ):
     """
-    Destroy clusters, resources, and workflows.
+    Destroy clusters and resources.
     """
     params = YamlParams(params=yaml_params)
 
@@ -114,10 +111,8 @@ def destroy(
         data = params.update_data_with_values(str(data))
         clusters = Clusters(**data)
         resources = ResourceList(**data)
-        workflows = Workflows(**data)
         astrobase_destroy.destroy_clusters(clusters.clusters)
         astrobase_destroy.destroy_resources(resources.resources)
-        astrobase_destroy.destroy_workflows(workflows.workflows)
 
 
 if __name__ == "__main__":

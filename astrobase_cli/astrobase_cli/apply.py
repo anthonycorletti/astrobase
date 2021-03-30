@@ -2,7 +2,6 @@ from astrobase_cli.clients.eks import EKSClient
 from astrobase_cli.clients.gke import GKEClient
 from schemas.cluster import Clusters
 from schemas.resource import ResourceList
-from schemas.workflow import Workflows
 
 
 class Apply:
@@ -25,6 +24,3 @@ class Apply:
                 cluster_name=cluster_name,
                 cluster_location=cluster_location,
             )
-
-    def apply_workflows(self, workflows: Workflows) -> None:
-        pass
