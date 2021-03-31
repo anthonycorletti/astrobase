@@ -2,11 +2,8 @@
 name = "astrobase"
 version = "0.1.0"
 description = "Astrobase API Server"
-authors = ["Anthony Corletti <anthcor@gmail.com>"]
+authors = ["Anthony Corletti <anthony@astrobase.co>"]
 readme = "README.md"
-
-[tool.poetry.scripts]
-astro = "main:app"
 
 [tool.poetry.dependencies]
 python = "^3.9"

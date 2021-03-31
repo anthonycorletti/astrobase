@@ -163,4 +163,3 @@ shippable
 
 tmp/
 .pytest_cache/
-astrobase_cli/
