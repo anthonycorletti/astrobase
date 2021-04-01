@@ -102,7 +102,13 @@ class EKSApi:
                     clusterName=cluster_name, nodegroupName=nodegroup_name
                 )
             except Exception as e:
-                logger.error(e.response)
+                response_attr = "response"
+                if hasattr(e, response_attr):
+                    logger.error(getattr(e, response_attr))
+                else:
+                    logger.error(
+                        f"Logging exception that does not have response attr: {e}"
+                    )
         count = 0
         while True:
             if count > self.RETRY_COUNT:
@@ -117,7 +123,13 @@ class EKSApi:
                     "nodegroup_names": nodegroup_names,
                 }
             except Exception as e:
-                logger.error(e.response)
+                response_attr = "response"
+                if hasattr(e, response_attr):
+                    logger.error(getattr(e, response_attr))
+                else:
+                    logger.error(
+                        f"Logging exception that does not have response attr: {e}"
+                    )
             count += 1
             logger.info("waiting before trying to delete cluster again")
             time.sleep(60)
