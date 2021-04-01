@@ -24,7 +24,7 @@ class EKSApi:
                 "specificed those credentials in ~/.aws/credentials.",
             )
 
-    def create(self, cluster_create: EKSCreate) -> dict:
+    def create(self, cluster_create: EKSCreate) -> None:
         cluster_data = EKSCreateAPIFilter(**cluster_create.dict())
         try:
             cluster = self.client.create_cluster(**cluster_data.dict())

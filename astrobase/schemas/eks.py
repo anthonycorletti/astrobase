@@ -90,4 +90,4 @@ class EKSCreateAPIFilter(BaseModel):
     roleArn: str
     resourcesVpcConfig: ResourcesVpcConfig
     tags: Optional[Dict[str, str]] = {}
-    logging: Optional[ClusterLogging] = {}
+    logging: Optional[ClusterLogging] = ClusterLogging()

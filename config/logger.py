@@ -2,16 +2,12 @@ import logging
 import os
 import time
 
-from pydantic import BaseModel
-
-
-class AstrobaseDebug(BaseModel):
-    set_debug: bool = os.environ.get("ASTROBASE_DEBUG") or False
+ASTROBASE_DEBUG = os.environ.get("ASTROBASE_DEBUG") == "true"
 
 
 def create_logger(level: int = logging.INFO) -> logging.Logger:
     tz = time.strftime("%z")
-    logging.config = logging.basicConfig(
+    logging.basicConfig(
         format=(
             f"[%(asctime)s.%(msecs)03d {tz}] "
             "[%(process)s] [%(pathname)s L%(lineno)d] "
@@ -24,8 +20,7 @@ def create_logger(level: int = logging.INFO) -> logging.Logger:
     return logger
 
 
-astrobase_debug = AstrobaseDebug()
-if astrobase_debug.set_debug:
+if ASTROBASE_DEBUG:
     logger = create_logger(level=logging.DEBUG)
 else:
     logger = create_logger()
