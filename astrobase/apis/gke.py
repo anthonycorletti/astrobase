@@ -5,13 +5,13 @@ from google.auth import exceptions as google_auth_exceptions
 from googleapiclient import errors as google_api_client_errors
 from googleapiclient.discovery import build
 
+from astrobase.config.logger import logger
 from astrobase.schemas.gke import (
     GKECreate,
     GKECreateAPI,
     GKECreateAPIFilter,
     GKEErrorResponse,
 )
-from config.logger import logger
 
 
 class GKEApi:

@@ -11,4 +11,4 @@ RUN apt-get update -y \
     && poetry config virtualenvs.create false \
     && poetry install --no-interaction --no-ansi --no-dev
 
-CMD gunicorn main:api -c config/gunicorn.py
+CMD gunicorn astrobase.main:api -c astrobase/config/gunicorn.py

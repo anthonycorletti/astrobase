@@ -4,7 +4,7 @@ from datetime import datetime
 from fastapi import APIRouter
 
 from astrobase import __version__ as version
-from config.logger import logger
+from astrobase.config.logger import logger
 
 router = APIRouter()
 tags = ["health"]
