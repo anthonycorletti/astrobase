@@ -18,7 +18,7 @@ def create_eks_cluster(
 ):
     eks_api = EKSApi(region=cluster_create.region)
     background_tasks.add_task(eks_api.create, cluster_create)
-    return f"EKS create request submitted for {cluster_create.name}"
+    return {"message": f"EKS create request submitted for {cluster_create.name}"}
 
 
 @router.get("/eks", tags=tags)
@@ -58,7 +58,7 @@ def delete_eks_cluster(
     background_tasks.add_task(
         eks_api.delete, cluster_name=cluster_name, nodegroup_names=nodegroup_names
     )
-    return (
-        f"EKS delete request submitted for {cluster_name} cluster"
+    return {
+        "message": f"EKS delete request submitted for {cluster_name} cluster"
         f" and nodegroups: {', '.join(nodegroup_names)}"
-    )
+    }
