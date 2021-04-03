@@ -1,9 +1,9 @@
 ![](https://github.com/astrobase/brand/blob/master/logos/space-logo.png?raw=true)
 
-[![License](https://img.shields.io/badge/Astrobase-License-blue.svg)](https://github.com/astrobase/astrobase/blob/master/LICENSE)
-[![GitHub Release](https://img.shields.io/github/v/release/astrobase/astrobase?sort=semver)](https://github.com/astrobase/astrobase/tree/latest)
-[![Build Status](https://github.com/astrobase/astrobase/workflows/Python/badge.svg)](https://github.com/astrobase/astrobase/actions)
-[![Coverage Status](https://codecov.io/github/astrobase/astrobase/coverage.svg?branch=master)](https://codecov.io/github/astrobase/astrobase)
+[![License](https://img.shields.io/badge/astrobase-license-blue.svg)](https://github.com/astrobase/astrobase/blob/master/LICENSE)
+[![Release](https://img.shields.io/github/v/release/astrobase/astrobase?sort=semver)](https://github.com/astrobase/astrobase/tree/latest)
+[![Build](https://github.com/astrobase/astrobase/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/astrobase/astrobase/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/astrobase/astrobase/branch/master/graph/badge.svg?token=97YCqzHZmk)](https://codecov.io/gh/astrobase/astrobase)
 
 [**Why Astrobase**](#why-astrobase) |
 [**Installation and Usage**](#installation-and-usage) |
