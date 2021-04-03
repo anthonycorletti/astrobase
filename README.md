@@ -11,8 +11,7 @@
 [**Contributing**](./CONTRIBUTING.md) |
 [**Docs**](https://docs.astrobase.co) |
 [**Credits**](#credits) |
-[**Who uses Astrobase?**](./docs/who-uses-astrobase.md) |
-[**Get in touch**](https://astrobase.co)
+[**Who uses Astrobase?**](./docs/who-uses-astrobase.md)
 
 ## Why Astrobase?
 
