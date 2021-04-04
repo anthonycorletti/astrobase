@@ -26,12 +26,7 @@ class EKSApi:
 
     def create(self, cluster_create: EKSCreate) -> None:
         cluster_data = EKSCreateAPIFilter(**cluster_create.dict())
-        try:
-            cluster = self.client.create_cluster(**cluster_data.dict())
-        except Exception as e:
-            logger.error(e)
-            logger.info(f"Looking for cluster: {cluster_data.name}")
-            cluster = self.describe(cluster_name=cluster_data.name)
+        cluster = self.client.create_cluster(**cluster_data.dict())
 
         if cluster:
             count = 0
