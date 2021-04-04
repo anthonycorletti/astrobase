@@ -26,11 +26,11 @@ class EKSNodegroupCapacityType(str, Enum):
 
 
 class EKSNodegroup(BaseModel):
-    clusterName: str
+    clusterName: Optional[str]
     nodegroupName: str
     scalingConfig: EKSNodegroupScalingConfig
     diskSize: int = 100
-    subnets: List[str]
+    subnets: Optional[List[str]]
     instanceTypes: List[str] = ["t3.medium"]
     amiType: EKSNodegroupAmiType = EKSNodegroupAmiType.al2_x86_64
     nodeRole: str
@@ -79,6 +79,15 @@ class EKSBase(BaseModel):
         if not name:
             return random_name()
         return name
+
+    @validator("nodegroups", pre=True, always=True)
+    def set_nodegroup_name_subnets(cls, v, values):
+        for nodegroup in v:
+            if not nodegroup.get("clusterName"):
+                nodegroup["clusterName"] = values["name"]
+            if not nodegroup.get("subnets"):
+                nodegroup["subnets"] = values["resourcesVpcConfig"].subnetIds
+        return v
 
 
 class EKSCreate(EKSBase):

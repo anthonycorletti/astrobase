@@ -1,0 +1,33 @@
+name: test
+
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+      fail-fast: false
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: set up python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: install poetry
+        run: pip install poetry
+      - name: configue poetry
+        run: poetry config virtualenvs.create false
+      - name: install dependencies
+        run: poetry install
+      - name: test
+        run: scripts/test.sh
+      - name: upload coverage
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos

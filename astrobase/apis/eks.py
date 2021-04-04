@@ -35,11 +35,7 @@ class EKSApi:
 
         if cluster:
             count = 0
-            cluster_status = (
-                self.describe(cluster_name=cluster_data.name)
-                .get("cluster", {})
-                .get("status")
-            )
+            cluster_status = self.cluster_status(cluster_data.name)
             while cluster_status != "ACTIVE":
                 if count > self.RETRY_COUNT:
                     raise HTTPException(
@@ -49,11 +45,7 @@ class EKSApi:
                     )
                 logger.info("waiting before trying to create node group again")
                 time.sleep(60)
-                cluster_status = (
-                    self.describe(cluster_name=cluster_data.name)
-                    .get("cluster", {})
-                    .get("status")
-                )
+                cluster_status = self.cluster_status(cluster_data.name)
                 count += 1
 
         for nodegroup in cluster_create.nodegroups:
@@ -62,6 +54,9 @@ class EKSApi:
             except Exception as e:
                 logger.error(e)
         return
+
+    def cluster_status(self, cluster_name: str) -> str:
+        return self.describe(cluster_name=cluster_name).get("cluster", {}).get("status")
 
     def get(self) -> List[str]:
         try:
