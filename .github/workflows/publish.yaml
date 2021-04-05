@@ -15,9 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      - uses: google-github-actions/setup-gcloud@master
         with:
-          version: "334.0.0"
           service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
       - run: |
           # Set up docker to authenticate
