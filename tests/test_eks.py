@@ -2,7 +2,7 @@ import os
 
 from botocore.stub import Stubber
 
-from astrobase.schemas.eks import EKSCreateAPIFilter
+from astrobase.schemas.eks import EKSCreate, EKSCreateAPIFilter
 from tests.factories import ClusterFactory
 
 cluster_examples = ClusterFactory()
@@ -23,6 +23,14 @@ def test_create_cluster(client, eks_mock):
         "message": "EKS create request submitted "
         f"for {cluster_examples.eks_example().get('name')}"
     }
+
+
+def test_create_cluster_random_cluster_name():
+    example = cluster_examples.eks_example()
+    del example["name"]
+    eks_create = EKSCreate(**example)
+    assert eks_create.name is not None
+    assert eks_create.name != cluster_examples.eks_example()["name"]
 
 
 def test_get_clusters(client, eks_mock):

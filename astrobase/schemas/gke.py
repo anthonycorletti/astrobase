@@ -82,22 +82,14 @@ class GKEBase(BaseModel):
     name: Optional[str] = Field(default_factory=random_name)
     location: str
     project_id: str
-    parent: Optional[str]
+    parent: Optional[str] = None
     nodePools: List[GKENodePool]
     releaseChannel: GKEReleaseChannel = GKEReleaseChannel()
     resourceLabels: Optional[Dict[str, str]] = {}
 
-    @validator("name")
-    def name_is_set(cls, name: str) -> str:
-        if not name:
-            return random_name()
-        return name
-
     @validator("parent", pre=True, always=True)
     def set_parent(cls, v, values) -> str:
-        if not v:
-            return f"projects/{values['project_id']}/locations/{values['location']}"
-        return v
+        return f"projects/{values['project_id']}/locations/{values['location']}"
 
 
 class GKECreate(GKEBase):

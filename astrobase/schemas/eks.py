@@ -74,12 +74,6 @@ class EKSBase(BaseModel):
     logging: ClusterLogging = ClusterLogging()
     nodegroups: List[EKSNodegroup]
 
-    @validator("name")
-    def name_is_set(cls, name: str) -> str:
-        if not name:
-            return random_name()
-        return name
-
     @validator("nodegroups", pre=True, always=True)
     def set_nodegroup_name_subnets(cls, v, values):
         for nodegroup in v:

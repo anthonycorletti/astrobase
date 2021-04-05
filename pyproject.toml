@@ -24,6 +24,7 @@ mypy = "^0.812"
 autoflake = "^1.4"
 coverage = "^5.5"
 pytest-cov = "^2.11.1"
+requests-mock = "^1.8.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
