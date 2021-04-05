@@ -17,6 +17,7 @@ def client():
 @pytest.fixture(scope="session")
 def eks_mock():
     os.environ["AWS_REGION"] = "us-east-1"
+    os.environ["AWS_DEFAULT_REGION"] = "us-east-1"
     os.environ["AWS_ACCESS_KEY_ID"] = "foo"
     os.environ["AWS_SECRET_ACCESS_KEY"] = "bar"
     os.environ.pop("AWS_PROFILE", None)
