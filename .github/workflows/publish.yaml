@@ -26,11 +26,9 @@ jobs:
         run: echo VERSION_TAG=$(python -c "import astrobase; print(astrobase.__version__)") >> $GITHUB_ENV
       - name: build
         run: |
-          echo "${{ env.VERSION_TAG }}"
-          # docker build -t "$REGISTRY_HOST"/"$IMAGE_NAME":"$VERSION_TAG" .
-      # - name: Publish
-      #   run: |
-      #     echo $TAG
-      #     docker push "$REGISTRY_HOSTNAME"/"$IMAGE":"$TAG"
-      #     docker tag "$REGISTRY_HOSTNAME"/"$IMAGE":"$TAG" "$REGISTRY_HOSTNAME"/"$IMAGE":latest
-      #     docker push "$REGISTRY_HOSTNAME"/"$IMAGE":latest
+          docker build -t "$REGISTRY_HOST"/"$IMAGE_NAME":"${{ env.VERSION_TAG }}" .
+      - name: push
+        run: |
+          docker push "$REGISTRY_HOSTNAME"/"$IMAGE":"${{ env.VERSION_TAG }}"
+          docker tag "$REGISTRY_HOSTNAME"/"$IMAGE":"${{ env.VERSION_TAG }}" "$REGISTRY_HOSTNAME"/"$IMAGE":latest
+          docker push "$REGISTRY_HOSTNAME"/"$IMAGE":latest
