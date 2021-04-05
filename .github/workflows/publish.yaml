@@ -23,7 +23,7 @@ jobs:
           # via gcloud command-line tool.
           gcloud auth configure-docker
       - name: set version tag
-        run: echo $(python -c "import astrobase; print(astrobase.__version__)") >> $VERSION_TAG
+        run: export VERSION_TAG=echo $(python -c "import astrobase; print(astrobase.__version__)")
       - name: build
         run: |
           echo $VERSION_TAG
