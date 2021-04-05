@@ -2,10 +2,8 @@ import logging
 import os
 import time
 
-ASTROBASE_DEBUG = os.environ.get("ASTROBASE_DEBUG") == "true"
 
-
-def create_logger(level: int = logging.INFO) -> logging.Logger:
+def create_logger() -> logging.Logger:
     tz = time.strftime("%z")
     logging.basicConfig(
         format=(
@@ -13,14 +11,11 @@ def create_logger(level: int = logging.INFO) -> logging.Logger:
             "[%(process)s] [%(pathname)s L%(lineno)d] "
             "[%(levelname)s] %(message)s"
         ),
-        level=level,
+        level=os.environ.get("LOGLEVEL", "INFO").upper(),
         datefmt="%Y-%m-%d %H:%M:%S",
     )
     logger = logging.getLogger(__name__)
     return logger
 
 
-if ASTROBASE_DEBUG:
-    logger = create_logger(level=logging.DEBUG)
-else:
-    logger = create_logger()
+logger = create_logger()

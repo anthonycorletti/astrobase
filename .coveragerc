@@ -5,7 +5,5 @@ source =
 
 omit =
     *__init__.py
-    astrobase/config/gunicorn.py
-    astrobase/config/logger.py
 
 parallel = True
