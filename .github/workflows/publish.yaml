@@ -29,6 +29,6 @@ jobs:
           docker build -t "$REGISTRY_HOST"/"$IMAGE_NAME":"${{ env.VERSION_TAG }}" .
       - name: push
         run: |
-          docker push "$REGISTRY_HOSTNAME"/"$IMAGE":"${{ env.VERSION_TAG }}"
-          docker tag "$REGISTRY_HOSTNAME"/"$IMAGE":"${{ env.VERSION_TAG }}" "$REGISTRY_HOSTNAME"/"$IMAGE":latest
-          docker push "$REGISTRY_HOSTNAME"/"$IMAGE":latest
+          docker push "$REGISTRY_HOST"/"$IMAGE":"${{ env.VERSION_TAG }}"
+          docker tag "$REGISTRY_HOST"/"$IMAGE":"${{ env.VERSION_TAG }}" "$REGISTRY_HOST"/"$IMAGE":latest
+          docker push "$REGISTRY_HOST"/"$IMAGE":latest
