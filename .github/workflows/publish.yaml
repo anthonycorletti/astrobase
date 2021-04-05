@@ -1,10 +1,9 @@
 name: publish
 
 on:
-  push:
-  # release:
-  #   types:
-  #     - created
+  release:
+    types:
+      - created
 
 env:
   IMAGE_NAME: "astrobaseco/astrobase"
