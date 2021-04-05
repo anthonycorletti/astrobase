@@ -19,12 +19,10 @@ jobs:
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-      - name: install poetry
-        run: pip install poetry
-      - name: configue poetry
-        run: poetry config virtualenvs.create false
+      - name: install flit
+        run: pip install flit
       - name: install dependencies
-        run: poetry install
+        run: scripts/install.sh
       - name: test
         run: scripts/test.sh
       - name: upload coverage

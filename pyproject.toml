@@ -1,33 +1,40 @@
-[tool.poetry]
-name = "astrobase"
-version = "0.1.0"
-description = "Astrobase API Server"
-authors = ["Anthony Corletti <anthony@astrobase.co>"]
-readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.9"
-fastapi = {extras = ["all"], version = "^0.63.0"}
-gunicorn = "^20.0.4"
-passlib = "^1.7.4"
-google-api-python-client = "^2.0.2"
-uvicorn = "^0.13.3"
-boto3 = "^1.17.22"
-
-[tool.poetry.dev-dependencies]
-pytest = "^6.2"
-flake8 = "^3.8.4"
-black = "^20.8b1"
-isort = "^5.8.0"
-mypy = "^0.812"
-autoflake = "^1.4"
-coverage = "^5.5"
-pytest-cov = "^2.11.1"
-requests-mock = "^1.8.0"
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["flit_core >=2,<3"]
+build-backend = "flit_core.buildapi"
+
+[tool.flit.metadata]
+module = "astrobase"
+author = "Astrobase Inc."
+author-email = "anthony@astrobase.co"
+home-page = "https://www.github.com/astrobase/astrobase"
+description-file = "README.md"
+requires-python = ">=3.8"
+requires = [
+    "fastapi >=0.63.0",
+    "gunicorn >=20.0.4",
+    "google-api-python-client >=2.0.2",
+    "uvicorn >=0.13.3",
+    "boto3 >=1.17.22",
+    "PyYaml >=5.4.1"
+]
+
+[tool.flit.metadata.urls]
+Documentation = "https://www.github.com/astrobase/astrobase/docs"
+
+[tool.flit.metadata.requires-extra]
+test = [
+    "pytest >=5.2",
+    "mypy >=0.812",
+    "coverage >=5.5",
+    "pytest-cov >=2.11.1",
+    "requests-mock >=1.8.0"
+]
+dev = [
+    "flake8 >=3.8.4",
+    "black >=20.8b1",
+    "isort >=5.8.0",
+    "autoflake >=1.4"
+]
 
 [tool.isort]
 profile = "black"
