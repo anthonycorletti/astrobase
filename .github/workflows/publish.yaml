@@ -1,20 +1,37 @@
 name: publish
 
 on:
-  release:
-    types:
-      - created
+  push:
+  # release:
+  #   types:
+  #     - created
+
+env:
+  IMAGE_NAME: "astrobaseco/astrobase"
+  REGISTRY_HOST: gcr.io
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: set up python
-        uses: actions/setup-python@v1
+      - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
-          python-version: "3.9"
-      - name: install flit
-        run: pip install flit
-      - name: publish
-        run: echo "TODO!"
+          version: "334.0.0"
+          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
+      - run: |
+          # Set up docker to authenticate
+          # via gcloud command-line tool.
+          gcloud auth configure-docker
+      - name: set version tag
+        run: echo $(python -c "import astrobase; print(astrobase.__version__)") >> $VERSION_TAG
+      - name: build
+        run: |
+          echo $VERSION_TAG
+          # docker build -t "$REGISTRY_HOST"/"$IMAGE_NAME":"$VERSION_TAG" .
+      # - name: Publish
+      #   run: |
+      #     echo $TAG
+      #     docker push "$REGISTRY_HOSTNAME"/"$IMAGE":"$TAG"
+      #     docker tag "$REGISTRY_HOSTNAME"/"$IMAGE":"$TAG" "$REGISTRY_HOSTNAME"/"$IMAGE":latest
+      #     docker push "$REGISTRY_HOSTNAME"/"$IMAGE":latest
