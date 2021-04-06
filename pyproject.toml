@@ -15,7 +15,9 @@ requires = [
     "google-api-python-client >=2.0.2",
     "uvicorn >=0.13.3",
     "boto3 >=1.17.22",
-    "PyYaml >=5.4.1"
+    "PyYaml >=5.4.1",
+    "uvloop >=0.14.0,<0.15.0",
+    "httptools==0.1.*"
 ]
 
 [tool.flit.metadata.urls]
