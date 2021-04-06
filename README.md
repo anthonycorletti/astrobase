@@ -10,7 +10,7 @@
 [**Installation and Usage**](#installation-and-usage) |
 [**Roadmap**](./docs/ROADMAP.md) |
 [**Contributing**](./CONTRIBUTING.md) |
-[**Docs**](https://docs.astrobase.co) |
+[**Docs**](./docs) |
 [**Credits**](#credits) |
 [**Who uses Astrobase?**](./docs/who-uses-astrobase.md)
 
