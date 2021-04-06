@@ -1,19 +1,18 @@
 import yaml
 
-EXAMPLES_DIR = "examples"
+TEST_ASSET_DIR = "tests/assets"
 
 
 class ClusterFactory:
-    CLUSTERS_DIR = "clusters"
-    GKE_EXAMPLE = "gke.yaml"
-    EKS_EXAMPLE = "eks.yaml"
+    GKE_EXAMPLE = "test-gke-cluster.yaml"
+    EKS_EXAMPLE = "test-eks-cluster.yaml"
 
     def gke_example(self) -> dict:
-        example_file = f"{EXAMPLES_DIR}/{self.CLUSTERS_DIR}/{self.GKE_EXAMPLE}"
+        example_file = f"{TEST_ASSET_DIR}/{self.GKE_EXAMPLE}"
         with open(example_file, "r") as f:
             return yaml.safe_load(f).get("clusters")[0]
 
     def eks_example(self) -> dict:
-        example_file = f"{EXAMPLES_DIR}/{self.CLUSTERS_DIR}/{self.EKS_EXAMPLE}"
+        example_file = f"{TEST_ASSET_DIR}/{self.EKS_EXAMPLE}"
         with open(example_file, "r") as f:
             return yaml.safe_load(f).get("clusters")[0]
