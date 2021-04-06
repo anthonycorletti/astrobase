@@ -8,7 +8,7 @@
 
 [**Why Astrobase**](#why-astrobase) |
 [**Installation and Usage**](#installation-and-usage) |
-[**Roadmap**](./docs/ROADMAP.md) |
+[**Roadmap**](./docs/roadmap.md) |
 [**Contributing**](./CONTRIBUTING.md) |
 [**Docs**](./docs) |
 [**Credits**](#credits) |
