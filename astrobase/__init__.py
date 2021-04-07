@@ -2,3 +2,4 @@
 workflows, MLOps, and more."""
 
 __version__ = "0.1.0"
+api_version = "v0"

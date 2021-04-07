@@ -3,11 +3,12 @@
 ## 2021-2022
 
 #### Features
-- A Frontend UI
-- User management
-- Authentication and Authorization
-- RBAC Profiling
-- API Key Issuing
+- API Component Versioning
+- A Frontend UI, Next.js
+- User and service account management
+- Authentication and authorization
+- RBAC profiling
+- API key issuing
 
 #### Cloud Providers
 - Azure Kubernetes Engine Support
@@ -15,7 +16,7 @@
 
 #### Resource Orchestration and Deployment Features
 - Deploy using Helm
-- Deploy Nomad Resources
+- Deploy Nomad resources
 
 #### Kubernetes
 - Astrobase Kubernetes Engine on AWS EC2

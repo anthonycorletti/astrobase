@@ -1,4 +1,4 @@
-apiVersion: 0.1.0
+apiVersion: v0
 clusters:
     - name: astrobase-test-eks
       provider: eks
