@@ -3,6 +3,7 @@
 ## 2021-2022
 
 #### Features
+- Astrobase CLI passes params directly into kubernetes yaml configs
 - API Component Versioning
 - A Frontend UI, Next.js
 - User and service account management
