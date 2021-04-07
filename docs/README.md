@@ -37,8 +37,6 @@ And pass parameters when applying your resources like so:
 $ astrobase apply -f resources.yaml -v "ENV=dev LOCATION=us-central1"
 ```
 
-As for the
-
 
 ## Installation and Usage
 
