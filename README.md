@@ -20,7 +20,7 @@ Astrobase provides:
 - Low-code overhead
 - Cloud bursting capability
 - ***Pass any parameter directly into your kubernetes yaml from the command line!***
-- Profiled Deployment
+- Multiple deployment environment profiles
 - API Server works anywhere docker containers work
 - Live, interactive documentation built right in!
 - Lightweight and unopinionated configs – we just only what cloud vendors do.
