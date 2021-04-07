@@ -14,21 +14,29 @@
 
 ## Why Astrobase?
 
-- cloud bursting risk mitigation
-- MLOps solution
-- repeatable environments
-- simple pointers and variable passing _directly into yaml_
-- one fast, easy way to deploy multiple types of applications faster
-- time saving from complexity growth from infra as code
-- no proprietary lock-in features. astrobase is built entirely on top of open source components. we dont even use a dsl or our own language. wowzers.
+Astrobase provides:
 
-## Installation and Usage
+- Consistent multi-cloud support
+- Low-code overhead
+- Cloud bursting capability
+- ***Pass any parameter directly into your kubernetes yaml from the command line!***
+- Profiled Deployment
+- API Server works anywhere docker containers work
+- Live, interactive documentation built right in!
+- Lightweight and unopinionated configs – we just only what cloud vendors do.
+- One fast, easy way to create infrastructure and applications
+- No more chicken-egg problem for running infrastructure – you only need Astrobase to deploy infrastructure and resources.
+- No DSL or proprietary language to learn. Astrobase is built entirely on top of open source components.
+- No more dependency graphs or surprises when making changes to your infrastructure-as-code!
 
-If you haven't already installed the [Astrobase CLI](https://github.com/astrobase/cli) yet, please do so. It's the best way to work with Astrobase, and has an awesome [walkthrough of the features and usage of the cli](https://github.com/astrobase/cli#features-and-usage).
+## Getting Started
 
-After reading that, head on over to our [docs](./docs) for more.
+If you haven't already installed the [Astrobase CLI](https://github.com/astrobase/cli) yet, please do. The CLI the best way to work with Astrobase, and has an awesome [walkthrough of the features and usage of the cli](https://github.com/astrobase/cli#features-and-usage).
+
+After that, read Astrobase's [docs](./docs) for more.
 
 ## Credits
 
-- [fastapi](https://github.com/tiangolo/fastapi)
-- [typer](https://github.com/tiangolo/typer)
+- The Astrobase API server is built on top of [fastapi](https://github.com/tiangolo/fastapi).
+- The Astrobase CLI is built on top of [typer](https://github.com/tiangolo/typer).
+
