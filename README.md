@@ -6,7 +6,7 @@
 
 [**Why Astrobase**](#why-astrobase) |
 [**Docs**](./docs) |
-[**Who uses Astrobase?**](./docs/who-uses-astrobase.md)
+[**Who uses Astrobase?**](./docs/who-uses-astrobase.md) |
 [**Roadmap**](./docs/roadmap.md) |
 [**Contributing**](./CONTRIBUTING.md) |
 [**Credits**](#credits)
