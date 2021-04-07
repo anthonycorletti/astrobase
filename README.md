@@ -5,12 +5,11 @@
 [![codecov](https://codecov.io/gh/astrobase/astrobase/branch/master/graph/badge.svg?token=LdSYGUjerD)](https://codecov.io/gh/astrobase/astrobase)
 
 [**Why Astrobase**](#why-astrobase) |
-[**Installation and Usage**](#installation-and-usage) |
+[**Docs**](./docs) |
+[**Who uses Astrobase?**](./docs/who-uses-astrobase.md)
 [**Roadmap**](./docs/roadmap.md) |
 [**Contributing**](./CONTRIBUTING.md) |
-[**Docs**](./docs) |
-[**Credits**](#credits) |
-[**Who uses Astrobase?**](./docs/who-uses-astrobase.md)
+[**Credits**](#credits)
 
 ## Why Astrobase?
 
