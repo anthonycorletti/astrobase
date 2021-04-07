@@ -15,17 +15,17 @@
 
 Astrobase provides:
 
-- Consistent multi-cloud support
+- A streamlined framework for deploying multi-cloud systems
 - Low-code overhead
-- Cloud bursting capability
+- Cloud bursting capabilities
 - ***Pass any parameter directly into your kubernetes yaml from the command line!***
 - Multiple deployment environment profiles
 - API Server works anywhere docker containers work
 - Live, interactive documentation built right in!
-- Lightweight and unopinionated configs – we just only what cloud vendors do.
-- One fast, easy way to create infrastructure and applications
-- No more chicken-egg problem for running infrastructure – you only need Astrobase to deploy infrastructure and resources.
-- No DSL or proprietary language to learn. Astrobase is built entirely on top of open source components.
+- Lightweight and unopinionated configs – we only do what cloud vendors do.
+- One fast, easy way to define and create infrastructure and deployment configs as code
+- No more chicken-and-egg problems for running infrastructure – you only need Astrobase to deploy infrastructure and resources.
+- No DSL or proprietary language to learn! Astrobase is built entirely on top of open source components.
 - No more dependency graphs or surprises when making changes to your infrastructure-as-code!
 
 ## Getting Started
