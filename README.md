@@ -16,6 +16,7 @@
 Astrobase provides:
 
 - A streamlined framework for deploying multi-cloud systems
+- Bring together the best products of all cloud vendors; S3, BigQuery, GKE, SageMaker, Lambda, Kinesis, etc.
 - Low-code overhead
 - Cloud bursting capabilities
 - ***Pass any parameter directly into your kubernetes yaml from the command line!***
