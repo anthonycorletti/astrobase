@@ -89,7 +89,7 @@ class GKEBase(BaseModel):
 
     @validator("parent", pre=True, always=True)
     def set_parent(cls, v, values) -> str:
-        return f"projects/{values['project_id']}/locations/{values['location']}"
+        return f"projects/{values['project_id']}/zones/{values['location']}"
 
 
 class GKECreate(GKEBase):
