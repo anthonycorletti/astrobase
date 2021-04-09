@@ -1,7 +1,7 @@
 from enum import Enum, unique
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field
 
 from astrobase.helpers.name import random_name
 
@@ -82,14 +82,9 @@ class GKEBase(BaseModel):
     name: Optional[str] = Field(default_factory=random_name)
     location: str
     project_id: str
-    parent: Optional[str] = None
     nodePools: List[GKENodePool]
     releaseChannel: GKEReleaseChannel = GKEReleaseChannel()
     resourceLabels: Optional[Dict[str, str]] = {}
-
-    @validator("parent", pre=True, always=True)
-    def set_parent(cls, v, values) -> str:
-        return f"projects/{values['project_id']}/zones/{values['location']}"
 
 
 class GKECreate(GKEBase):

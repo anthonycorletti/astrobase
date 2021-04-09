@@ -1,5 +1,5 @@
 import json
-from typing import Any, Optional
+from typing import Any
 
 from fastapi import HTTPException
 from google.auth import exceptions as google_auth_exceptions
@@ -31,35 +31,51 @@ class GKEApi:
     def create(self, cluster_create: GKECreate) -> dict:
         logger.info(f"cluster_create {cluster_create.dict()}")
         body = GKECreateAPI(cluster=GKECreateAPIFilter(**cluster_create.dict()))
-        return self.make_create_request(parent=cluster_create.parent, body=body.dict())
+        return self.make_create_request(
+            project_id=cluster_create.project_id,
+            location=cluster_create.location,
+            body=body.dict(),
+        )
 
-    def make_create_request(self, parent: Optional[str], body: dict) -> dict:
-        req = self.cluster_client.create(parent=parent, body=body)
+    def make_create_request(self, project_id: str, location: str, body: dict) -> dict:
+        req = self.cluster_client.create(projectId=project_id, zone=location, body=body)
         return self.handle_google_request(req)
 
     def get(self, project_id: str, location: str) -> dict:
-        return self.make_get_request(f"projects/{project_id}/zones/{location}")
+        return self.make_get_request(project_id=project_id, location=location)
 
-    def make_get_request(self, parent: str) -> dict:
-        req = self.cluster_client.list(parent=parent)
+    def make_get_request(self, project_id: str, location: str) -> dict:
+        req = self.cluster_client.list(projectId=project_id, zone=location)
         return self.handle_google_request(req)
 
-    def describe(self, location: str, project_id: str, cluster_name: str) -> dict:
+    def describe(self, project_id: str, location: str, cluster_name: str) -> dict:
         return self.make_describe_request(
-            f"projects/{project_id}/zones/{location}/clusters/{cluster_name}"
+            project_id=project_id,
+            location=location,
+            cluster_name=cluster_name,
         )
 
-    def make_describe_request(self, name: str) -> dict:
-        req = self.cluster_client.get(name=name)
+    def make_describe_request(
+        self, project_id: str, location: str, cluster_name: str
+    ) -> dict:
+        req = self.cluster_client.get(
+            projectId=project_id, zone=location, clusterId=cluster_name
+        )
         return self.handle_google_request(req)
 
-    def delete(self, location: str, project_id: str, cluster_name: str) -> dict:
+    def delete(self, project_id: str, location: str, cluster_name: str) -> dict:
         return self.make_delete_request(
-            f"projects/{project_id}/zones/{location}/clusters/{cluster_name}"
+            project_id=project_id,
+            location=location,
+            cluster_name=cluster_name,
         )
 
-    def make_delete_request(self, name: str) -> dict:
-        req = self.cluster_client.delete(name=name)
+    def make_delete_request(
+        self, project_id: str, location: str, cluster_name: str
+    ) -> dict:
+        req = self.cluster_client.delete(
+            projectId=project_id, zone=location, clusterId=cluster_name
+        )
         return self.handle_google_request(req)
 
     def handle_google_request(self, req: Any) -> dict:
