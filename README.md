@@ -9,6 +9,7 @@
 [**Who uses Astrobase?**](./docs/who-uses-astrobase.md) |
 [**Roadmap**](./docs/roadmap.md) |
 [**Contributing**](./CONTRIBUTING.md) |
+[**Showcase**](https://github.com/astrobase/showcase) |
 [**Credits**](#credits)
 
 ## Why Astrobase?
