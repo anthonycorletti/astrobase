@@ -10,11 +10,6 @@ The Astrobase Enterprise Edition is licensed under the Astrobase
 Non-Commercial License (the "Non-Commercial License"). A copy of
 the Non-Commercial License is provided below.
 
-The source files in this repository have a header indicating
-which license they are under. The BUILDING_OSS file provides
-instructions for creating the Community Edition distribution
-subject to the terms of the Apache License.
-
 -----------------------------------------------------------------
 
 Astrobase Non-Commercial License
@@ -82,8 +77,9 @@ Contributor waives the terms of rule 1 for companies meeting all
 the following criteria, counting all subsidiaries and affiliated
 entities as one:
 
-1. Less than 5,000 total resources operations executed using
-   this software in the immediately preceding, year-long period
+1. Less than 5,000 total cluster and resource operations executed
+   using this software in the immediately preceding, year-long
+   period
 
 Contributor will not revoke this waiver, but may change terms for
 future versions of the software.
