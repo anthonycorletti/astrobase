@@ -2,6 +2,12 @@
 
 Hi there! Welcome to Astrobase's docs.
 
+Astrobase assumes that you already have an account with one of our supported cloud vendors and have credentials configured on your local machine.
+
+If you have not created a free account yet, here are links to free trials;
+- Google Cloud; https://cloud.google.com/free
+- AWS; https://aws.amazon.com/free
+
 To get started using Astrobase right away, we suggest reading through the [astrobase cli README](https://github.com/astrobase/cli/blob/master/README.md) and/ or checking out our [showcase](https://github.com/astrobase/showcase).
 
 If you'd like to start hacking on astrobase, check out the [contributing guide](../CONTRIBUTING.md).
