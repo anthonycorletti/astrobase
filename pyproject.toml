@@ -17,7 +17,11 @@ requires = [
     "boto3 >=1.17.22",
     "PyYaml >=5.4.1",
     "uvloop >=0.14.0,<0.15.0",
-    "httptools==0.1.*"
+    "httptools==0.1.*",
+    "azure-identity >=1.5.0",
+    "azure-mgmt-resource >=16.0.0",
+    "azure-mgmt-containerservice >=15.1.0",
+    "msrestazure >=0.6.4"
 ]
 
 [tool.flit.metadata.urls]

@@ -7,7 +7,7 @@ from tests.factories import ClusterFactory
 cluster_examples = ClusterFactory()
 gke_api = GKEApi()
 router = APIRouter()
-tags = ["cluster"]
+tags = ["cluster", "gke"]
 
 
 @router.post("/gke", tags=tags)

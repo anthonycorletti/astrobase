@@ -1,0 +1,19 @@
+apiVersion: v0
+clusters:
+  - name: astrobaseTestAKS
+    provider: aks
+    location: eastus
+    dns_prefix: astrobaseTestAKS
+    resource_group_name: astrobase
+    tags:
+      name: astrobaseTestAKS
+      env: dev
+    agent_pool_profiles:
+      - name: cpu
+        mode: System
+        tags:
+          name: astrobaseTestAKS
+          env: dev
+        node_labels:
+          name: cpu
+          env: dev

@@ -8,7 +8,7 @@ from tests.factories import ClusterFactory
 
 cluster_examples = ClusterFactory()
 router = APIRouter()
-tags = ["cluster"]
+tags = ["cluster", "eks"]
 
 
 @router.post("/eks", tags=tags)
