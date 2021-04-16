@@ -1,7 +1,10 @@
 import os
+from typing import List
 
+from azure.core.exceptions import ResourceExistsError
 from azure.identity import ClientSecretCredential
 from azure.mgmt.containerservice import ContainerServiceClient
+from fastapi import HTTPException
 
 from astrobase.config.logger import logger
 from astrobase.schemas.aks import AKSCreate
@@ -34,21 +37,42 @@ class AKSApi:
             )
 
     def create(self, resource_group_name: str, cluster_create: AKSCreate) -> dict:
-        logger.info(f"data –– {cluster_create.dict()}")
-        managed_cluster_create = (
-            self.container_client.managed_clusters.begin_create_or_update(
-                resource_group_name=resource_group_name,
-                resource_name=cluster_create.name,
-                parameters=cluster_create.dict(),
+        try:
+            managed_cluster_create = (
+                self.container_client.managed_clusters.begin_create_or_update(
+                    resource_group_name=resource_group_name,
+                    resource_name=cluster_create.name,
+                    parameters=cluster_create.dict(),
+                )
             )
+            return {
+                "result": managed_cluster_create.result,
+                "status": managed_cluster_create.status,
+            }
+        except ResourceExistsError as e:
+            logger.error(f"Create AKS cluster failed with: {e.message}")
+            raise HTTPException(detail=e.message, status_code=400)
+
+    def get(self, resource_group_name: str) -> List[dict]:
+        m = self.container_client.managed_clusters
+        return [
+            cluster.as_dict()
+            for cluster in m.list_by_resource_group(
+                resource_group_name=resource_group_name
+            )
+        ]
+
+    def describe(self, resource_group_name: str, cluster_name: str) -> dict:
+        return self.container_client.managed_clusters.get(
+            resource_group_name=resource_group_name,
+            resource_name=cluster_name,
         )
-        return dict(managed_cluster_create)
 
-    def get(self, location: str):
-        pass
-
-    def describe(self, location: str, cluster_name: str):
-        pass
-
-    def delete(self, location: str, cluster_name: str):
-        pass
+    def delete(self, resource_group_name: str, cluster_name: str):
+        managed_cluster_delete = self.container_client.managed_clusters.begin_delete(
+            resource_group_name=resource_group_name, resource_name=cluster_name
+        )
+        return {
+            "result": managed_cluster_delete.result,
+            "status": managed_cluster_delete.status,
+        }

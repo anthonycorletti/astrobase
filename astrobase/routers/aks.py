@@ -22,18 +22,18 @@ def create_aks_cluster(
 
 @router.get("/aks", tags=tags)
 def get_aks_clusters(
-    location: str,
+    resource_group_name: str,
 ):
-    return aks_api.get(location)
+    return aks_api.get(resource_group_name=resource_group_name)
 
 
 @router.get("/aks/{cluster_name}", tags=tags)
 def describe_aks_cluster(
     cluster_name: str,
-    location: str,
+    resource_group_name: str,
 ):
     return aks_api.describe(
-        location=location,
+        resource_group_name=resource_group_name,
         cluster_name=cluster_name,
     )
 
@@ -41,9 +41,9 @@ def describe_aks_cluster(
 @router.delete("/aks/{cluster_name}", tags=tags)
 def delete_aks_cluster(
     cluster_name: str,
-    location: str,
+    resource_group_name: str,
 ):
     return aks_api.delete(
+        resource_group_name=resource_group_name,
         cluster_name=cluster_name,
-        location=location,
     )
