@@ -43,7 +43,7 @@ def delete_aks_cluster(
     cluster_name: str,
     resource_group_name: str,
 ):
-    return aks_api.delete(
+    return aks_api.begin_delete(
         resource_group_name=resource_group_name,
         cluster_name=cluster_name,
     )
