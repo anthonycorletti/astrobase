@@ -44,8 +44,9 @@ class AKSApi:
                 resource_group_name=resource_group_name, cluster_create=cluster_create
             )
             return {
-                "result": managed_cluster.result,
-                "status": managed_cluster.status,
+                "result": managed_cluster.result
+                or f"AKS create request submitted for {cluster_create.name}",
+                "status": managed_cluster.status or 200,
             }
         except ResourceExistsError as e:
             logger.error(f"Create AKS cluster failed with: {e.message}")
@@ -84,8 +85,9 @@ class AKSApi:
             resource_group_name=resource_group_name, cluster_name=cluster_name
         )
         return {
-            "result": managed_cluster_delete.result,
-            "status": managed_cluster_delete.status,
+            "result": managed_cluster_delete.result
+            or f"AKS delete request submitted for {cluster_name}",
+            "status": managed_cluster_delete.status or 200,
         }
 
     def make_begin_delete_request(
