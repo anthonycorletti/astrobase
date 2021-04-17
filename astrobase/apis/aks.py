@@ -40,13 +40,11 @@ class AKSApi:
 
     def create(self, resource_group_name: str, cluster_create: AKSCreate) -> dict:
         try:
-            managed_cluster = self.make_begin_create_or_update_request(
+            self.make_begin_create_or_update_request(
                 resource_group_name=resource_group_name, cluster_create=cluster_create
             )
             return {
-                "result": managed_cluster.result
-                or f"AKS create request submitted for {cluster_create.name}",
-                "status": managed_cluster.status or 200,
+                "message": f"AKS create request submitted for {cluster_create.name}"
             }
         except ResourceExistsError as e:
             logger.error(f"Create AKS cluster failed with: {e.message}")
@@ -81,13 +79,11 @@ class AKSApi:
         )
 
     def begin_delete(self, resource_group_name: str, cluster_name: str):
-        managed_cluster_delete = self.make_begin_delete_request(
+        self.make_begin_delete_request(
             resource_group_name=resource_group_name, cluster_name=cluster_name
         )
         return {
-            "result": managed_cluster_delete.result
-            or f"AKS delete request submitted for {cluster_name}",
-            "status": managed_cluster_delete.status or 200,
+            "message": f"AKS delete request submitted for {cluster_name}",
         }
 
     def make_begin_delete_request(
