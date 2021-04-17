@@ -1,7 +1,7 @@
 import os
 from typing import List
 
-from azure.core.exceptions import ResourceExistsError
+from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
 from azure.core.polling import LROPoller
 from azure.identity import ClientSecretCredential
 from azure.mgmt.containerservice import ContainerServiceClient
@@ -60,12 +60,19 @@ class AKSApi:
         )
 
     def get(self, resource_group_name: str) -> List[dict]:
-        return [
-            cluster.as_dict()
-            for cluster in self.make_get_request(
-                resource_group_name=resource_group_name
+        try:
+            return [
+                cluster.as_dict()
+                for cluster in self.make_get_request(
+                    resource_group_name=resource_group_name
+                )
+            ]
+        except ResourceNotFoundError as e:
+            logger.error(
+                "Get AKS clusters failed for resource "
+                f"group {resource_group_name} with: {e.message}"
             )
-        ]
+            raise HTTPException(detail=e.message, status_code=400)
 
     def make_get_request(self, resource_group_name: str) -> ManagedClusterListResult:
         return self.container_client.managed_clusters.list_by_resource_group(
@@ -73,18 +80,32 @@ class AKSApi:
         )
 
     def describe(self, resource_group_name: str, cluster_name: str) -> ManagedCluster:
-        return self.container_client.managed_clusters.get(
-            resource_group_name=resource_group_name,
-            resource_name=cluster_name,
-        )
+        try:
+            return self.container_client.managed_clusters.get(
+                resource_group_name=resource_group_name,
+                resource_name=cluster_name,
+            )
+        except ResourceNotFoundError as e:
+            logger.error(
+                f"Get AKS cluster {cluster_name} failed for resource "
+                f"group {resource_group_name} with: {e.message}"
+            )
+            raise HTTPException(detail=e.message, status_code=400)
 
     def begin_delete(self, resource_group_name: str, cluster_name: str):
-        self.make_begin_delete_request(
-            resource_group_name=resource_group_name, cluster_name=cluster_name
-        )
-        return {
-            "message": f"AKS delete request submitted for {cluster_name}",
-        }
+        try:
+            self.make_begin_delete_request(
+                resource_group_name=resource_group_name, cluster_name=cluster_name
+            )
+            return {
+                "message": f"AKS delete request submitted for {cluster_name}",
+            }
+        except ResourceNotFoundError as e:
+            logger.error(
+                f"Delete AKS cluster {cluster_name} failed for resource "
+                f"group {resource_group_name} with: {e.message}"
+            )
+            raise HTTPException(detail=e.message, status_code=400)
 
     def make_begin_delete_request(
         self, resource_group_name: str, cluster_name
