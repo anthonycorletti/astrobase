@@ -7,6 +7,7 @@ Astrobase assumes that you already have an account with one of our supported clo
 If you have not created a free account yet, here are links to free trials;
 - Google Cloud; https://cloud.google.com/free
 - AWS; https://aws.amazon.com/free
+- Azure; https://azure.microsoft.com/en-us/free/
 
 To get started using Astrobase right away, we suggest reading through the [astrobase cli README](https://github.com/astrobase/cli/blob/master/README.md) and/ or checking out our [showcase](https://github.com/astrobase/showcase).
 
