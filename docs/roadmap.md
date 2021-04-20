@@ -1,5 +1,7 @@
 # The Astrobase Product Roadmap
 
+This roadmap is subject to change and plans to integrate new features and providers may come and go.
+
 ## 2021-2022
 
 #### Features
@@ -11,7 +13,7 @@
 - API key issuing
 
 #### Cloud Providers
-- Azure Kubernetes Engine Support
+- ✅ Azure Kubernetes Engine Support
 - DigitalOcean Kubernetes Support
 
 #### Resource Orchestration and Deployment Features
