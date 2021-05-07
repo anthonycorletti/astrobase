@@ -9,7 +9,7 @@ If you have not created a free account yet, here are links to free trials;
 - AWS; https://aws.amazon.com/free
 - Azure; https://azure.microsoft.com/en-us/free/
 
-To get started using Astrobase right away, we suggest reading through the [astrobase cli README](https://github.com/astrobase/cli/blob/master/README.md) and/ or checking out our [showcase](https://github.com/astrobase/showcase).
+To get started using Astrobase right away, we suggest reading through the [astrobase cli README](https://github.com/astrobase/cli/blob/main/README.md) and/ or checking out our [showcase](https://github.com/astrobase/showcase).
 
 If you'd like to start hacking on astrobase, check out the [contributing guide](../CONTRIBUTING.md).
 

@@ -1,8 +1,8 @@
-![](https://github.com/astrobase/brand/blob/master/logos/space-logo.png?raw=true)
+![](https://github.com/astrobase/brand/blob/main/logos/space-logo.png?raw=true)
 
 [![publish](https://github.com/astrobase/astrobase/actions/workflows/publish.yaml/badge.svg)](https://github.com/astrobase/astrobase/actions/workflows/publish.yaml)
 [![test](https://github.com/astrobase/astrobase/actions/workflows/test.yaml/badge.svg)](https://github.com/astrobase/astrobase/actions/workflows/test.yaml)
-[![codecov](https://codecov.io/gh/astrobase/astrobase/branch/master/graph/badge.svg?token=LdSYGUjerD)](https://codecov.io/gh/astrobase/astrobase)
+[![codecov](https://codecov.io/gh/astrobase/astrobase/branch/main/graph/badge.svg?token=LdSYGUjerD)](https://codecov.io/gh/astrobase/astrobase)
 
 [**Why Astrobase**](#why-astrobase) |
 [**Docs**](./docs) |
