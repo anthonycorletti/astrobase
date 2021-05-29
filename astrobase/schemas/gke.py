@@ -10,10 +10,11 @@ from astrobase.helpers.name import random_name
 class ReleaseChannel(str, Enum):
     regular = "REGULAR"
     rapid = "RAPID"
+    stable = "STABLE"
 
 
 class GKEReleaseChannel(BaseModel):
-    channel: ReleaseChannel = ReleaseChannel.regular
+    channel: ReleaseChannel = ReleaseChannel.stable
 
 
 class GKEAutoscaling(BaseModel):
