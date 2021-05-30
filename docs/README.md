@@ -13,7 +13,7 @@ To get started using Astrobase right away, we suggest reading through the [astro
 
 If you'd like to start hacking on astrobase, check out the [contributing guide](../CONTRIBUTING.md).
 
-For more details about Astrobase, and using astrobase, read on!
+For more details about Astrobase, read on!
 
 ## Design and Architecture
 
