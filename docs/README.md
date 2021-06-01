@@ -19,13 +19,13 @@ For more details about Astrobase, read on!
 
 Astrobase was created because infrastructure and deployment management of containerized systems is not easy - **we believe it should be**.
 
-Developers and teams of developers should not have to spend time solving problems that occur from opionionated infrastructure-as-code tools that make changes they did not intend. Astrobase simply passes requests directly to cloud providers and allows you to manage all cloud resources from one control-plane.
+Developers and teams of developers should not have to spend time solving problems that occur from opinionated infrastructure-as-code tools that make changes they did not intend. Astrobase simply passes requests directly to cloud providers and allows you to manage all cloud resources from one control-plane.
 
 Astrobase will not restrict developers to a special deployment toolset. Developers can use whatever tool they want to deploy their services – be it `kubectl`, `helm`, `nomad`, or something else! This is why we take a lightweight approach to resource deployment. Similarly to how you define clusters in the form of `.yaml` files, specify a parent resource `.yaml` file that references your configs, and deploy!
 
 We're also fed up with how difficult it can be to pass a parameter to yaml files. So we made it simple.
 
-Just define your parameter in `yaml` kindof like how you would an environemnt variable
+Just define your parameter in `yaml` just how you would an environment variable
 
 ```yaml
 # resources.yaml
