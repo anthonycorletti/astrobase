@@ -16,7 +16,7 @@ from astrobase.schemas.gke import (
 
 
 class GKEApi:
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             self.client = build("container", "v1beta1")
             self.cluster_client = self.client.projects().zones().clusters()

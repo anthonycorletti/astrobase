@@ -30,7 +30,7 @@ Documentation = "https://www.github.com/astrobase/astrobase/docs"
 [tool.flit.metadata.requires-extra]
 test = [
     "pytest >=5.2",
-    "mypy >=0.812",
+    "mypy >=0.900",
     "coverage >=5.5",
     "pytest-cov >=2.11.1",
     "requests-mock >=1.8.0"

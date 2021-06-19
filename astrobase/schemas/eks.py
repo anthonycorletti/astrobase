@@ -75,7 +75,9 @@ class EKSBase(BaseModel):
     nodegroups: List[EKSNodegroup]
 
     @validator("nodegroups", pre=True, always=True)
-    def set_nodegroup_name_subnets(cls, v, values):
+    def set_nodegroup_name_subnets(
+        cls: BaseModel, v: List[dict], values: dict
+    ) -> List[dict]:
         for nodegroup in v:
             if not nodegroup.get("clusterName"):
                 nodegroup["clusterName"] = values["name"]

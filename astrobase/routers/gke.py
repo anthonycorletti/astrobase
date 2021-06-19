@@ -13,7 +13,7 @@ tags = ["cluster", "gke"]
 @router.post("/gke", tags=tags)
 def create_gke_cluster(
     cluster_create: GKECreate = Body(..., example=cluster_examples.gke_example()),
-):
+) -> dict:
     return gke_api.create(cluster_create)
 
 
@@ -21,7 +21,7 @@ def create_gke_cluster(
 def get_gke_clusters(
     project_id: str,
     location: str,
-):
+) -> dict:
     return gke_api.get(project_id, location)
 
 
@@ -30,7 +30,7 @@ def describe_gke_cluster(
     cluster_name: str,
     project_id: str,
     location: str,
-):
+) -> dict:
     return gke_api.describe(
         project_id=project_id,
         location=location,
@@ -43,7 +43,7 @@ def delete_gke_cluster(
     cluster_name: str,
     project_id: str,
     location: str,
-):
+) -> dict:
     return gke_api.delete(
         cluster_name=cluster_name,
         project_id=project_id,

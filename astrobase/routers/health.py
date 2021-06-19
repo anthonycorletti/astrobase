@@ -12,7 +12,7 @@ tags = ["health"]
 
 
 @router.get("/healthcheck", tags=tags)
-def healthcheck():
+def healthcheck() -> dict:
     message = "We're on the air."
     logger.info(message)
     return {

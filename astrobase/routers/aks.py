@@ -1,3 +1,6 @@
+from typing import List
+
+from azure.mgmt.containerservice.models import ManagedCluster
 from fastapi import APIRouter, Body
 
 from astrobase.apis.aks import AKSApi
@@ -13,7 +16,7 @@ tags = ["cluster", "aks"]
 @router.post("/aks", tags=tags)
 def create_aks_cluster(
     cluster_create: AKSCreate = Body(..., example=cluster_examples.aks_example()),
-):
+) -> dict:
     return aks_api.create(
         resource_group_name=cluster_create.resource_group_name,
         cluster_create=cluster_create,
@@ -23,7 +26,7 @@ def create_aks_cluster(
 @router.get("/aks", tags=tags)
 def get_aks_clusters(
     resource_group_name: str,
-):
+) -> List[dict]:
     return aks_api.get(resource_group_name=resource_group_name)
 
 
@@ -31,7 +34,7 @@ def get_aks_clusters(
 def describe_aks_cluster(
     cluster_name: str,
     resource_group_name: str,
-):
+) -> ManagedCluster:
     return aks_api.describe(
         resource_group_name=resource_group_name,
         cluster_name=cluster_name,
@@ -42,7 +45,7 @@ def describe_aks_cluster(
 def delete_aks_cluster(
     cluster_name: str,
     resource_group_name: str,
-):
+) -> dict:
     return aks_api.begin_delete(
         resource_group_name=resource_group_name,
         cluster_name=cluster_name,

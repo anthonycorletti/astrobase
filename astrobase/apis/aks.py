@@ -18,7 +18,7 @@ class AKSApi:
     AZURE_CLIENT_ID = os.getenv("AZURE_CLIENT_ID", None)
     AZURE_CLIENT_SECRET = os.getenv("AZURE_CLIENT_SECRET", None)
 
-    def __init__(self):
+    def __init__(self) -> None:
         try:
             credential = ClientSecretCredential(
                 tenant_id=self.AZURE_TENANT_ID,
@@ -92,7 +92,7 @@ class AKSApi:
             )
             raise HTTPException(detail=e.message, status_code=400)
 
-    def begin_delete(self, resource_group_name: str, cluster_name: str):
+    def begin_delete(self, resource_group_name: str, cluster_name: str) -> dict:
         try:
             self.make_begin_delete_request(
                 resource_group_name=resource_group_name, cluster_name=cluster_name
@@ -108,7 +108,7 @@ class AKSApi:
             raise HTTPException(detail=e.message, status_code=400)
 
     def make_begin_delete_request(
-        self, resource_group_name: str, cluster_name
+        self, resource_group_name: str, cluster_name: str
     ) -> LROPoller:
         return self.container_client.managed_clusters.begin_delete(
             resource_group_name=resource_group_name, resource_name=cluster_name
