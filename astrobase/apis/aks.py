@@ -20,6 +20,10 @@ class AKSApi:
 
     def __init__(self) -> None:
         try:
+            assert self.AZURE_SUBSCRIPTION_ID is not None
+            assert self.AZURE_TENANT_ID is not None
+            assert self.AZURE_CLIENT_ID is not None
+            assert self.AZURE_CLIENT_SECRET is not None
             credential = ClientSecretCredential(
                 tenant_id=self.AZURE_TENANT_ID,
                 client_id=self.AZURE_CLIENT_ID,
