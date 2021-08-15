@@ -5,6 +5,7 @@
 [![codecov](https://codecov.io/gh/astrobase/astrobase/branch/main/graph/badge.svg?token=LdSYGUjerD)](https://codecov.io/gh/astrobase/astrobase)
 
 [**Why Astrobase**](#why-astrobase) |
+[**Compare Astrobase**](./docs/compare.md) |
 [**Docs**](./docs) |
 [**Who uses Astrobase?**](./docs/who-uses-astrobase.md) |
 [**Roadmap**](./docs/roadmap.md) |
