@@ -1,6 +1,6 @@
 # Who uses Astrobase?
 
-Do you use Astrobase? DM us on twitter [@astrobaseco](https://twitter.com/@astrobaseco) or drop us an [email](mailto:anthony@astrobase.co) to let us know!
+Do you use Astrobase? DM us on twitter [@astrobasecloud](https://twitter.com/astrobasecloud) or drop us an [email](mailto:anthony@astrobase.cloud) to let us know!
 
 ## Startups & Companies
 

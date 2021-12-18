@@ -6,7 +6,7 @@ on:
       - created
 
 env:
-  IMAGE_NAME: "astrobaseco/astrobase"
+  IMAGE_NAME: "astrobasecloud/astrobase"
   REGISTRY_HOST: gcr.io
 
 jobs:

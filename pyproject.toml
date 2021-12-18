@@ -5,7 +5,7 @@ build-backend = "flit_core.buildapi"
 [tool.flit.metadata]
 module = "astrobase"
 author = "Astrobase Inc."
-author-email = "anthony@astrobase.co"
+author-email = "anthony@astrobase.cloud"
 home-page = "https://www.github.com/astrobase/astrobase"
 description-file = "README.md"
 requires-python = ">=3.8"

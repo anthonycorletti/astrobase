@@ -8,7 +8,7 @@ This document outlines security procedures and general policies for this project
 
 ## Reporting a Bug
 
-Report security bugs by emailing the lead maintainer at anthony@astrobase.co.
+Report security bugs by emailing the lead maintainer at anthony@astrobase.cloud.
 
 The lead maintainer will acknowledge your email within 48 hours, and will send a
 more detailed response within 48 hours indicating the next steps in handling
