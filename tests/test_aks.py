@@ -20,7 +20,7 @@ class MockManagedCluster:
 
 def test_create_cluster(client):
     with mock.patch(
-        "astrobase.apis.aks.AKSApi.make_begin_create_or_update_request"
+        "astrobase.providers.aks.AKSApi.make_begin_create_or_update_request"
     ) as mock_make_begin_create_or_update_request:
 
         mock_make_begin_create_or_update_request.return_value = MockBeginAnyResponse(
@@ -37,7 +37,7 @@ def test_create_cluster(client):
 
 def test_get_clusters(client):
     with mock.patch(
-        "astrobase.apis.aks.AKSApi.make_get_request"
+        "astrobase.providers.aks.AKSApi.make_get_request"
     ) as mock_make_get_request:
 
         mock_make_get_request.return_value = [MockManagedCluster()]
@@ -48,7 +48,7 @@ def test_get_clusters(client):
 
 
 def test_describe_cluster(client):
-    with mock.patch("astrobase.apis.aks.AKSApi.describe") as mock_describe:
+    with mock.patch("astrobase.providers.aks.AKSApi.describe") as mock_describe:
         cluster_name = "another-cluster"
         mock_describe.return_value = MockManagedCluster(name=cluster_name)
 
@@ -61,7 +61,7 @@ def test_describe_cluster(client):
 
 def test_delete_clister(client):
     with mock.patch(
-        "astrobase.apis.aks.AKSApi.make_begin_delete_request"
+        "astrobase.providers.aks.AKSApi.make_begin_delete_request"
     ) as mock_make_begin_delete_request:
         cluster_name = "another-cluster"
         mock_make_begin_delete_request.return_value = MockBeginAnyResponse(

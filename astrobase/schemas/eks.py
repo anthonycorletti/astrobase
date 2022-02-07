@@ -3,7 +3,7 @@ from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field, validator
 
-from astrobase.helpers.name import random_name
+from astrobase.server.utils import random_name
 
 
 class EKSNodegroupScalingConfig(BaseModel):
@@ -88,6 +88,33 @@ class EKSBase(BaseModel):
 
 class EKSCreate(EKSBase):
     pass
+
+    class Config:
+        example = {
+            "name": "astrobase-test-eks",
+            "provider": "eks",
+            "region": "us-east-1",
+            "roleArn": "$CLUSTER_ROLE_ARN",
+            "resourcesVpcConfig": {
+                "subnetIds": ["$SUBNET_ID_0", "$SUBNET_ID_1"],
+                "securityGroupIds": ["$SECURITY_GROUP"],
+            },
+            "tags": {
+                "cluster_key": "cluster_value",
+                "cluster_key_2": "cluster_value_2",
+            },
+            "nodegroups": [
+                {
+                    "nodegroupName": "test-nodegroup-cpu",
+                    "scalingConfig": {"minSize": 1, "maxSize": 3, "desiredSize": 1},
+                    "nodeRole": "$NODE_ROLE_ARN",
+                    "tags": {
+                        "cluster_key": "cluster_value",
+                        "cluster_key_2": "cluster_value_2",
+                    },
+                }
+            ],
+        }
 
 
 class EKSCreateAPIFilter(BaseModel):

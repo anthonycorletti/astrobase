@@ -3,7 +3,7 @@ from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
-from astrobase.helpers.name import random_name
+from astrobase.server.utils import random_name
 
 
 @unique
@@ -90,6 +90,33 @@ class GKEBase(BaseModel):
 
 class GKECreate(GKEBase):
     pass
+
+    class Config:
+        example = {
+            "name": "astrobase-test-gke",
+            "provider": "gke",
+            "location": "us-central1-c",
+            "project_id": "$PROJECT_ID",
+            "resourceLabels": {
+                "resource_label_key": "resource_label_value",
+                "resource_env": "dev",
+            },
+            "nodePools": [
+                {
+                    "name": "cpu-test-nodepool",
+                    "initialNodeCount": 1,
+                    "autoscaling": {
+                        "enabled": True,
+                        "minNodeCount": 1,
+                        "maxNodeCount": 3,
+                    },
+                    "config": {
+                        "metadata": {"gce_key": "gce_value"},
+                        "labels": {"kube_node_key": "kube_node_value"},
+                    },
+                }
+            ],
+        }
 
 
 class GKECreateAPIFilter(BaseModel):

@@ -5,7 +5,9 @@ from azure.mgmt.containerservice.models import (
     AgentPoolMode,
     ContainerServiceVMSizeTypes,
 )
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+
+from astrobase.server.utils import random_name
 
 
 class ServicePrincipalProfile(BaseModel):
@@ -27,7 +29,7 @@ class AgentPoolProfiles(BaseModel):
 
 
 class AKSBase(BaseModel):
-    name: str
+    name: str = Field(default_factory=random_name)
     location: str
     dns_prefix: str
     resource_group_name: str
@@ -39,3 +41,21 @@ class AKSBase(BaseModel):
 
 class AKSCreate(AKSBase):
     pass
+
+    class Config:
+        example = {
+            "name": "astrobase-test-aks",
+            "provider": "aks",
+            "location": "eastus",
+            "dns_prefix": "astrobase-test-aks",
+            "resource_group_name": "$RESOURCE_GROUP_NAME",
+            "tags": {"name": "astrobase-test-aks", "env": "dev"},
+            "agent_pool_profiles": [
+                {
+                    "name": "cpu",
+                    "mode": "System",
+                    "tags": {"name": "astrobase-test-aks", "env": "dev"},
+                    "node_labels": {"name": "cpu", "env": "dev"},
+                }
+            ],
+        }

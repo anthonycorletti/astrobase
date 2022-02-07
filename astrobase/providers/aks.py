@@ -8,8 +8,8 @@ from azure.mgmt.containerservice import ContainerServiceClient
 from azure.mgmt.containerservice.models import ManagedCluster, ManagedClusterListResult
 from fastapi import HTTPException
 
-from astrobase.config.logger import logger
 from astrobase.schemas.aks import AKSCreate
+from astrobase.server.logger import logger
 
 
 class AKSApi:

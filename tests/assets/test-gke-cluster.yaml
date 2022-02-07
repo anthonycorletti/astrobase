@@ -1,9 +1,9 @@
-apiVersion: v0
+---
 clusters:
     - name: astrobase-test-gke
       provider: gke
       location: us-central1-c
-      project_id: $PROJECT_ID
+      project_id: astrobase-dev-1644194311
       resourceLabels:
           resource_label_key: resource_label_value
           resource_env: dev

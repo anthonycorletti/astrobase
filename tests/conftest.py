@@ -1,21 +1,22 @@
 import os
+from typing import Any, Dict, Generator
 from unittest.mock import patch
 
 import boto3
 import pytest
 from starlette.testclient import TestClient
 
-from astrobase.main import api
+from astrobase.server.main import api
 
 
 @pytest.fixture(scope="session")
-def client():
+def client() -> Generator:
     with TestClient(api) as client:
         yield client
 
 
 @pytest.fixture(scope="session")
-def eks_mock():
+def eks_mock() -> Generator:
     os.environ["AWS_REGION"] = "us-east-1"
     os.environ["AWS_DEFAULT_REGION"] = "us-east-1"
     os.environ["AWS_ACCESS_KEY_ID"] = "foo"
@@ -24,8 +25,8 @@ def eks_mock():
 
     eks_client = boto3.client("eks")
 
-    def eks_func(*args, **kwargs):
+    def eks_func(*args: Any, **kwargs: Dict[str, Any]) -> Any:
         return eks_client
 
-    with patch("astrobase.apis.eks.boto3.client", eks_func):
+    with patch("astrobase.providers.eks.boto3.client", eks_func):
         yield eks_func

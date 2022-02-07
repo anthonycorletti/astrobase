@@ -4,7 +4,7 @@ from typing import List
 import boto3
 from fastapi import HTTPException
 
-from astrobase.config.logger import logger
+from astrobase.server.logger import logger
 from astrobase.schemas.eks import EKSCreate, EKSCreateAPIFilter
 
 

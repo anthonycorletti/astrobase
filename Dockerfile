@@ -1,13 +1,12 @@
-FROM python:3.9.0-slim
+FROM python:3.9.7-slim
 
 WORKDIR /astrobase
 
 COPY . /astrobase
 
 RUN apt-get update -y \
-    && apt-get install build-essential -y \
     && rm -rf /var/lib/apt/lists/* \
     && pip install flit \
-    && FLIT_ROOT_INSTALL=1 flit install --deps=all --extras=all
+    && FLIT_ROOT_INSTALL=1 flit install --deps=production --extras=all
 
-CMD gunicorn astrobase.main:api -c astrobase/config/gunicorn.py
+CMD gunicorn astrobase.server.main:api -c astrobase/server/gunicorn_config.py
