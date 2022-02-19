@@ -1,7 +1,7 @@
 import typer
 import yaml
 
-from astrobase.cli.client import AstrobaseClient
+from astrobase.providers.main import AstrobaseClient
 
 app = typer.Typer(help="""Manage Kubernetes Clusters.""")
 
@@ -9,7 +9,7 @@ app = typer.Typer(help="""Manage Kubernetes Clusters.""")
 @app.command("create")
 def _create(
     spec_filepath: str = typer.Option(
-        "--file", "-f", help="Path to an Astrobase cluster spec."
+        ..., "--file", "-f", help="Path to an Astrobase cluster spec."
     )
 ) -> None:
     """Create one or many Kubernetes clusters."""

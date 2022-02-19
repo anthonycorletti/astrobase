@@ -7,24 +7,19 @@ name = "astrobase"
 authors = [{name = "Astrobase Inc.", email = "anthony@astrobase.cloud"}]
 dynamic = ["version", "description"]
 readme = "README.md"
-requires-python = ">=3.9.7"
+requires-python = ">=3.9.10"
 dependencies = [
-    "fastapi>=0.72.0",
+    "fastapi>=0.74.0",
     "typer>=0.4.0",
     "gunicorn>=20.1.0",
     "uvicorn>=0.17.0",
     "PyYaml>=6.0",
-    "boto3>=1.20.37",
-    "google-api-python-client>=2.35.0",
-    "azure-identity>=1.7.1",
-    "azure-mgmt-resource>=20.0.0",
-    "azure-mgmt-containerservice>=16.4.0",
-    "msrestazure>=0.6.4"
+    "google-cloud-container>=2.10.3"
 ]
 
 [project.urls]
 Home = "https://www.github.com/astrobase/astrobase"
-Documentation = "https://www.github.com/astrobase/astrobase/docs"
+Documentation = "https://astrobase.cloud"
 
 [project.scripts]
 astrobase = "astrobase.cli.main:app"
@@ -32,12 +27,17 @@ astrobase = "astrobase.cli.main:app"
 [project.optional-dependencies]
 test = [
     "pytest>=6.2.5",
-    "mypy>=0.931",
+    "mypy>=0.910",
     "coverage>=6.2",
     "pytest-cov>=3.0.0",
     "requests-mock>=1.9.3",
     "types-PyYAML>=6.0.3",
     "types-requests>=2.27.8"
+]
+doc = [
+    "mkdocs>=1.1.2,<2.0.0",
+    "mkdocs-material>=8.1.4,<9.0.0",
+    "mdx-include>=1.4.1,<2.0.0",
 ]
 dev = [
     "flake8>=4.0.1",

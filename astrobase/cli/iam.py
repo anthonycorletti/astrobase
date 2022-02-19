@@ -13,11 +13,6 @@ def _get() -> None:
     pass
 
 
-@app.command("list")
-def _list() -> None:
-    pass
-
-
 @app.command("delete")
 def _delete() -> None:
     pass

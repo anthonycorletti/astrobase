@@ -3,14 +3,14 @@ import os
 
 from typer.testing import CliRunner
 
-from astrobase.cli.config import AstrobaseConfig
+from astrobase.cli.config import AstrobaseCLIConfig
 from astrobase.cli.main import app
 
 runner = CliRunner()
 
 
 def test_profile_create() -> None:
-    test_profile_name = os.getenv(AstrobaseConfig.ASTROBASE_PROFILE)
+    test_profile_name = os.getenv(AstrobaseCLIConfig.ASTROBASE_PROFILE_NAME)
     result = runner.invoke(
         app,
         [
@@ -30,7 +30,7 @@ def test_profile_create() -> None:
 
 
 def test_profile_get() -> None:
-    test_profile_name = os.getenv(AstrobaseConfig.ASTROBASE_PROFILE)
+    test_profile_name = os.getenv(AstrobaseCLIConfig.ASTROBASE_PROFILE_NAME)
     result = runner.invoke(app, ["profile", "get"])
     assert result.exit_code == 0
     config = json.loads(result.stdout)
@@ -45,7 +45,7 @@ def test_profile_get() -> None:
 
 
 def test_profile_current() -> None:
-    test_profile_name = os.getenv(AstrobaseConfig.ASTROBASE_PROFILE)
+    test_profile_name = os.getenv(AstrobaseCLIConfig.ASTROBASE_PROFILE_NAME)
     result = runner.invoke(app, ["profile", "current"])
     assert result.exit_code == 0
     profile = json.loads(result.stdout)
@@ -54,7 +54,7 @@ def test_profile_current() -> None:
 
 
 def test_profile_delete() -> None:
-    test_profile_name = os.getenv(AstrobaseConfig.ASTROBASE_PROFILE)
+    test_profile_name = os.getenv(AstrobaseCLIConfig.ASTROBASE_PROFILE_NAME)
     result = runner.invoke(app, ["profile", "delete", "--name", test_profile_name])
     assert result.exit_code == 0
     assert f"Deleted {test_profile_name} profile" in result.stdout
@@ -64,9 +64,10 @@ def test_profile_delete() -> None:
 
 
 def test_profile_current_not_set() -> None:
-    del os.environ[AstrobaseConfig.ASTROBASE_PROFILE]
+    del os.environ[AstrobaseCLIConfig.ASTROBASE_PROFILE_NAME]
     result = runner.invoke(app, ["profile", "current"])
     assert result.exit_code == 1
     assert (
-        "ASTROBASE_PROFILE environment variable is not set properly." in result.stdout
+        "ASTROBASE_PROFILE_NAME environment variable is not set properly."
+        in result.stdout
     )

@@ -10,7 +10,7 @@ def test_create_cluster(client):
         "astrobase.providers.gke.GKEApi.make_create_request"
     ) as mock_gke_api_request:
         mock_gke_api_request.return_value = {"name": "astrobase-gke-api"}
-        response = client.post("/gke", json=cluster_examples.gke_example())
+        response = client.post("/gcp", json=cluster_examples.gke_example())
         assert response.status_code == 200
         assert response.json().get("name") == "astrobase-gke-api"
 
@@ -21,7 +21,7 @@ def test_get_clusters(client):
     ) as mock_gke_api_request:
         mock_gke_api_request.return_value = {"name": "astrobase-gke-api"}
         response = client.get(
-            "/gke?project_id=test&location=us-central1",
+            "/gcp?project_id=test&location=us-central1",
             json=cluster_examples.gke_example(),
         )
         assert response.status_code == 200
@@ -34,7 +34,7 @@ def test_describe_cluster(client):
     ) as mock_gke_api_request:
         mock_gke_api_request.return_value = {"name": "astrobase-gke-api"}
         response = client.get(
-            "/gke/astrobase-gke-api?project_id=test&location=us-central1"
+            "/gcp/astrobase-gke-api?project_id=test&location=us-central1"
         )
         assert response.status_code == 200
         assert response.json().get("name") == "astrobase-gke-api"
@@ -43,6 +43,6 @@ def test_describe_cluster(client):
 def test_delete_clister(client):
     with mock.patch("astrobase.providers.gke.GKEApi.make_delete_request"):
         response = client.delete(
-            "/gke/astrobase-gke-api?project_id=test&location=us-central1"
+            "/gcp/astrobase-gke-api?project_id=test&location=us-central1"
         )
         assert response.status_code == 200

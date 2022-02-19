@@ -1,19 +1,19 @@
 ---
 clusters:
-    - name: astrobase-test-gke
-      provider: gke
+    - name: my-gke-cluster
+      provider: gcp
       location: us-central1-c
       project_id: astrobase-dev-1644194311
-      resourceLabels:
+      resource_labels:
           resource_label_key: resource_label_value
           resource_env: dev
-      nodePools:
-          - name: cpu-test-nodepool
-            initialNodeCount: 1
+      node_pools:
+          - name: my-nodepool
+            initial_node_count: 1
             autoscaling:
                 enabled: true
-                minNodeCount: 1
-                maxNodeCount: 3
+                min_node_count: 1
+                max_node_count: 3
             config:
                 metadata:
                     gce_key: gce_value

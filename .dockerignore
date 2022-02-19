@@ -163,3 +163,8 @@ shippable
 
 tmp/
 .pytest_cache/
+
+examples
+docs
+scripts
+tests

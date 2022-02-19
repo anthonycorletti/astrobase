@@ -7,10 +7,9 @@ from astrobase import __version__
 from astrobase.server.logger import logger
 
 router = APIRouter()
-tags = ["health"]
 
 
-@router.get("/healthcheck", tags=tags)
+@router.get("/healthcheck", tags=["health"])
 def healthcheck() -> dict:
     message = "We're on the air."
     logger.info(message)

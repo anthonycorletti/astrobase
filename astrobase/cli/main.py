@@ -3,7 +3,7 @@ import uvicorn
 
 from astrobase import __version__
 from astrobase.cli import cluster, iam, profile
-from astrobase.cli.config import AstrobaseConfig
+from astrobase.server.config import AstrobaseServerConfig
 
 name = f"Astrobase {__version__}"
 
@@ -32,9 +32,9 @@ def _server() -> None:
     """Start the Astrobase server."""
     from astrobase.server.main import api
 
-    astrobase_config = AstrobaseConfig()
+    astrobase_server_config = AstrobaseServerConfig()
     uvicorn.run(
         api,
-        port=astrobase_config.current_profile.port,
-        host=astrobase_config.current_profile.host,
+        port=astrobase_server_config.port,
+        host=astrobase_server_config.host,
     )
