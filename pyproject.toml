@@ -1,5 +1,5 @@
 [build-system]
-requires = ["flit_core >=3.2,<4"]
+requires = ["flit_core>=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
@@ -16,7 +16,11 @@ dependencies = [
     "PyYaml>=6.0",
     "google-cloud-container>=2.10.3",
     "google-cloud-service-usage>=1.2.1",
-    "pydanticprotobuf>=0.0.2"
+    "boto3>=1.17.22",
+    "azure-identity>=1.7.1",
+    "azure-mgmt-resource>=20.1.0",
+    "azure-mgmt-containerservice>=17.0.0",
+    "msrestazure>=0.6.4"
 ]
 
 [project.urls]

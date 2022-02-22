@@ -14,3 +14,13 @@ class ClusterFactory:
         example_file = f"{TEST_ASSET_DIR}/{self.GKE_EXAMPLE}"
         with open(example_file, "r") as f:
             return yaml.safe_load(f).get("clusters")[0]
+
+    def eks_example(self) -> Dict:
+        example_file = f"{TEST_ASSET_DIR}/{self.EKS_EXAMPLE}"
+        with open(example_file, "r") as f:
+            return yaml.safe_load(f).get("clusters")[0]
+
+    def aks_example(self) -> Dict:
+        example_file = f"{TEST_ASSET_DIR}/{self.EKS_EXAMPLE}"
+        with open(example_file, "r") as f:
+            return yaml.safe_load(f).get("clusters")[0]
