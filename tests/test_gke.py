@@ -1,11 +1,13 @@
 from unittest import mock
 
+from fastapi.testclient import TestClient
+
 from tests.factories import ClusterFactory
 
 cluster_examples = ClusterFactory()
 
 
-def test_create_cluster(client):
+def test_create_cluster(client: TestClient) -> None:
     with mock.patch(
         "astrobase.providers.gke.GKEApi.make_create_request"
     ) as mock_gke_api_request:
@@ -15,7 +17,7 @@ def test_create_cluster(client):
         assert response.json().get("name") == "astrobase-gke-api"
 
 
-def test_get_clusters(client):
+def test_get_clusters(client: TestClient) -> None:
     with mock.patch(
         "astrobase.providers.gke.GKEApi.make_get_request"
     ) as mock_gke_api_request:
@@ -28,7 +30,7 @@ def test_get_clusters(client):
         assert response.json().get("name") == "astrobase-gke-api"
 
 
-def test_describe_cluster(client):
+def test_describe_cluster(client: TestClient) -> None:
     with mock.patch(
         "astrobase.providers.gke.GKEApi.make_describe_request"
     ) as mock_gke_api_request:
@@ -40,7 +42,7 @@ def test_describe_cluster(client):
         assert response.json().get("name") == "astrobase-gke-api"
 
 
-def test_delete_clister(client):
+def test_delete_clister(client: TestClient) -> None:
     with mock.patch("astrobase.providers.gke.GKEApi.make_delete_request"):
         response = client.delete(
             "/gcp/astrobase-gke-api?project_id=test&location=us-central1"

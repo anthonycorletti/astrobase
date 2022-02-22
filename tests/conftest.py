@@ -1,3 +1,4 @@
+import os
 from typing import Generator
 
 import pytest
@@ -10,3 +11,10 @@ from astrobase.server.main import api
 def client() -> Generator:
     with TestClient(api) as client:
         yield client
+
+
+@pytest.fixture(scope="function")
+def astrobase_profile_name() -> str:
+    name = "test-profile"
+    os.environ["ASTROBASE_PROFILE_NAME"] = name
+    return name

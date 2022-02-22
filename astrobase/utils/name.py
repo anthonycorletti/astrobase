@@ -1,4 +1,5 @@
 import random
+import time
 
 ADJECTIVES = [
     "able",
@@ -1618,9 +1619,26 @@ COLORS = [
 ]
 
 
+def random_adjective() -> str:
+    return random.choice(ADJECTIVES)
+
+
+def random_color() -> str:
+    return random.choice(COLORS)
+
+
+def random_animal() -> str:
+    return random.choice(ANIMALS)
+
+
 def random_name() -> str:
-    result = []
-    result.append(random.choice(ADJECTIVES))
-    result.append(random.choice(COLORS))
-    result.append(random.choice(ANIMALS))
+    result = [
+        random_adjective(),
+        random_color(),
+        random_animal(),
+    ]
     return "_".join(result).lower()
+
+
+def random_gcp_project_id() -> str:
+    return f"ab-{random_color()}-{int(time.time())}"

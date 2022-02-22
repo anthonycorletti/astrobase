@@ -2,7 +2,7 @@ import typer
 import uvicorn
 
 from astrobase import __version__
-from astrobase.cli import cluster, iam, profile
+from astrobase.cli import cluster, profile, provider
 from astrobase.server.config import AstrobaseServerConfig
 
 name = f"Astrobase {__version__}"
@@ -10,7 +10,7 @@ name = f"Astrobase {__version__}"
 app = typer.Typer(name=name, no_args_is_help=True)
 app.add_typer(profile.app, name="profile", no_args_is_help=True)
 app.add_typer(cluster.app, name="cluster", no_args_is_help=True)
-app.add_typer(iam.app, name="iam", no_args_is_help=True)
+app.add_typer(provider.app, name="provider", no_args_is_help=True)
 
 
 @app.callback()

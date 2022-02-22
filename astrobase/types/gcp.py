@@ -88,10 +88,6 @@ class GKEBase(BaseModel):
 
 
 class GKECluster(GKEBase):
-    project_id: str
-
-
-class GKEClusterAPIFilter(GKEBase):
     pass
 
 
@@ -99,3 +95,26 @@ class GKEClusterOperationResponse(BaseModel):
     operation_type: str
     self_link: str
     target_link: str
+
+
+class GCPProjectCreateOperationResponse(BaseModel):
+    name: str
+    done: str
+
+
+class GCPSetupSpec(BaseModel):
+    project_id: str
+
+    class Config:
+        schema_extra = {"example": {"project_id": "my-project-123"}}
+
+
+@unique
+class GCPServiceNames(str, Enum):
+    container = "container.googleapis.com"
+
+
+class GKEClusterRead(BaseModel):
+    name: str
+    location: str
+    project_id: str

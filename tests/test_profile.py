@@ -9,14 +9,13 @@ from astrobase.cli.main import app
 runner = CliRunner()
 
 
-def test_profile_create() -> None:
-    test_profile_name = os.getenv(AstrobaseCLIConfig.ASTROBASE_PROFILE_NAME)
+def test_profile_create(astrobase_profile_name: str) -> None:
     result = runner.invoke(
         app,
         [
             "profile",
             "create",
-            test_profile_name,
+            astrobase_profile_name,
             "--gcp-creds",
             "test-gcp",
             "--aws-creds",
@@ -26,16 +25,15 @@ def test_profile_create() -> None:
         ],
     )
     assert result.exit_code == 0
-    assert f"Created profile {test_profile_name}" in result.stdout
+    assert f"Created profile {astrobase_profile_name}" in result.stdout
 
 
-def test_profile_get() -> None:
-    test_profile_name = os.getenv(AstrobaseCLIConfig.ASTROBASE_PROFILE_NAME)
+def test_profile_get(astrobase_profile_name: str) -> None:
     result = runner.invoke(app, ["profile", "get"])
     assert result.exit_code == 0
     config = json.loads(result.stdout)
-    assert test_profile_name in config
-    result = runner.invoke(app, ["profile", "get", "--name", test_profile_name])
+    assert astrobase_profile_name in config
+    result = runner.invoke(app, ["profile", "get", "--name", astrobase_profile_name])
     assert result.exit_code == 0
     config = json.loads(result.stdout)
     assert "server" in config
@@ -44,26 +42,24 @@ def test_profile_get() -> None:
     assert "profile noname not found" in result.stdout
 
 
-def test_profile_current() -> None:
-    test_profile_name = os.getenv(AstrobaseCLIConfig.ASTROBASE_PROFILE_NAME)
+def test_profile_current(astrobase_profile_name: str) -> None:
     result = runner.invoke(app, ["profile", "current"])
     assert result.exit_code == 0
     profile = json.loads(result.stdout)
-    assert profile.get("name") == test_profile_name
+    assert profile.get("name") == astrobase_profile_name
     assert profile.get("server") == "http://localhost:8787"
 
 
-def test_profile_delete() -> None:
-    test_profile_name = os.getenv(AstrobaseCLIConfig.ASTROBASE_PROFILE_NAME)
-    result = runner.invoke(app, ["profile", "delete", "--name", test_profile_name])
+def test_profile_delete(astrobase_profile_name: str) -> None:
+    result = runner.invoke(app, ["profile", "delete", "--name", astrobase_profile_name])
     assert result.exit_code == 0
-    assert f"Deleted {test_profile_name} profile" in result.stdout
-    result = runner.invoke(app, ["profile", "delete", "--name", test_profile_name])
+    assert f"Deleted {astrobase_profile_name} profile" in result.stdout
+    result = runner.invoke(app, ["profile", "delete", "--name", astrobase_profile_name])
     assert result.exit_code == 0
-    assert f"Profile {test_profile_name} not found" in result.stdout
+    assert f"Profile {astrobase_profile_name} not found" in result.stdout
 
 
-def test_profile_current_not_set() -> None:
+def test_profile_current_not_set(astrobase_profile_name: str) -> None:
     del os.environ[AstrobaseCLIConfig.ASTROBASE_PROFILE_NAME]
     result = runner.invoke(app, ["profile", "current"])
     assert result.exit_code == 1
