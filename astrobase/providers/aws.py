@@ -6,7 +6,7 @@ from fastapi import HTTPException
 
 from astrobase.providers._provider import Provider
 from astrobase.server.logger import logger
-from astrobase.types.aws import EKSCreate, EKSCreateAPIFilter
+from astrobase.types.aws import EKSCluster, EKSClusterAPIFilter
 
 
 class AWSProvider(Provider):
@@ -25,8 +25,8 @@ class AWSProvider(Provider):
                 "specificed those credentials in ~/.aws/credentials.",
             )
 
-    def create(self, cluster_create: EKSCreate) -> None:
-        cluster_data = EKSCreateAPIFilter(**cluster_create.dict())
+    def create(self, eks_cluster: EKSCluster) -> None:
+        cluster_data = EKSClusterAPIFilter(**eks_cluster.dict())
         cluster = self.client.create_cluster(**cluster_data.dict())
 
         if cluster:
@@ -44,7 +44,7 @@ class AWSProvider(Provider):
                 cluster_status = self.cluster_status(cluster_data.name)
                 count += 1
 
-        for nodegroup in cluster_create.nodegroups:
+        for nodegroup in eks_cluster.nodegroups:
             try:
                 self.client.create_nodegroup(**nodegroup.dict())
             except Exception as e:

@@ -86,11 +86,11 @@ class EKSBase(BaseModel):
         return v
 
 
-class EKSCreate(EKSBase):
+class EKSCluster(EKSBase):
     pass
 
 
-class EKSCreateAPIFilter(BaseModel):
+class EKSClusterAPIFilter(BaseModel):
     name: str
     roleArn: str
     resourcesVpcConfig: ResourcesVpcConfig

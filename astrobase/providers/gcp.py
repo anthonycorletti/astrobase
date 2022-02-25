@@ -5,6 +5,7 @@ from google.cloud.container_v1 import (
     ClusterManagerAsyncClient,
     CreateClusterRequest,
     DeleteClusterRequest,
+    GetClusterRequest,
     ListClustersRequest,
     ListClustersResponse,
     Operation,
@@ -25,6 +26,12 @@ class GCPProvider(Provider):
 
     def _parent(self, project_id: str, location: str) -> str:
         return f"projects/{project_id}/locations/{location}"
+
+    def _name(self, project_id: str, location: str, cluster_id: str) -> str:
+        return (
+            f"{self._parent(project_id=project_id, location=location)}"
+            f"/clusters/{cluster_id}"
+        )
 
     def _enable_project_request_name(self, project_id: str, service_name: str) -> str:
         return f"projects/{project_id}/services/{service_name}"
@@ -74,6 +81,23 @@ class GCPProvider(Provider):
         request = ListClustersRequest(parent=parent)
         try:
             response = await self.cluster_manager_async_client.list_clusters(
+                request=request
+            )
+            return response
+        except GoogleAPICallError as e:
+            if e.code is None:
+                e.code = 500
+            raise HTTPException(status_code=e.code, detail=e.message)
+
+    async def describe(
+        self, project_id: str, location: str, cluster_name: str
+    ) -> Cluster:
+        name = self._name(
+            project_id=project_id, location=location, cluster_id=cluster_name
+        )
+        request = GetClusterRequest(name=name)
+        try:
+            response = await self.cluster_manager_async_client.get_cluster(
                 request=request
             )
             return response

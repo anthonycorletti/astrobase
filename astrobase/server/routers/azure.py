@@ -1,43 +1,44 @@
-from typing import Dict, List
+from typing import List
 
 from azure.mgmt.containerservice.models import ManagedCluster
 from fastapi import APIRouter, Body
 
 from astrobase.providers.azure import AzureProvider
-from astrobase.types.azure import AKSCreate
+from astrobase.types.azure import AKSCluster, AKSClusterOperationResponse
 from astrobase.types.provider import ProviderName
 
 router = APIRouter(tags=[ProviderName.azure], prefix="/azure")
 azure_provider = AzureProvider()
 
 
-@router.post("/aks")
-def create_aks_cluster(cluster_create: AKSCreate = Body(...)) -> Dict:
+@router.post("/cluster", response_model=AKSClusterOperationResponse)
+def create_aks_cluster(
+    cluster_create: AKSCluster = Body(...),
+) -> AKSClusterOperationResponse:
     return azure_provider.create(
         resource_group_name=cluster_create.resource_group_name,
         cluster_create=cluster_create,
     )
 
 
-@router.get("/aks")
-def get_aks_clusters(resource_group_name: str) -> List[Dict]:
+@router.get("/cluster", response_model=List[AKSCluster])
+def get_aks_clusters(resource_group_name: str) -> List[AKSCluster]:
     return azure_provider.get(resource_group_name=resource_group_name)
 
 
-@router.get("/aks/{cluster_name}")
-def describe_aks_cluster(
-    cluster_name: str,
-    resource_group_name: str,
-) -> ManagedCluster:
+@router.get("/cluster/{cluster_name}", response_model=AKSCluster)
+def describe_aks_cluster(cluster_name: str, resource_group_name: str) -> ManagedCluster:
     return azure_provider.describe(
         resource_group_name=resource_group_name,
         cluster_name=cluster_name,
     )
 
 
-@router.delete("/aks/{cluster_name}")
-def delete_aks_cluster(cluster_name: str, resource_group_name: str) -> Dict:
+@router.delete("/cluster", response_model=AKSClusterOperationResponse)
+def delete_aks_cluster(
+    cluster_create: AKSCluster = Body(...),
+) -> AKSClusterOperationResponse:
     return azure_provider.begin_delete(
-        resource_group_name=resource_group_name,
-        cluster_name=cluster_name,
+        resource_group_name=cluster_create.resource_group_name,
+        cluster_name=cluster_create.name,
     )

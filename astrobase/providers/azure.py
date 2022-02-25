@@ -10,7 +10,7 @@ from fastapi import HTTPException
 
 from astrobase.providers._provider import Provider
 from astrobase.server.logger import logger
-from astrobase.types.azure import AKSCreate
+from astrobase.types.azure import AKSCluster, AKSClusterOperationResponse
 
 
 class AzureProvider(Provider):
@@ -43,20 +43,22 @@ class AzureProvider(Provider):
                 f"Full exception:\n{e}"
             )
 
-    def create(self, resource_group_name: str, cluster_create: AKSCreate) -> dict:
+    def create(
+        self, resource_group_name: str, cluster_create: AKSCluster
+    ) -> AKSClusterOperationResponse:
         try:
             self.make_begin_create_or_update_request(
                 resource_group_name=resource_group_name, cluster_create=cluster_create
             )
-            return {
-                "message": f"AKS create request submitted for {cluster_create.name}"
-            }
+            return AKSClusterOperationResponse(
+                message=f"AKS create request submitted for {cluster_create.name}"
+            )
         except ResourceExistsError as e:
             logger.error(f"Create AKS cluster failed with: {e.message}")
             raise HTTPException(detail=e.message, status_code=400)
 
     def make_begin_create_or_update_request(
-        self, resource_group_name: str, cluster_create: AKSCreate
+        self, resource_group_name: str, cluster_create: AKSCluster
     ) -> LROPoller[ManagedCluster]:
         return self.container_client.managed_clusters.begin_create_or_update(
             resource_group_name=resource_group_name,
@@ -64,10 +66,10 @@ class AzureProvider(Provider):
             parameters=cluster_create.dict(),
         )
 
-    def get(self, resource_group_name: str) -> List[dict]:
+    def get(self, resource_group_name: str) -> List[AKSCluster]:
         try:
             return [
-                cluster.as_dict()
+                AKSCluster(**cluster.as_dict())
                 for cluster in self.make_get_request(
                     resource_group_name=resource_group_name
                 )
@@ -97,14 +99,16 @@ class AzureProvider(Provider):
             )
             raise HTTPException(detail=e.message, status_code=400)
 
-    def begin_delete(self, resource_group_name: str, cluster_name: str) -> dict:
+    def begin_delete(
+        self, resource_group_name: str, cluster_name: str
+    ) -> AKSClusterOperationResponse:
         try:
             self.make_begin_delete_request(
                 resource_group_name=resource_group_name, cluster_name=cluster_name
             )
-            return {
-                "message": f"AKS delete request submitted for {cluster_name}",
-            }
+            return AKSClusterOperationResponse(
+                message=f"AKS delete request submitted for {cluster_name}"
+            )
         except ResourceNotFoundError as e:
             logger.error(
                 f"Delete AKS cluster {cluster_name} failed for resource "

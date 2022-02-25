@@ -4,7 +4,6 @@ from fastapi import APIRouter, Body
 from google.cloud.container_v1.types import Cluster
 
 from astrobase.providers.gcp import GCPProvider
-from astrobase.server.logger import logger
 from astrobase.types.gcp import (
     GCPProjectCreateOperationResponse,
     GCPSetupSpec,
@@ -57,8 +56,21 @@ async def _get_gke_cluster(project_id: str, location: str) -> List[GKEClusterRea
         )
         for cluster in result.clusters
     ]
-    logger.info(data)
     return data
+
+
+@router.get(path="/cluster/{cluster_name}", response_model=List[GKEClusterRead])
+async def _describe_gke_cluster(
+    project_id: str, location: str, cluster_name: str
+) -> GKEClusterRead:
+    result = await gcp_provider.describe(
+        project_id=project_id, location=location, cluster_name=cluster_name
+    )
+    return GKEClusterRead(
+        name=result.name,
+        location=location,
+        project_id=project_id,
+    )
 
 
 @router.delete(path="/cluster", response_model=GKEClusterOperationResponse)

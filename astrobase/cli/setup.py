@@ -16,4 +16,4 @@ def _gcp(
 ) -> None:
     ab_client = AstrobaseGCPClient()
     setup_spec = GCPSetupSpec(project_id=project_id)
-    ab_client.setup_provider(setup_spec=setup_spec.dict())
+    ab_client.setup_provider(setup_spec=GCPSetupSpec(**setup_spec.dict()))

@@ -37,5 +37,9 @@ class AKSBase(BaseModel):
     tags: Dict[str, str] = {}
 
 
-class AKSCreate(AKSBase):
+class AKSCluster(AKSBase):
     pass
+
+
+class AKSClusterOperationResponse(BaseModel):
+    message: str
