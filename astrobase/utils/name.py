@@ -1,5 +1,4 @@
 import random
-import time
 
 ADJECTIVES = [
     "able",
@@ -1638,7 +1637,3 @@ def random_name() -> str:
         random_animal(),
     ]
     return "_".join(result).lower()
-
-
-def random_gcp_project_id() -> str:
-    return f"ab-{random_color()}-{int(time.time())}"

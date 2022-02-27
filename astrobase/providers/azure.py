@@ -20,6 +20,9 @@ class AzureProvider(Provider):
     AZURE_CLIENT_SECRET = os.getenv("AZURE_CLIENT_SECRET")
 
     def __init__(self) -> None:
+        pass
+
+    def container_client(self) -> ContainerServiceClient:
         try:
             assert self.AZURE_SUBSCRIPTION_ID is not None
             assert self.AZURE_TENANT_ID is not None
@@ -30,11 +33,10 @@ class AzureProvider(Provider):
                 client_id=self.AZURE_CLIENT_ID,
                 client_secret=self.AZURE_CLIENT_SECRET,
             )
-            container_client = ContainerServiceClient(
+            return ContainerServiceClient(
                 credential=credential,
                 subscription_id=self.AZURE_SUBSCRIPTION_ID,
             )
-            self.container_client = container_client
         except Exception as e:
             logger.error(
                 "Failed to create ContainerServiceClient for the api server. "
@@ -60,7 +62,7 @@ class AzureProvider(Provider):
     def make_begin_create_or_update_request(
         self, resource_group_name: str, cluster_create: AKSCluster
     ) -> LROPoller[ManagedCluster]:
-        return self.container_client.managed_clusters.begin_create_or_update(
+        return self.container_client().managed_clusters.begin_create_or_update(
             resource_group_name=resource_group_name,
             resource_name=cluster_create.name,
             parameters=cluster_create.dict(),
@@ -82,13 +84,13 @@ class AzureProvider(Provider):
             raise HTTPException(detail=e.message, status_code=400)
 
     def make_get_request(self, resource_group_name: str) -> ManagedClusterListResult:
-        return self.container_client.managed_clusters.list_by_resource_group(
+        return self.container_client().managed_clusters.list_by_resource_group(
             resource_group_name=resource_group_name
         )
 
-    def describe(self, resource_group_name: str, cluster_name: str) -> ManagedCluster:
+    def describe(self, resource_group_name: str, cluster_name: str) -> AKSCluster:
         try:
-            return self.container_client.managed_clusters.get(
+            return self.container_client().managed_clusters.get(
                 resource_group_name=resource_group_name,
                 resource_name=cluster_name,
             )
@@ -119,6 +121,6 @@ class AzureProvider(Provider):
     def make_begin_delete_request(
         self, resource_group_name: str, cluster_name: str
     ) -> LROPoller:
-        return self.container_client.managed_clusters.begin_delete(
+        return self.container_client().managed_clusters.begin_delete(
             resource_group_name=resource_group_name, resource_name=cluster_name
         )

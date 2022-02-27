@@ -41,7 +41,7 @@ def describe_eks_cluster(
 
 
 @router.get(
-    "/cluster/{cluster_name}/nodegroups",
+    "/cluster/{cluster_name}/nodegroup",
     response_model=EKSClusterListNodegroupsResponse,
 )
 def list_eks_cluster_nodegroups(
@@ -52,7 +52,7 @@ def list_eks_cluster_nodegroups(
 
 
 @router.get(
-    "/cluster/{cluster_name}/nodegroups/{nodegroup_name}",
+    "/cluster/{cluster_name}/nodegroup/{nodegroup_name}",
     response_model=EKSClusterDescribeNodegroupResponse,
 )
 def describe_eks_cluster_nodegroup(

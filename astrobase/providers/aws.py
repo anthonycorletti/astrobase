@@ -21,8 +21,10 @@ class AWSProvider(Provider):
 
     def __init__(self, region: str):
         self.region = region
+
+    def eks_client(self) -> boto3.client:
         try:
-            self.client = boto3.client("eks", region_name=self.region)
+            return boto3.client("eks", region_name=self.region)
         except Exception as e:
             logger.error("Exception: ", e)
             logger.error(
@@ -34,7 +36,8 @@ class AWSProvider(Provider):
 
     def create(self, eks_cluster: EKSCluster) -> None:
         cluster_data = EKSClusterAPIFilter(**eks_cluster.dict())
-        cluster = self.client.create_cluster(**cluster_data.dict())
+        eks_client = self.eks_client()
+        cluster = eks_client.create_cluster(**cluster_data.dict())
 
         if cluster:
             count = 0
@@ -53,7 +56,7 @@ class AWSProvider(Provider):
 
         for nodegroup in eks_cluster.nodegroups:
             try:
-                self.client.create_nodegroup(**nodegroup.dict())
+                eks_client.create_nodegroup(**nodegroup.dict())
             except Exception as e:
                 logger.error(e)
         return
@@ -68,7 +71,7 @@ class AWSProvider(Provider):
 
     def get(self) -> EKSClusterListClustersResponse:
         try:
-            return EKSClusterListClustersResponse(**self.client.list_clusters())
+            return EKSClusterListClustersResponse(**self.eks_client().list_clusters())
         except Exception as e:
             logger.error(e)
             raise HTTPException(status_code=400, detail=str(e))
@@ -76,7 +79,7 @@ class AWSProvider(Provider):
     def describe(self, cluster_name: str) -> EKSClusterDescribeClusterResponse:
         try:
             return EKSClusterDescribeClusterResponse(
-                **self.client.describe_cluster(name=cluster_name)
+                **self.eks_client().describe_cluster(name=cluster_name)
             )
         except Exception as e:
             logger.error(e)
@@ -87,7 +90,7 @@ class AWSProvider(Provider):
     ) -> EKSClusterListNodegroupsResponse:
         try:
             return EKSClusterListNodegroupsResponse(
-                **self.client.list_nodegroups(clusterName=cluster_name)
+                **self.eks_client().list_nodegroups(clusterName=cluster_name)
             )
         except Exception as e:
             logger.error(e)
@@ -98,7 +101,7 @@ class AWSProvider(Provider):
     ) -> EKSClusterDescribeNodegroupResponse:
         try:
             return EKSClusterDescribeNodegroupResponse(
-                **self.client.describe_nodegroup(
+                **self.eks_client().describe_nodegroup(
                     clusterName=cluster_name, nodegroupName=nodegroup_name
                 )
             )
@@ -107,9 +110,10 @@ class AWSProvider(Provider):
             raise HTTPException(status_code=400, detail=str(e))
 
     def delete(self, cluster_name: str, nodegroup_names: List[str]) -> None:
+        eks_client = self.eks_client()
         for nodegroup_name in nodegroup_names:
             try:
-                self.client.delete_nodegroup(
+                eks_client.delete_nodegroup(
                     clusterName=cluster_name, nodegroupName=nodegroup_name
                 )
             except Exception as e:
@@ -128,7 +132,8 @@ class AWSProvider(Provider):
                     detail="Timed out waiting for node groups to delete.",
                 )
             try:
-                self.client.delete_cluster(name=cluster_name)
+                eks_client.delete_cluster(name=cluster_name)
+                return
             except Exception as e:
                 response_attr = "response"
                 if hasattr(e, response_attr):

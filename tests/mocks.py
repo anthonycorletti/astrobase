@@ -3,6 +3,10 @@ from unittest.mock import MagicMock
 
 from google.api_core.exceptions import GoogleAPICallError
 
+from tests.factories import ClusterFactory
+
+cluster_factory = ClusterFactory()
+
 
 class MockGCPOperation:
     def __init__(self, name: str = None, done: str = None) -> None:
@@ -99,3 +103,7 @@ class MockGKEClusterManagerFailClient(MagicMock):
 class MockGKEServiceUsageFailClient(MagicMock):
     def enable_service(request: MockGCPEnableServiceRequest) -> MockGKECoreOperation:
         raise GoogleAPICallError(message="Failed to enable service.")
+
+
+class MockAzureContainerClient:
+    pass

@@ -22,10 +22,33 @@ class ClusterFactory:
         with open(example_file, "r") as f:
             return yaml.safe_load(f).get("cluster")
 
+    def eks_example_complete_spec(self) -> Dict:
+        cluster_spec = self.eks_example()
+        cluster_spec[
+            "roleArn"
+        ] = "arn:aws:iam::000000000001:role/AstrobaseEKSClusterRole"
+        cluster_spec["resourcesVpcConfig"] = {}
+        cluster_spec["resourcesVpcConfig"]["subnetIds"] = [
+            "subnet-000001",
+            "subnet-000002",
+        ]
+        cluster_spec["resourcesVpcConfig"]["securityGroupIds"] = [
+            "sg-000001",
+            "sg-000001",
+        ]
+        for ng in cluster_spec["nodegroups"]:
+            ng["nodeRole"] = "arn:aws:iam::000000000001:role/AstrobaseEKSNodegroupRole"
+        return cluster_spec
+
     def aks_example(self) -> Dict:
-        example_file = f"{TEST_ASSET_DIR}/{self.EKS_EXAMPLE}"
+        example_file = f"{TEST_ASSET_DIR}/{self.AKS_EXAMPLE}"
         with open(example_file, "r") as f:
             return yaml.safe_load(f).get("cluster")
+
+    def aks_example_complete_spec(self) -> Dict:
+        cluster_spec = self.aks_example()
+        cluster_spec["resource_group_name"] = "test-rg"
+        return cluster_spec
 
 
 class GCPSetupSpecFactory:

@@ -98,6 +98,10 @@ class EKSClusterAPIFilter(BaseModel):
     logging: Optional[ClusterLogging] = ClusterLogging()
 
 
+class EKSDescribeClusterAPIFilter(EKSClusterAPIFilter):
+    status: str
+
+
 class EKSClusterOperationResponse(BaseModel):
     message: str
 
@@ -107,7 +111,7 @@ class EKSClusterListClustersResponse(BaseModel):
 
 
 class EKSClusterDescribeClusterResponse(BaseModel):
-    cluster: EKSClusterAPIFilter
+    cluster: EKSDescribeClusterAPIFilter
 
 
 class EKSClusterListNodegroupsResponse(BaseModel):

@@ -1,6 +1,5 @@
 from typing import List
 
-from azure.mgmt.containerservice.models import ManagedCluster
 from fastapi import APIRouter, Body
 
 from astrobase.providers.azure import AzureProvider
@@ -27,7 +26,7 @@ def get_aks_clusters(resource_group_name: str) -> List[AKSCluster]:
 
 
 @router.get("/cluster/{cluster_name}", response_model=AKSCluster)
-def describe_aks_cluster(cluster_name: str, resource_group_name: str) -> ManagedCluster:
+def describe_aks_cluster(cluster_name: str, resource_group_name: str) -> AKSCluster:
     return azure_provider.describe(
         resource_group_name=resource_group_name,
         cluster_name=cluster_name,
