@@ -6,7 +6,14 @@ from fastapi import HTTPException
 
 from astrobase.providers._provider import Provider
 from astrobase.server.logger import logger
-from astrobase.types.aws import EKSCluster, EKSClusterAPIFilter
+from astrobase.types.aws import (
+    EKSCluster,
+    EKSClusterAPIFilter,
+    EKSClusterDescribeClusterResponse,
+    EKSClusterDescribeNodegroupResponse,
+    EKSClusterListClustersResponse,
+    EKSClusterListNodegroupsResponse,
+)
 
 
 class AWSProvider(Provider):
@@ -19,7 +26,7 @@ class AWSProvider(Provider):
         except Exception as e:
             logger.error("Exception: ", e)
             logger.error(
-                "Missing credentials for EKSApi. ",
+                "Missing AWS credentials. ",
                 "Make sure you've set your ",
                 "AWS_PROFILE environment variable and have ",
                 "specificed those credentials in ~/.aws/credentials.",
@@ -52,41 +59,54 @@ class AWSProvider(Provider):
         return
 
     def cluster_status(self, cluster_name: str) -> str:
-        return self.describe(cluster_name=cluster_name).get("cluster", {}).get("status")
+        return (
+            self.describe(cluster_name=cluster_name)
+            .dict()
+            .get("cluster", {})
+            .get("status")
+        )
 
-    def get(self) -> List[str]:
+    def get(self) -> EKSClusterListClustersResponse:
         try:
-            return self.client.list_clusters().get("clusters", [])
+            return EKSClusterListClustersResponse(**self.client.list_clusters())
         except Exception as e:
             logger.error(e)
             raise HTTPException(status_code=400, detail=str(e))
 
-    def describe(self, cluster_name: str) -> dict:
+    def describe(self, cluster_name: str) -> EKSClusterDescribeClusterResponse:
         try:
-            return self.client.describe_cluster(name=cluster_name)
+            return EKSClusterDescribeClusterResponse(
+                **self.client.describe_cluster(name=cluster_name)
+            )
         except Exception as e:
             logger.error(e)
             raise HTTPException(status_code=400, detail=str(e))
 
-    def list_cluster_nodegroups(self, cluster_name: str) -> List[dict]:
+    def list_cluster_nodegroups(
+        self, cluster_name: str
+    ) -> EKSClusterListNodegroupsResponse:
         try:
-            return self.client.list_nodegroups(clusterName=cluster_name)
+            return EKSClusterListNodegroupsResponse(
+                **self.client.list_nodegroups(clusterName=cluster_name)
+            )
         except Exception as e:
             logger.error(e)
             raise HTTPException(status_code=400, detail=str(e))
 
     def describe_cluster_nodegroup(
         self, cluster_name: str, nodegroup_name: str
-    ) -> List[dict]:
+    ) -> EKSClusterDescribeNodegroupResponse:
         try:
-            return self.client.describe_nodegroup(
-                clusterName=cluster_name, nodegroupName=nodegroup_name
+            return EKSClusterDescribeNodegroupResponse(
+                **self.client.describe_nodegroup(
+                    clusterName=cluster_name, nodegroupName=nodegroup_name
+                )
             )
         except Exception as e:
             logger.error(e)
             raise HTTPException(status_code=400, detail=str(e))
 
-    def delete(self, cluster_name: str, nodegroup_names: List[str]) -> dict:
+    def delete(self, cluster_name: str, nodegroup_names: List[str]) -> None:
         for nodegroup_name in nodegroup_names:
             try:
                 self.client.delete_nodegroup(
@@ -109,10 +129,6 @@ class AWSProvider(Provider):
                 )
             try:
                 self.client.delete_cluster(name=cluster_name)
-                return {
-                    "cluster_name": cluster_name,
-                    "nodegroup_names": nodegroup_names,
-                }
             except Exception as e:
                 response_attr = "response"
                 if hasattr(e, response_attr):

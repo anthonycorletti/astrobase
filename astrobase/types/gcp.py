@@ -92,7 +92,7 @@ class GKECluster(GKEBase):
 
 
 class GKEClusterOperationResponse(BaseModel):
-    operation_type: str
+    operation: str
     self_link: str
     target_link: str
 
@@ -102,16 +102,22 @@ class GCPProjectCreateOperationResponse(BaseModel):
     done: str
 
 
+@unique
+class GCPServiceName(str, Enum):
+    container = "container.googleapis.com"
+
+
 class GCPSetupSpec(BaseModel):
     project_id: str
+    service_name: GCPServiceName
 
     class Config:
-        schema_extra = {"example": {"project_id": "my-project-123"}}
-
-
-@unique
-class GCPServiceNames(str, Enum):
-    container = "container.googleapis.com"
+        schema_extra = {
+            "example": {
+                "project_id": "my-project-123",
+                "service_name": "container.googleapis.com",
+            }
+        }
 
 
 class GKEClusterRead(BaseModel):

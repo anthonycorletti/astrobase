@@ -96,3 +96,23 @@ class EKSClusterAPIFilter(BaseModel):
     resourcesVpcConfig: ResourcesVpcConfig
     tags: Optional[Dict[str, str]] = {}
     logging: Optional[ClusterLogging] = ClusterLogging()
+
+
+class EKSClusterOperationResponse(BaseModel):
+    message: str
+
+
+class EKSClusterListClustersResponse(BaseModel):
+    clusters: List[str]
+
+
+class EKSClusterDescribeClusterResponse(BaseModel):
+    cluster: EKSClusterAPIFilter
+
+
+class EKSClusterListNodegroupsResponse(BaseModel):
+    nodegroups: List[str]
+
+
+class EKSClusterDescribeNodegroupResponse(BaseModel):
+    nodegroup: EKSNodegroup

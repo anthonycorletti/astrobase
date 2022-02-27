@@ -18,11 +18,10 @@ gcp_provider = GCPProvider()
 
 
 @router.post(path="/setup", response_model=GCPProjectCreateOperationResponse)
-async def _setup_gcp(
+def _setup_gcp(
     setup_spec: GCPSetupSpec = Body(...),
 ) -> GCPProjectCreateOperationResponse:
-    provider = GCPProvider()
-    response = await provider.setup(setup_spec=setup_spec)
+    response = gcp_provider.setup(setup_spec=setup_spec)
     return GCPProjectCreateOperationResponse(
         done=response.operation.done,
         name=response.operation.name,
@@ -30,24 +29,24 @@ async def _setup_gcp(
 
 
 @router.post(path="/cluster", response_model=GKEClusterOperationResponse)
-async def _create_gke_cluster(
+def _create_gke_cluster(
     project_id: str,
     cluster: GKECluster = Body(...),
 ) -> GKEClusterOperationResponse:
-    result = await gcp_provider.create_cluster_async(
+    result = gcp_provider.create_cluster(
         project_id=project_id,
         cluster=Cluster(**GKECluster(**cluster.dict()).dict()),
     )
     return GKEClusterOperationResponse(
-        operation_type=str(result.operation_type.name),
+        operation=str(result.operation.name),
         self_link=result.self_link,
         target_link=result.target_link,
     )
 
 
 @router.get(path="/cluster", response_model=List[GKEClusterRead])
-async def _get_gke_cluster(project_id: str, location: str) -> List[GKEClusterRead]:
-    result = await gcp_provider.get(project_id=project_id, location=location)
+def _get_gke_cluster(project_id: str, location: str) -> List[GKEClusterRead]:
+    result = gcp_provider.get(project_id=project_id, location=location)
     data = [
         GKEClusterRead(
             name=cluster.name,
@@ -59,11 +58,11 @@ async def _get_gke_cluster(project_id: str, location: str) -> List[GKEClusterRea
     return data
 
 
-@router.get(path="/cluster/{cluster_name}", response_model=List[GKEClusterRead])
-async def _describe_gke_cluster(
+@router.get(path="/cluster/{cluster_name}", response_model=GKEClusterRead)
+def _describe_gke_cluster(
     project_id: str, location: str, cluster_name: str
 ) -> GKEClusterRead:
-    result = await gcp_provider.describe(
+    result = gcp_provider.describe(
         project_id=project_id, location=location, cluster_name=cluster_name
     )
     return GKEClusterRead(
@@ -74,16 +73,16 @@ async def _describe_gke_cluster(
 
 
 @router.delete(path="/cluster", response_model=GKEClusterOperationResponse)
-async def _delete_gke_cluster(
+def _delete_gke_cluster(
     project_id: str,
     cluster: GKECluster = Body(...),
 ) -> GKEClusterOperationResponse:
-    result = await gcp_provider.delete_cluster_async(
+    result = gcp_provider.delete_cluster(
         project_id=project_id,
         cluster=Cluster(**GKECluster(**cluster.dict()).dict()),
     )
     return GKEClusterOperationResponse(
-        operation_type=str(result.operation_type.name),
+        operation=str(result.operation.name),
         self_link=result.self_link,
         target_link=result.target_link,
     )
