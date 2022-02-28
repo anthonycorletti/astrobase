@@ -8,6 +8,7 @@ from astrobase.types.gcp import (
     GCPProjectCreateOperationResponse,
     GCPSetupSpec,
     GKECluster,
+    GKEClusterApiFilter,
     GKEClusterOperationResponse,
     GKEClusterRead,
 )
@@ -30,12 +31,11 @@ def _setup_gcp(
 
 @router.post(path="/cluster", response_model=GKEClusterOperationResponse)
 def _create_gke_cluster(
-    project_id: str,
     cluster: GKECluster = Body(...),
 ) -> GKEClusterOperationResponse:
     result = gcp_provider.create_cluster(
-        project_id=project_id,
-        cluster=Cluster(**GKECluster(**cluster.dict()).dict()),
+        project_id=cluster.project_id,
+        cluster=Cluster(**GKEClusterApiFilter(**cluster.dict()).dict()),
     )
     return GKEClusterOperationResponse(
         operation=str(result.operation.name),
@@ -74,12 +74,11 @@ def _describe_gke_cluster(
 
 @router.delete(path="/cluster", response_model=GKEClusterOperationResponse)
 def _delete_gke_cluster(
-    project_id: str,
     cluster: GKECluster = Body(...),
 ) -> GKEClusterOperationResponse:
     result = gcp_provider.delete_cluster(
-        project_id=project_id,
-        cluster=Cluster(**GKECluster(**cluster.dict()).dict()),
+        project_id=cluster.project_id,
+        cluster=Cluster(**GKEClusterApiFilter(**cluster.dict()).dict()),
     )
     return GKEClusterOperationResponse(
         operation=str(result.operation.name),

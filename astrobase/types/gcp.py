@@ -88,6 +88,10 @@ class GKEBase(BaseModel):
 
 
 class GKECluster(GKEBase):
+    project_id: str
+
+
+class GKEClusterApiFilter(GKEBase):
     pass
 
 

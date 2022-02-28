@@ -23,16 +23,7 @@ class AWSProvider(Provider):
         self.region = region
 
     def eks_client(self) -> boto3.client:
-        try:
-            return boto3.client("eks", region_name=self.region)
-        except Exception as e:
-            logger.error("Exception: ", e)
-            logger.error(
-                "Missing AWS credentials. ",
-                "Make sure you've set your ",
-                "AWS_PROFILE environment variable and have ",
-                "specificed those credentials in ~/.aws/credentials.",
-            )
+        return boto3.client("eks", region_name=self.region)
 
     def create(self, eks_cluster: EKSCluster) -> None:
         cluster_data = EKSClusterAPIFilter(**eks_cluster.dict())

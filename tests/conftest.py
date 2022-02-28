@@ -10,22 +10,27 @@ from typer.testing import CliRunner
 from astrobase.cli.main import app
 from astrobase.server.main import api
 
-runner = CliRunner()
-
 
 @pytest.fixture(scope="session")
 def client() -> Generator:
-    with TestClient(api) as client:
+    with TestClient(app=api, base_url="http://localhost:8787") as client:
         yield client
 
 
 @pytest.fixture(scope="function")
-def astrobase_profile() -> Generator:
+def astrobase_cli_runner() -> Generator:
+    runner = CliRunner()
+    test_config = f"{os.getcwd()}/config.json.test"
+    os.environ["ASTROBASE_CONFIG"] = test_config
     name = "test-profile"
+    runner.invoke(
+        app,
+        ["profile", "create", name, "--no-secure"],
+    )
     os.environ["ASTROBASE_PROFILE_NAME"] = name
-    runner.invoke(app, ["profile", "create", name])
-    yield
+    yield runner
     runner.invoke(app, ["profile", "delete", name])
+    os.remove(test_config)
 
 
 @pytest.fixture(scope="session")

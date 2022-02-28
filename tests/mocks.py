@@ -1,8 +1,9 @@
-from typing import List
+from typing import Dict, List
 from unittest.mock import MagicMock
 
 from google.api_core.exceptions import GoogleAPICallError
 
+from astrobase.types.azure import AgentPoolProfiles
 from tests.factories import ClusterFactory
 
 cluster_factory = ClusterFactory()
@@ -105,5 +106,52 @@ class MockGKEServiceUsageFailClient(MagicMock):
         raise GoogleAPICallError(message="Failed to enable service.")
 
 
-class MockAzureContainerClient:
-    pass
+class MockManagedCluster:
+    def __init__(
+        self,
+        name: str = "my_mock_managed_cluster",
+        location: str = "eastus",
+        dns_prefix: str = "test",
+        resource_group_name: str = "test-rg",
+        agent_pool_profiles: List[AgentPoolProfiles] = None,
+    ) -> None:
+        self.name = name
+        self.location = location
+        self.dns_prefix = dns_prefix
+        self.resource_group_name = resource_group_name
+        self.agent_pool_profiles = [AgentPoolProfiles(name="test", mode="User")]
+
+    def as_dict(self) -> Dict:
+        return {
+            "name": self.name,
+            "location": self.location,
+            "dns_prefix": self.dns_prefix,
+            "resource_group_name": self.resource_group_name,
+            "agent_pool_profiles": self.agent_pool_profiles,
+        }
+
+
+class MockAzureManagedClustersClient(MagicMock):
+    def begin_create_or_update(
+        self, resource_group_name: str, resource_name: str, parameters: Dict
+    ) -> None:
+        pass
+
+    def list_by_resource_group(
+        self, resource_group_name: str
+    ) -> List[MockManagedCluster]:
+        return [MockManagedCluster(resource_group_name=resource_group_name)]
+
+    def get(self, resource_group_name: str, resource_name: str) -> MockManagedCluster:
+        return MockManagedCluster(
+            resource_group_name=resource_group_name, name=resource_name
+        )
+
+    def begin_delete(self, resource_group_name: str, resource_name: str) -> None:
+        pass
+
+
+class MockAzureContainerClient(MagicMock):
+    def __init__(self, managed_clusters: MockAzureManagedClustersClient = None) -> None:
+        super().__init__()
+        self.managed_clusters = MockAzureManagedClustersClient()

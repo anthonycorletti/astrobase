@@ -23,8 +23,8 @@ def test_create_cluster(
     client: TestClient,
 ) -> None:
     response = client.post(
-        "/gcp/cluster?project_id=testProject",
-        json=cluster_examples.gke_example(),
+        "/gcp/cluster",
+        json=cluster_examples.gke_example_complete_spec(),
     )
     assert response.status_code == 200
     assert response.json() == {
@@ -68,7 +68,7 @@ def test_delete_clister(
     mock_cluster_manager_client: mock.MagicMock, client: TestClient
 ) -> None:
     response = client.delete(
-        "/gcp/cluster?project_id=testProject", json=cluster_examples.gke_example()
+        "/gcp/cluster", json=cluster_examples.gke_example_complete_spec()
     )
     assert response.status_code == 200
 
@@ -95,8 +95,8 @@ def test_create_cluster_raises(
     client: TestClient,
 ) -> None:
     response = client.post(
-        "/gcp/cluster?project_id=testProject",
-        json=cluster_examples.gke_example(),
+        "/gcp/cluster",
+        json=cluster_examples.gke_example_complete_spec(),
     )
     assert response.status_code == 500
 
@@ -133,7 +133,7 @@ def test_delete_clister_raises(
     mock_cluster_manager_client: mock.MagicMock, client: TestClient
 ) -> None:
     response = client.delete(
-        "/gcp/cluster?project_id=testProject", json=cluster_examples.gke_example()
+        "/gcp/cluster", json=cluster_examples.gke_example_complete_spec()
     )
     assert response.status_code == 500
 

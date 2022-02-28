@@ -90,9 +90,13 @@ class AzureProvider(Provider):
 
     def describe(self, resource_group_name: str, cluster_name: str) -> AKSCluster:
         try:
-            return self.container_client().managed_clusters.get(
-                resource_group_name=resource_group_name,
-                resource_name=cluster_name,
+            return AKSCluster(
+                **self.container_client()
+                .managed_clusters.get(
+                    resource_group_name=resource_group_name,
+                    resource_name=cluster_name,
+                )
+                .as_dict()
             )
         except ResourceNotFoundError as e:
             logger.error(

@@ -17,6 +17,11 @@ class ClusterFactory:
         with open(example_file, "r") as f:
             return yaml.safe_load(f).get("cluster")
 
+    def gke_example_complete_spec(self) -> Dict:
+        cluster_spec = self.gke_example()
+        cluster_spec["project_id"] = "testProject"
+        return cluster_spec
+
     def eks_example(self) -> Dict:
         example_file = f"{TEST_ASSET_DIR}/{self.EKS_EXAMPLE}"
         with open(example_file, "r") as f:
@@ -34,7 +39,7 @@ class ClusterFactory:
         ]
         cluster_spec["resourcesVpcConfig"]["securityGroupIds"] = [
             "sg-000001",
-            "sg-000001",
+            "sg-000002",
         ]
         for ng in cluster_spec["nodegroups"]:
             ng["nodeRole"] = "arn:aws:iam::000000000001:role/AstrobaseEKSNodegroupRole"

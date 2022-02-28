@@ -19,8 +19,8 @@ def create(
     secure: bool = typer.Option(default=True),
 ) -> None:
     """Create a profile."""
-    new_profile = AstrobaseProfile(name=name, host=host, port=port, secure=secure)
     astrobase_config = AstrobaseCLIConfig()
+    new_profile = AstrobaseProfile(name=name, host=host, port=port, secure=secure)
     if name in astrobase_config.config:
         typer.echo(f"Name {name} already present in config. Please try another name!")
         raise typer.Exit(1)
