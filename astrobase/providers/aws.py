@@ -4,6 +4,7 @@ from typing import List
 import boto3
 from fastapi import HTTPException
 
+from astrobase.exc.main import AstrobaseException
 from astrobase.providers._provider import Provider
 from astrobase.server.logger import logger
 from astrobase.types.aws import (
@@ -18,6 +19,7 @@ from astrobase.types.aws import (
 
 class AWSProvider(Provider):
     RETRY_COUNT = 23
+    RETRY_WAIT_SECONDS = 60
 
     def __init__(self, region: str):
         self.region = region
@@ -33,23 +35,22 @@ class AWSProvider(Provider):
         if cluster:
             count = 0
             cluster_status = self.cluster_status(cluster_data.name)
-            while cluster_status != "ACTIVE":
+            while not self.cluster_is_active(cluster_status=cluster_status):
                 if count > self.RETRY_COUNT:
-                    raise HTTPException(
-                        status_code=400,
-                        detail="Something doesn't seem right "
-                        f"with cluster {cluster_data.name}",
+                    msg = (
+                        "Something doesn't seem right "
+                        f"with cluster {cluster_data.name}. "
+                        "Please check the AWS Console for more information."
                     )
+                    logger.error(msg=msg)
+                    raise AstrobaseException(msg)
                 logger.info("waiting before trying to create node group again")
-                time.sleep(60)
+                time.sleep(self.RETRY_WAIT_SECONDS)
                 cluster_status = self.cluster_status(cluster_data.name)
                 count += 1
 
         for nodegroup in eks_cluster.nodegroups:
-            try:
-                eks_client.create_nodegroup(**nodegroup.dict())
-            except Exception as e:
-                logger.error(e)
+            eks_client.create_nodegroup(**nodegroup.dict())
         return
 
     def cluster_status(self, cluster_name: str) -> str:
@@ -59,6 +60,9 @@ class AWSProvider(Provider):
             .get("cluster", {})
             .get("status")
         )
+
+    def cluster_is_active(self, cluster_status: str) -> bool:
+        return cluster_status == "ACTIVE"
 
     def get(self) -> EKSClusterListClustersResponse:
         try:
@@ -103,25 +107,19 @@ class AWSProvider(Provider):
     def delete(self, cluster_name: str, nodegroup_names: List[str]) -> None:
         eks_client = self.eks_client()
         for nodegroup_name in nodegroup_names:
-            try:
-                eks_client.delete_nodegroup(
-                    clusterName=cluster_name, nodegroupName=nodegroup_name
-                )
-            except Exception as e:
-                response_attr = "response"
-                if hasattr(e, response_attr):
-                    logger.error(getattr(e, response_attr))
-                else:
-                    logger.error(
-                        f"Logging exception that does not have response attr: {e}"
-                    )
+            eks_client.delete_nodegroup(
+                clusterName=cluster_name, nodegroupName=nodegroup_name
+            )
         count = 0
         while True:
             if count > self.RETRY_COUNT:
-                raise HTTPException(
-                    status_code=400,
-                    detail="Timed out waiting for node groups to delete.",
+                msg = (
+                    "Something doesn't seem right "
+                    f"with cluster {cluster_name}. "
+                    "Please check the AWS Console for more information."
                 )
+                logger.error(msg=msg)
+                raise AstrobaseException(msg)
             try:
                 eks_client.delete_cluster(name=cluster_name)
                 return
@@ -134,5 +132,5 @@ class AWSProvider(Provider):
                         f"Logging exception that does not have response attr: {e}"
                     )
             count += 1
-            logger.info("waiting before trying to delete cluster again")
-            time.sleep(60)
+            logger.info("Waiting before trying to delete cluster again.")
+            time.sleep(self.RETRY_WAIT_SECONDS)
