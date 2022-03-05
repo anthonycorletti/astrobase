@@ -14,28 +14,27 @@ from astrobase.types.azure import AKSCluster, AKSClusterOperationResponse
 
 
 class AzureProvider(Provider):
-    AZURE_SUBSCRIPTION_ID = os.getenv("AZURE_SUBSCRIPTION_ID")
-    AZURE_TENANT_ID = os.getenv("AZURE_TENANT_ID")
-    AZURE_CLIENT_ID = os.getenv("AZURE_CLIENT_ID")
-    AZURE_CLIENT_SECRET = os.getenv("AZURE_CLIENT_SECRET")
-
     def __init__(self) -> None:
         pass
 
     def container_client(self) -> ContainerServiceClient:
+        AZURE_SUBSCRIPTION_ID = os.getenv("AZURE_SUBSCRIPTION_ID")
+        AZURE_TENANT_ID = os.getenv("AZURE_TENANT_ID")
+        AZURE_CLIENT_ID = os.getenv("AZURE_CLIENT_ID")
+        AZURE_CLIENT_SECRET = os.getenv("AZURE_CLIENT_SECRET")
         try:
-            assert self.AZURE_SUBSCRIPTION_ID is not None
-            assert self.AZURE_TENANT_ID is not None
-            assert self.AZURE_CLIENT_ID is not None
-            assert self.AZURE_CLIENT_SECRET is not None
+            assert AZURE_SUBSCRIPTION_ID is not None
+            assert AZURE_TENANT_ID is not None
+            assert AZURE_CLIENT_ID is not None
+            assert AZURE_CLIENT_SECRET is not None
             credential = ClientSecretCredential(
-                tenant_id=self.AZURE_TENANT_ID,
-                client_id=self.AZURE_CLIENT_ID,
-                client_secret=self.AZURE_CLIENT_SECRET,
+                tenant_id=AZURE_TENANT_ID,
+                client_id=AZURE_CLIENT_ID,
+                client_secret=AZURE_CLIENT_SECRET,
             )
-            return ContainerServiceClient(
+            return ContainerServiceClient(  # pragma: no cover
                 credential=credential,
-                subscription_id=self.AZURE_SUBSCRIPTION_ID,
+                subscription_id=AZURE_SUBSCRIPTION_ID,
             )
         except Exception as e:
             logger.error(
@@ -56,8 +55,9 @@ class AzureProvider(Provider):
                 message=f"AKS create request submitted for {cluster_create.name}"
             )
         except ResourceExistsError as e:
-            logger.error(f"Create AKS cluster failed with: {e.message}")
-            raise HTTPException(detail=e.message, status_code=400)
+            msg = f"Create AKS cluster failed with: {e.message}"
+            logger.error(msg)
+            raise HTTPException(detail=msg, status_code=400)
 
     def make_begin_create_or_update_request(
         self, resource_group_name: str, cluster_create: AKSCluster
@@ -77,11 +77,12 @@ class AzureProvider(Provider):
                 )
             ]
         except ResourceNotFoundError as e:
-            logger.error(
+            msg = (
                 "Get AKS clusters failed for resource "
                 f"group {resource_group_name} with: {e.message}"
             )
-            raise HTTPException(detail=e.message, status_code=400)
+            logger.error(msg)
+            raise HTTPException(detail=msg, status_code=400)
 
     def make_get_request(self, resource_group_name: str) -> ManagedClusterListResult:
         return self.container_client().managed_clusters.list_by_resource_group(
@@ -99,11 +100,12 @@ class AzureProvider(Provider):
                 .as_dict()
             )
         except ResourceNotFoundError as e:
-            logger.error(
-                f"Get AKS cluster {cluster_name} failed for resource "
+            msg = (
+                f"Get AKS cluster failed for cluster {cluster_name} in resource "
                 f"group {resource_group_name} with: {e.message}"
             )
-            raise HTTPException(detail=e.message, status_code=400)
+            logger.error(msg)
+            raise HTTPException(detail=msg, status_code=400)
 
     def begin_delete(
         self, resource_group_name: str, cluster_name: str
@@ -116,11 +118,12 @@ class AzureProvider(Provider):
                 message=f"AKS delete request submitted for {cluster_name}"
             )
         except ResourceNotFoundError as e:
-            logger.error(
-                f"Delete AKS cluster {cluster_name} failed for resource "
+            msg = (
+                f"Delete AKS cluster failed for cluster {cluster_name} in resource "
                 f"group {resource_group_name} with: {e.message}"
             )
-            raise HTTPException(detail=e.message, status_code=400)
+            logger.error(msg)
+            raise HTTPException(detail=msg, status_code=400)
 
     def make_begin_delete_request(
         self, resource_group_name: str, cluster_name: str

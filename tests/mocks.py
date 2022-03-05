@@ -1,6 +1,7 @@
 from typing import Dict, List
 from unittest.mock import MagicMock
 
+from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
 from google.api_core.exceptions import GoogleAPICallError
 
 from astrobase.types.azure import AgentPoolProfiles
@@ -155,3 +156,29 @@ class MockAzureContainerClient(MagicMock):
     def __init__(self, managed_clusters: MockAzureManagedClustersClient = None) -> None:
         super().__init__()
         self.managed_clusters = MockAzureManagedClustersClient()
+
+
+class MockFailAzureManagedClustersClient(MagicMock):
+    def begin_create_or_update(
+        self, resource_group_name: str, resource_name: str, parameters: Dict
+    ) -> None:
+        raise ResourceExistsError
+
+    def list_by_resource_group(
+        self, resource_group_name: str
+    ) -> List[MockManagedCluster]:
+        raise ResourceNotFoundError
+
+    def get(self, resource_group_name: str, resource_name: str) -> MockManagedCluster:
+        raise ResourceNotFoundError
+
+    def begin_delete(self, resource_group_name: str, resource_name: str) -> None:
+        raise ResourceNotFoundError
+
+
+class MockFailAzureContainerClient(MagicMock):
+    def __init__(
+        self, managed_clusters: MockFailAzureManagedClustersClient = None
+    ) -> None:
+        super().__init__()
+        self.managed_clusters = MockFailAzureManagedClustersClient()
