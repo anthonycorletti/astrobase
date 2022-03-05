@@ -84,10 +84,3 @@ class AstrobaseAzureClient:
             json=cluster_spec,
         )
         self._echo_response(res.json())
-
-    def setup_provider(self, setup_spec: Dict) -> None:
-        res = requests.post(
-            f"{self.url}/{ProviderName.azure}/setup",
-            json=setup_spec,
-        )
-        self._echo_response(res.json())

@@ -1,4 +1,6 @@
 import os
+import time
+from multiprocessing import Process
 from typing import Any, Dict, Generator
 from unittest.mock import patch
 
@@ -13,7 +15,7 @@ from astrobase.server.main import api
 
 @pytest.fixture(scope="session")
 def client() -> Generator:
-    with TestClient(app=api, base_url="http://localhost:8787") as client:
+    with TestClient(app=api) as client:
         yield client
 
 
@@ -48,3 +50,17 @@ def mock_eks_client() -> Generator:
 
     with patch("astrobase.providers.aws.boto3.client", mock_eks):
         yield mock_eks
+
+
+@pytest.fixture(scope="module")
+def astrobase_server() -> Generator:
+    runner = CliRunner()
+    p = Process(
+        target=runner.invoke,
+        args=(app, ["server"]),
+        daemon=True,
+    )  # type: ignore
+    p.start()
+    time.sleep(3)
+    yield
+    p.terminate()
