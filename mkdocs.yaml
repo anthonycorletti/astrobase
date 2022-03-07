@@ -1,0 +1,79 @@
+site_name: Astrobase
+site_description: A simple tool for creating and managing Kubernetes clusters anywhere.
+site_url: https://docs.astrobase.cloud
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: blue
+      toggle:
+        icon: material/lightbulb
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: cyan
+      toggle:
+        icon: material/lightbulb-outline
+        name: Switch to light mode
+  icon:
+    repo: fontawesome/brands/github-alt
+  logo: https://raw.githubusercontent.com/astrobase/brand/main/logos/sq-white-trnsp-hex.png
+  favicon: https://raw.githubusercontent.com/astrobase/brand/main/logos/favicon.ico
+
+repo_name: astrobase/astrobase
+repo_url: https://github.com/astrobase/astrobase
+edit_uri: ""
+
+nav:
+  - Welcome: index.md
+  - Tutorial & User Guide:
+      - Intro: tutorial/intro.md
+      - Setup & Quickstart: tutorial/quickstart.md
+      - Google Cloud:
+          - Google Cloud - Intro: tutorial/gcp/intro.md
+          - Google Cloud - GKE: tutorial/gcp/gke.md
+      - Microsoft Azure:
+          - Microsoft Azure - Intro: tutorial/azure/intro.md
+          - Microsoft Azure - AKS: tutorial/azure/aks.md
+      - Amazon Web Services:
+          - Amazon Web Services - Intro: tutorial/aws/intro.md
+          - Amazon Web Services - EKS: tutorial/aws/eks.md
+      - DigitalOcean: tutorial/do/coming-soon.md
+      - DIY Kubernetes: tutorial/diy-k8s/coming-soon.md
+  - Alternatives, Inspiration, and Comparisons: alternatives.md
+  - Help Astrobase & Get Help: help.md
+  - Development & Contributing: contributing.md
+  - Release Notes: release-notes.md
+
+markdown_extensions:
+  - toc:
+      title: On this page
+      permalink: true
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - admonition
+  - codehilite
+  - extra
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format ""
+  - pymdownx.tabbed:
+      alternate_style: true
+  - mdx_include:
+      base_path: docs
+
+extra:
+  analytics:
+    provider: google
+    property: UA-ABC1234567-1
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/astrobase/astrobase
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/astrobasecloud
+    - icon: fontawesome/solid/globe
+      link: https://astrobase.cloud
