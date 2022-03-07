@@ -27,7 +27,7 @@
 
 ---
 
-Astrobase is for creating and managing Kubernetes clusters across many cloud providers and bare metal kubernetes solutions.
+Astrobase is great for developers that create and manage Kubernetes clusters across one or many cloud providers as well as on bare metal kubernetes solutions.
 
 The key features are:
 
@@ -167,7 +167,7 @@ astrobase cluster eks create \
 --file "eks-cluster.yaml"
 ```
 
-Deploying your EKS cluster requires a little extra setup. Checkout the [AWS user guide section](./tutorial/aws/setup) for more details.
+Deploying your EKS cluster requires a little extra setup. Checkout the [AWS user guide section](./tutorial/aws/intro) for more details.
 
 
 ## Recap
