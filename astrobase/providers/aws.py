@@ -45,7 +45,8 @@ class AWSProvider(Provider):
                     logger.error(msg=msg)
                     raise AstrobaseException(msg)
                 logger.info(
-                    f"Waiting {self.RETRY_WAIT_SECONDS} seconds before trying to create node group again."
+                    f"Waiting {self.RETRY_WAIT_SECONDS} seconds "
+                    "before trying to create node group again."
                 )
                 time.sleep(self.RETRY_WAIT_SECONDS)
                 cluster_status = self.cluster_status(cluster_data.name)
@@ -135,6 +136,7 @@ class AWSProvider(Provider):
                     )
             count += 1
             logger.info(
-                f"Waiting {self.RETRY_WAIT_SECONDS} seconds before trying to delete cluster again."
+                f"Waiting {self.RETRY_WAIT_SECONDS} seconds "
+                "before trying to delete cluster again."
             )
             time.sleep(self.RETRY_WAIT_SECONDS)
