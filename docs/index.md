@@ -17,6 +17,9 @@
 <a href="https://pypi.org/project/astrobasecloud" target="_blank">
     <img src="https://img.shields.io/pypi/v/astrobasecloud?color=%2334D058&label=pypi%20package" alt="Package version">
 </a>
+<a href="https://pypi.org/project/astrobasecloud" target="_blank">
+    <img src="https://img.shields.io/pypi/pyversions/astrobasecloud.svg?color=%2334D058" alt="Supported Python versions">
+</a>
 </p>
 
 ---
