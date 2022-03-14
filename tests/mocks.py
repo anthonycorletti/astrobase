@@ -188,3 +188,11 @@ class MockFailAzureContainerClient(MagicMock):
     ) -> None:
         super().__init__()
         self.managed_clusters = MockFailAzureManagedClustersClient()
+
+
+class MockJsonResponse:
+    def __init__(self, response: Dict) -> None:
+        self.response = response
+
+    def json(self) -> Dict:
+        return self.response

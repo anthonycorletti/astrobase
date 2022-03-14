@@ -1,12 +1,17 @@
 from typing import Generator
+from unittest import mock
 
 from typer.testing import CliRunner
 
 from astrobase.cli.main import app
+from tests.mocks import MockJsonResponse
 
 
+@mock.patch("requests.post", return_value=MockJsonResponse(response={"mock": "value"}))
 def test_gcp_provider_setup(
-    astrobase_cli_runner: CliRunner, astrobase_server: Generator
+    mock_request_post: mock.MagicMock,
+    astrobase_cli_runner: CliRunner,
+    astrobase_server: Generator,
 ) -> None:
     result = astrobase_cli_runner.invoke(
         app,
