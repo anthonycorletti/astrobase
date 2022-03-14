@@ -49,7 +49,7 @@ Alternatively, you can run Astrobase as a docker container incase you arent usin
 pip install astrobasecloud
 ```
 
-## A Quick Example! 🚀
+## A Quick Example
 
 ### The absolute minimum
 
@@ -94,7 +94,7 @@ astrobase cluster gke create \
 
 Done!
 
-## ☁️ Going Multi-Cloud ☁️
+## Going Multi-Cloud
 
 ### Two clusters, different clouds
 
