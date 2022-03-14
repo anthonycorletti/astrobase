@@ -1,8 +1,8 @@
 ---
-name: ❓ Question
-about: Ask a question
-title: "[QUESTION]"
-labels: question
+name: 📝 Documentation
+about: Request additional documentation or suggest improvements
+title: "[DOC]"
+labels: documentation
 assignees: ''
 ---
 
