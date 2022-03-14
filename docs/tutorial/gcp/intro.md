@@ -4,7 +4,7 @@ In order to deploy clusters on GCP (GKE), you'll need to do some preliminary set
 
 #### Project ID and Google Application Credentials
 
-You'll need to have a Google Cloud project created already with the GKE (Google Kubernetes Engine) and GCE (Google Compute Engine) APIs enabled. You can use `astrobase provider setup gcp --help` to automatically setup your project for you. Continue on in the tutorial to learn how to do this.
+You'll need to have a Google Cloud project created already with a billing account attached.
 
 Make sure you can complete the `gcloud auth login` flow from the shell session from which you're running `astrobase server` to create and manage clusters.
 

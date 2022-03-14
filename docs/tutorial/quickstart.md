@@ -54,7 +54,7 @@ astrobase profile current
 }
 ```
 
-Awesome. Now we're ready to initialize Astrobase and deploy clusters and resources.
+Awesome. Now we're ready to initialize Astrobase and create our kubernetes cluster.
 
 ### Running Astrobase and deploying a cluster
 

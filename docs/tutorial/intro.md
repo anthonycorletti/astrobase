@@ -27,7 +27,7 @@ Also, Astrobase can be deployed into any service that can run a python runtime w
 
 ### So what about multiple cloud providers?
 
-Glad you asked. Follow the [user guide](./tutorial) for setup instructions and examples.
+Glad you asked. [Continue reading](../quickstart) for setup instructions and examples for AWS, GCP, and Azure.
 
 ### More questions before you get started?
 

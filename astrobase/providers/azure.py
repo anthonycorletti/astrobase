@@ -36,13 +36,14 @@ class AzureProvider(Provider):
                 credential=credential,
                 subscription_id=AZURE_SUBSCRIPTION_ID,
             )
-        except Exception as e:
-            logger.error(
+        except Exception:
+            msg = (
                 "Failed to create ContainerServiceClient for the api server. "
                 "Make sure you've set the AZURE_SUBSCRIPTION_ID AZURE_TENANT_ID "
-                "AZURE_CLIENT_ID AZURE_CLIENT_SECRET environment variables.\n"
-                f"Full exception:\n{e}"
+                "AZURE_CLIENT_ID AZURE_CLIENT_SECRET environment variables."
             )
+            logger.exception(msg)
+            raise HTTPException(status_code=400, detail=msg)
 
     def create(
         self, resource_group_name: str, cluster_create: AKSCluster

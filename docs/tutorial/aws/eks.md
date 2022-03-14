@@ -28,13 +28,17 @@ Now for the ARNs. You'll need an ARN for the cluster and another for each nodegr
 
 1. Create an IAM role, call it whatever you like. For documentation's sake, we'll call it `AstrobaseEKSRole`.
 1. Attach the AWS managed policy, titled `AmazonEKSClusterPolicy`.
-1. Set it in your environment: `export CLUSTER_ROLE_ARN=arn:aws:iam::account_id:role/AstrobaseEKSRole`
+1. Set it in your environment:
+
+    `export CLUSTER_ROLE_ARN=arn:aws:iam::account_id:role/AstrobaseEKSRole`
 
 #### NODE_ROLE_ARN
 
 1. Create an IAM role, call it whatever you like. For documentation's sake, we'll call it `AstrobaseEKSNodegroupRole`.
 1. Attach the following AWS managed policies, titled: `AmazonEKSWorkerNodePolicy`, `AmazonEC2ContainerRegistryReadOnly`, `AmazonEKS_CNI_Policy`
-1. Set it in your environment: `export NODE_ROLE_ARN=arn:aws:iam::account_id:role/AstrobaseEKSNodegroupRole`
+1. Set it in your environment:
+
+    `export NODE_ROLE_ARN=arn:aws:iam::account_id:role/AstrobaseEKSNodegroupRole`
 
 #### AWS Configure
 

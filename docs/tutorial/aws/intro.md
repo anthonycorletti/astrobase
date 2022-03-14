@@ -4,6 +4,6 @@ In order to deploy clusters on Amazon Elastic Kubernetes Engine (EKS), you'll ne
 
 #### IAM Roles, Security Groups, and Subnets
 
-You'll need to have a resource group ready and and active directory application with permissions to create AKS clusters.
+You'll need to have an account ready with billing enabled and some IAM permissions configured.
 
-When using astrobase remotely, say in AKS itself, astrobase will use the permissions on the resource and nothing more.
+When using astrobase remotely, say in EKS itself, astrobase will use the permissions on the cloud resource and nothing more.

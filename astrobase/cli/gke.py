@@ -28,7 +28,7 @@ def _create(
 def _delete(
     project_id: str = typer.Option(...),
     spec_filepath: str = typer.Option(
-        "--file", "-f", help="Path to an Astrobase cluster spec."
+        ..., "--file", "-f", help="Path to an Astrobase cluster spec."
     ),
 ) -> None:
     """Delete one or many Kubernetes clusters."""

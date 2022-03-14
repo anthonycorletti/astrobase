@@ -38,7 +38,7 @@ def _create_gke_cluster(
         cluster=Cluster(**GKEClusterApiFilter(**cluster.dict()).dict()),
     )
     return GKEClusterOperationResponse(
-        operation=str(result.operation.name),
+        operation=str(result.name),
         self_link=result.self_link,
         target_link=result.target_link,
     )
@@ -81,7 +81,7 @@ def _delete_gke_cluster(
         cluster=Cluster(**GKEClusterApiFilter(**cluster.dict()).dict()),
     )
     return GKEClusterOperationResponse(
-        operation=str(result.operation.name),
+        operation=str(result.name),
         self_link=result.self_link,
         target_link=result.target_link,
     )

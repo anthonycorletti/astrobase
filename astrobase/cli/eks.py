@@ -52,7 +52,7 @@ def _delete(
         " Format: nodegroupname=fullArn,nodegroupname2=fullArn2",
     ),
     spec_filepath: str = typer.Option(
-        "--file", "-f", help="Path to an Astrobase cluster spec."
+        ..., "--file", "-f", help="Path to an Astrobase cluster spec."
     ),
 ) -> None:
     """Delete one or many Kubernetes clusters."""
