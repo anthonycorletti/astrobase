@@ -12,13 +12,13 @@
     <img src="https://github.com/astrobase/astrobase/workflows/publish/badge.svg" alt="publish">
 </a>
 <a href="https://codecov.io/gh/astrobase/astrobase" target="_blank">
-    <img src="https://img.shields.io/codecov/c/github/astrobase/astrobase" alt="Coverage">
+    <img src="https://img.shields.io/codecov/c/github/astrobase/astrobase?color=%2334D058" alt="Coverage">
 </a>
 <a href="https://pypi.org/project/astrobasecloud" target="_blank">
-    <img src="https://img.shields.io/pypi/v/astrobasecloud?&label=pypi%20package" alt="Package version">
+    <img src="https://img.shields.io/pypi/v/astrobasecloud?color=%2334D058&label=pypi%20package" alt="Package version">
 </a>
 <a href="https://pypi.org/project/astrobasecloud" target="_blank">
-    <img src="https://img.shields.io/pypi/pyversions/astrobasecloud.svg" alt="Supported Python versions">
+    <img src="https://img.shields.io/pypi/pyversions/astrobasecloud.svg?color=%2334D058" alt="Supported Python versions">
 </a>
 </p>
 
