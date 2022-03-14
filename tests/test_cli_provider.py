@@ -3,7 +3,7 @@ from unittest import mock
 
 from typer.testing import CliRunner
 
-from astrobase.cli.main import app
+from astrobasecloud.cli.main import app
 from tests.mocks import MockJsonResponse
 
 

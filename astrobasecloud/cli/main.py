@@ -1,9 +1,9 @@
 import typer
 import uvicorn
 
-from astrobase import __version__
-from astrobase.cli import cluster, profile, provider
-from astrobase.server.config import AstrobaseServerConfig
+from astrobasecloud import __version__
+from astrobasecloud.cli import cluster, profile, provider
+from astrobasecloud.server.config import AstrobaseServerConfig
 
 name = f"Astrobase {__version__}"
 
@@ -30,7 +30,7 @@ def _version() -> None:
 @app.command("server")
 def _server() -> None:
     """Start the Astrobase server."""
-    from astrobase.server.main import api
+    from astrobasecloud.server.main import api
 
     astrobase_server_config = AstrobaseServerConfig()
     uvicorn.run(

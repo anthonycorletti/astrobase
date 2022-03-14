@@ -3,7 +3,7 @@ requires = ["flit_core>=3.2,<4"]
 build-backend = "flit_core.buildapi"
 
 [project]
-name = "astrobase"
+name = "astrobasecloud"
 authors = [{name = "Astrobase Inc.", email = "anthony@astrobase.cloud"}]
 dynamic = ["version", "description"]
 readme = "README.md"
@@ -28,7 +28,7 @@ Home = "https://www.github.com/astrobase/astrobase"
 Documentation = "https://astrobase.cloud"
 
 [project.scripts]
-astrobase = "astrobase.cli.main:app"
+astrobase = "astrobasecloud.cli.main:app"
 
 [project.optional-dependencies]
 test = [

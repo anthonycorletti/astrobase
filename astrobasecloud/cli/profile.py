@@ -2,7 +2,7 @@ import json
 
 import typer
 
-from astrobase.cli.config import (
+from astrobasecloud.cli.config import (
     ASTROBASE_HOST_PORT,
     AstrobaseCLIConfig,
     AstrobaseProfile,

@@ -1,3 +1,3 @@
 #!/bin/sh -e
 
-uvicorn astrobase.server.main:api --reload ${@}
+uvicorn astrobasecloud.server.main:api --reload ${@}

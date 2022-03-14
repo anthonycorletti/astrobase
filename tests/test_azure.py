@@ -22,7 +22,7 @@ cluster_examples = ClusterFactory()
     clear=True,
 )
 def test_container_client_successful_creation() -> None:
-    from astrobase.providers.azure import AzureProvider
+    from astrobasecloud.providers.azure import AzureProvider
 
     azure_provider = AzureProvider()
     # this will still fail because we cant initialize a client
@@ -32,7 +32,7 @@ def test_container_client_successful_creation() -> None:
 
 
 @mock.patch(
-    "astrobase.providers.azure.AzureProvider.container_client",
+    "astrobasecloud.providers.azure.AzureProvider.container_client",
     return_value=MockAzureContainerClient(),
 )
 def test_create_cluster(
@@ -49,7 +49,7 @@ def test_create_cluster(
 
 
 @mock.patch(
-    "astrobase.providers.azure.AzureProvider.container_client",
+    "astrobasecloud.providers.azure.AzureProvider.container_client",
     return_value=MockFailAzureContainerClient(),
 )
 def test_create_cluster_no_duplicate(
@@ -63,7 +63,7 @@ def test_create_cluster_no_duplicate(
 
 
 @mock.patch(
-    "astrobase.providers.azure.AzureProvider.container_client",
+    "astrobasecloud.providers.azure.AzureProvider.container_client",
     return_value=MockAzureContainerClient(),
 )
 def test_get_clusters(
@@ -75,7 +75,7 @@ def test_get_clusters(
 
 
 @mock.patch(
-    "astrobase.providers.azure.AzureProvider.container_client",
+    "astrobasecloud.providers.azure.AzureProvider.container_client",
     return_value=MockFailAzureContainerClient(),
 )
 def test_get_clusters_failure(
@@ -87,7 +87,7 @@ def test_get_clusters_failure(
 
 
 @mock.patch(
-    "astrobase.providers.azure.AzureProvider.container_client",
+    "astrobasecloud.providers.azure.AzureProvider.container_client",
     return_value=MockAzureContainerClient(),
 )
 def test_describe_cluster(
@@ -99,7 +99,7 @@ def test_describe_cluster(
 
 
 @mock.patch(
-    "astrobase.providers.azure.AzureProvider.container_client",
+    "astrobasecloud.providers.azure.AzureProvider.container_client",
     return_value=MockFailAzureContainerClient(),
 )
 def test_describe_cluster_failure(
@@ -111,7 +111,7 @@ def test_describe_cluster_failure(
 
 
 @mock.patch(
-    "astrobase.providers.azure.AzureProvider.container_client",
+    "astrobasecloud.providers.azure.AzureProvider.container_client",
     return_value=MockAzureContainerClient(),
 )
 def test_delete_cluster(
@@ -128,7 +128,7 @@ def test_delete_cluster(
 
 
 @mock.patch(
-    "astrobase.providers.azure.AzureProvider.container_client",
+    "astrobasecloud.providers.azure.AzureProvider.container_client",
     return_value=MockFailAzureContainerClient(),
 )
 def test_delete_cluster_failure(

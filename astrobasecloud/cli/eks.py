@@ -3,8 +3,8 @@ from typing import List
 import typer
 import yaml
 
-from astrobase.providers.main import AstrobaseAWSClient
-from astrobase.utils.str_to_dict import str_to_dict
+from astrobasecloud.providers.main import AstrobaseAWSClient
+from astrobasecloud.utils.str_to_dict import str_to_dict
 
 app = typer.Typer(help="""Manage Amazon Elastic Kubernetes Engine Clusters.""")
 

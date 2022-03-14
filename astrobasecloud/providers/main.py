@@ -4,10 +4,10 @@ from typing import Dict
 import requests
 import typer
 
-from astrobase.cli.config import AstrobaseCLIConfig
-from astrobase.types.aws import EKSCluster
-from astrobase.types.gcp import GCPSetupSpec, GKECluster
-from astrobase.types.provider import ProviderName
+from astrobasecloud.cli.config import AstrobaseCLIConfig
+from astrobasecloud.types.aws import EKSCluster
+from astrobasecloud.types.gcp import GCPSetupSpec, GKECluster
+from astrobasecloud.types.provider import ProviderName
 
 
 class AstrobaseGCPClient:

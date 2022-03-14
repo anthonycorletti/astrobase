@@ -4,10 +4,10 @@ from typing import List
 import boto3
 from fastapi import HTTPException
 
-from astrobase.exc.main import AstrobaseException
-from astrobase.providers._provider import Provider
-from astrobase.server.logger import logger
-from astrobase.types.aws import (
+from astrobasecloud.exc.main import AstrobaseException
+from astrobasecloud.providers._provider import Provider
+from astrobasecloud.server.logger import logger
+from astrobasecloud.types.aws import (
     EKSCluster,
     EKSClusterAPIFilter,
     EKSClusterDescribeClusterResponse,

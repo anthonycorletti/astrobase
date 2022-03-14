@@ -2,7 +2,7 @@ from typing import Dict
 
 import yaml
 
-from astrobase.types.gcp import GCPSetupSpec
+from astrobasecloud.types.gcp import GCPSetupSpec
 
 TEST_ASSET_DIR = "examples"
 

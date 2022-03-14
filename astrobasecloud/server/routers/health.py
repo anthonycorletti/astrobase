@@ -2,9 +2,9 @@ from datetime import datetime
 
 from fastapi import APIRouter
 
-from astrobase import __version__
-from astrobase.server.logger import logger
-from astrobase.types.health import HealthcheckResponse
+from astrobasecloud import __version__
+from astrobasecloud.server.logger import logger
+from astrobasecloud.types.health import HealthcheckResponse
 
 router = APIRouter(tags=["health"])
 

@@ -9,8 +9,8 @@ import pytest
 from fastapi.testclient import TestClient
 from typer.testing import CliRunner
 
-from astrobase.cli.main import app
-from astrobase.server.main import api
+from astrobasecloud.cli.main import app
+from astrobasecloud.server.main import api
 
 
 @pytest.fixture(scope="session")
@@ -48,7 +48,7 @@ def mock_eks_client() -> Generator:
     def mock_eks(*args: Any, **kwargs: Dict[str, Any]) -> Any:
         return eks_client
 
-    with patch("astrobase.providers.aws.boto3.client", mock_eks):
+    with patch("astrobasecloud.providers.aws.boto3.client", mock_eks):
         yield mock_eks
 
 

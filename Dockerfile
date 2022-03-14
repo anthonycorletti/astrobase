@@ -9,4 +9,4 @@ RUN apt-get update -y \
     && pip install flit \
     && FLIT_ROOT_INSTALL=1 flit install --deps=production --extras=all
 
-CMD gunicorn astrobase.server.main:api -c astrobase/server/gunicorn_config.py
+CMD gunicorn astrobasecloud.server.main:api -c astrobasecloud/server/gunicorn_config.py

@@ -2,7 +2,7 @@ from typing import Generator
 
 from typer.testing import CliRunner
 
-from astrobase.cli.main import app
+from astrobasecloud.cli.main import app
 from tests.factories import TEST_ASSET_DIR
 
 

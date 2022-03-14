@@ -15,7 +15,7 @@ gcp_setup_spec_examples = GCPSetupSpecFactory()
 
 
 @mock.patch(
-    "astrobase.providers.gcp.GCPProvider._cluster_manager_client",
+    "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerClient,
 )
 def test_create_cluster(
@@ -35,7 +35,7 @@ def test_create_cluster(
 
 
 @mock.patch(
-    "astrobase.providers.gcp.GCPProvider._cluster_manager_client",
+    "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerClient,
 )
 def test_get_clusters(
@@ -47,7 +47,7 @@ def test_get_clusters(
 
 
 @mock.patch(
-    "astrobase.providers.gcp.GCPProvider._cluster_manager_client",
+    "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerClient,
 )
 def test_describe_cluster(
@@ -61,7 +61,7 @@ def test_describe_cluster(
 
 
 @mock.patch(
-    "astrobase.providers.gcp.GCPProvider._cluster_manager_client",
+    "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerClient,
 )
 def test_delete_clister(
@@ -74,7 +74,7 @@ def test_delete_clister(
 
 
 @mock.patch(
-    "astrobase.providers.gcp.GCPProvider._service_usage_client",
+    "astrobasecloud.providers.gcp.GCPProvider._service_usage_client",
     return_value=MockGKEServiceUsageClient,
 )
 def test_setup_container_api(
@@ -87,7 +87,7 @@ def test_setup_container_api(
 
 
 @mock.patch(
-    "astrobase.providers.gcp.GCPProvider._cluster_manager_client",
+    "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerFailClient,
 )
 def test_create_cluster_raises(
@@ -102,7 +102,7 @@ def test_create_cluster_raises(
 
 
 @mock.patch(
-    "astrobase.providers.gcp.GCPProvider._cluster_manager_client",
+    "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerFailClient,
 )
 def test_get_clusters_raises(
@@ -113,7 +113,7 @@ def test_get_clusters_raises(
 
 
 @mock.patch(
-    "astrobase.providers.gcp.GCPProvider._cluster_manager_client",
+    "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerFailClient,
 )
 def test_describe_cluster_raises(
@@ -126,7 +126,7 @@ def test_describe_cluster_raises(
 
 
 @mock.patch(
-    "astrobase.providers.gcp.GCPProvider._cluster_manager_client",
+    "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerFailClient,
 )
 def test_delete_clister_raises(
@@ -139,7 +139,7 @@ def test_delete_clister_raises(
 
 
 @mock.patch(
-    "astrobase.providers.gcp.GCPProvider._service_usage_client",
+    "astrobasecloud.providers.gcp.GCPProvider._service_usage_client",
     return_value=MockGKEServiceUsageFailClient,
 )
 def test_setup_container_api_raises(

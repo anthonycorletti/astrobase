@@ -13,8 +13,8 @@ from google.cloud.container_v1.types import Cluster, Operation
 from google.cloud.service_usage_v1.services.service_usage import ServiceUsageClient
 from google.cloud.service_usage_v1.types.serviceusage import EnableServiceRequest
 
-from astrobase.providers._provider import Provider
-from astrobase.types.gcp import GCPSetupSpec
+from astrobasecloud.providers._provider import Provider
+from astrobasecloud.types.gcp import GCPSetupSpec
 
 
 class GCPProvider(Provider):

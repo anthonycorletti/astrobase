@@ -1,7 +1,7 @@
 from fastapi import APIRouter, BackgroundTasks, Body
 
-from astrobase.providers.aws import AWSProvider
-from astrobase.types.aws import (
+from astrobasecloud.providers.aws import AWSProvider
+from astrobasecloud.types.aws import (
     EKSCluster,
     EKSClusterDescribeClusterResponse,
     EKSClusterDescribeNodegroupResponse,
@@ -9,7 +9,7 @@ from astrobase.types.aws import (
     EKSClusterListNodegroupsResponse,
     EKSClusterOperationResponse,
 )
-from astrobase.types.provider import ProviderName
+from astrobasecloud.types.provider import ProviderName
 
 router = APIRouter(tags=[ProviderName.aws], prefix="/aws")
 

@@ -4,7 +4,7 @@ from unittest.mock import MagicMock
 from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
 from google.api_core.exceptions import GoogleAPICallError
 
-from astrobase.types.azure import AgentPoolProfiles
+from astrobasecloud.types.azure import AgentPoolProfiles
 from tests.factories import ClusterFactory
 
 cluster_factory = ClusterFactory()

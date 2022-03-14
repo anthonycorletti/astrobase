@@ -3,7 +3,7 @@ from multiprocessing import Process
 
 from typer.testing import CliRunner
 
-from astrobase.cli.main import app
+from astrobasecloud.cli.main import app
 
 
 def test_cli_start_server(astrobase_cli_runner: CliRunner) -> None:

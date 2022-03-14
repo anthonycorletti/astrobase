@@ -2,9 +2,9 @@ from typing import List
 
 from fastapi import APIRouter, Body
 
-from astrobase.providers.azure import AzureProvider
-from astrobase.types.azure import AKSCluster, AKSClusterOperationResponse
-from astrobase.types.provider import ProviderName
+from astrobasecloud.providers.azure import AzureProvider
+from astrobasecloud.types.azure import AKSCluster, AKSClusterOperationResponse
+from astrobasecloud.types.provider import ProviderName
 
 router = APIRouter(tags=[ProviderName.azure], prefix="/azure")
 azure_provider = AzureProvider()

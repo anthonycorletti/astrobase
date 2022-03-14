@@ -6,8 +6,8 @@ import pytest
 from botocore.stub import Stubber
 from fastapi.testclient import TestClient
 
-from astrobase.exc.main import AstrobaseException
-from astrobase.types.aws import (
+from astrobasecloud.exc.main import AstrobaseException
+from astrobasecloud.types.aws import (
     EKSCluster,
     EKSClusterAPIFilter,
     EKSDescribeClusterAPIFilter,
@@ -39,7 +39,7 @@ def test_create_cluster(client: TestClient, mock_eks_client: Any) -> None:
 
 
 @mock.patch(
-    "astrobase.providers.aws.AWSProvider.RETRY_COUNT",
+    "astrobasecloud.providers.aws.AWSProvider.RETRY_COUNT",
     new_callable=mock.PropertyMock,
     return_value=-1,
 )
@@ -63,12 +63,12 @@ def test_create_cluster_failed(
 
 
 @mock.patch(
-    "astrobase.providers.aws.AWSProvider.RETRY_COUNT",
+    "astrobasecloud.providers.aws.AWSProvider.RETRY_COUNT",
     new_callable=mock.PropertyMock,
     return_value=0,
 )
 @mock.patch(
-    "astrobase.providers.aws.AWSProvider.RETRY_WAIT_SECONDS",
+    "astrobasecloud.providers.aws.AWSProvider.RETRY_WAIT_SECONDS",
     new_callable=mock.PropertyMock,
     return_value=1,
 )
@@ -215,7 +215,7 @@ def test_delete_cluster(client: TestClient, mock_eks_client: Any) -> None:
 
 
 @mock.patch(
-    "astrobase.providers.aws.AWSProvider.RETRY_COUNT",
+    "astrobasecloud.providers.aws.AWSProvider.RETRY_COUNT",
     new_callable=mock.PropertyMock,
     return_value=-1,
 )
@@ -235,12 +235,12 @@ def test_delete_cluster_failed(
 
 
 @mock.patch(
-    "astrobase.providers.aws.AWSProvider.RETRY_COUNT",
+    "astrobasecloud.providers.aws.AWSProvider.RETRY_COUNT",
     new_callable=mock.PropertyMock,
     return_value=0,
 )
 @mock.patch(
-    "astrobase.providers.aws.AWSProvider.RETRY_WAIT_SECONDS",
+    "astrobasecloud.providers.aws.AWSProvider.RETRY_WAIT_SECONDS",
     new_callable=mock.PropertyMock,
     return_value=1,
 )
@@ -264,12 +264,12 @@ def test_delete_cluster_failed_eventually(
 
 
 @mock.patch(
-    "astrobase.providers.aws.AWSProvider.RETRY_COUNT",
+    "astrobasecloud.providers.aws.AWSProvider.RETRY_COUNT",
     new_callable=mock.PropertyMock,
     return_value=0,
 )
 @mock.patch(
-    "astrobase.providers.aws.AWSProvider.RETRY_WAIT_SECONDS",
+    "astrobasecloud.providers.aws.AWSProvider.RETRY_WAIT_SECONDS",
     new_callable=mock.PropertyMock,
     return_value=1,
 )

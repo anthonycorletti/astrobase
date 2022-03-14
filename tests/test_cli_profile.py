@@ -2,7 +2,7 @@ import json
 
 from typer.testing import CliRunner
 
-from astrobase.cli.main import app
+from astrobasecloud.cli.main import app
 
 
 def test_profile_create_get_delete(astrobase_cli_runner: CliRunner) -> None:

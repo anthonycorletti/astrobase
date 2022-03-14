@@ -2,8 +2,8 @@ import os
 
 from fastapi import FastAPI
 
-from astrobase import __version__
-from astrobase.server.routers import aws, azure, gcp, health
+from astrobasecloud import __version__
+from astrobasecloud.server.routers import aws, azure, gcp, health
 
 os.environ["TZ"] = "UTC"
 api = FastAPI(title="Astrobase API Server", version=__version__)

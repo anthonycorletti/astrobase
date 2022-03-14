@@ -1,4 +1,4 @@
-from astrobase import __version__
+from astrobasecloud import __version__
 
 
 def test_version() -> None:

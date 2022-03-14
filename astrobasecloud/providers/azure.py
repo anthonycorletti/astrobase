@@ -8,9 +8,9 @@ from azure.mgmt.containerservice import ContainerServiceClient
 from azure.mgmt.containerservice.models import ManagedCluster, ManagedClusterListResult
 from fastapi import HTTPException
 
-from astrobase.providers._provider import Provider
-from astrobase.server.logger import logger
-from astrobase.types.azure import AKSCluster, AKSClusterOperationResponse
+from astrobasecloud.providers._provider import Provider
+from astrobasecloud.server.logger import logger
+from astrobasecloud.types.azure import AKSCluster, AKSClusterOperationResponse
 
 
 class AzureProvider(Provider):

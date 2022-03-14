@@ -1,6 +1,6 @@
 #!/bin/sh -ex
 
-mypy astrobase tests
-flake8 astrobase tests
-black astrobase tests --check
-isort astrobase tests scripts --check-only
+mypy astrobasecloud tests
+flake8 astrobasecloud tests
+black astrobasecloud tests --check
+isort astrobasecloud tests scripts --check-only

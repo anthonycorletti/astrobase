@@ -1,7 +1,7 @@
 from typer.testing import CliRunner
 
-from astrobase import __version__
-from astrobase.cli.main import app
+from astrobasecloud import __version__
+from astrobasecloud.cli.main import app
 
 runner = CliRunner()
 

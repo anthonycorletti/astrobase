@@ -2,8 +2,8 @@ import logging
 
 from fastapi.testclient import TestClient
 
-from astrobase.server import gunicorn_config
-from astrobase.server.logger import logger
+from astrobasecloud.server import gunicorn_config
+from astrobasecloud.server.logger import logger
 
 
 def test_default_gunicorn_config(client: TestClient) -> None:

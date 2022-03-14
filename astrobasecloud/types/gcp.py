@@ -3,7 +3,7 @@ from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
-from astrobase.utils.name import random_name
+from astrobasecloud.utils.name import random_name
 
 
 @unique

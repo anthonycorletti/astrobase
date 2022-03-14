@@ -1,6 +1,6 @@
 import typer
 
-from astrobase.cli import aks, eks, gke
+from astrobasecloud.cli import aks, eks, gke
 
 app = typer.Typer(help="""Manage Kubernetes Clusters.""")
 app.add_typer(gke.app, name="gke", no_args_is_help=True)

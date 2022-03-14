@@ -1,7 +1,7 @@
 import typer
 
-from astrobase.providers.main import AstrobaseGCPClient
-from astrobase.types.gcp import GCPSetupSpec
+from astrobasecloud.providers.main import AstrobaseGCPClient
+from astrobasecloud.types.gcp import GCPSetupSpec
 
 app = typer.Typer(help="""Configure a cloud provider with Astrobase.""")
 
