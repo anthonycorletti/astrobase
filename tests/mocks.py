@@ -25,10 +25,11 @@ class MockGKEClusterOperation:
     def __init__(
         self,
         operation: MockGCPOperation = None,
+        name: str = None,
         self_link: str = None,
         target_link: str = None,
     ) -> None:
-        self.operation = operation
+        self.name = name
         self.self_link = self_link or "https://google.com"
         self.target_link = target_link or "https://google.com"
 
@@ -65,7 +66,10 @@ class MockGKEListClusterResponse:
 
 class MockGKEClusterManagerClient(MagicMock):
     def create_cluster(request: MockGKECreateClusterRequest) -> MockGKEClusterOperation:
-        return MockGKEClusterOperation(operation=MockGCPOperation(name="createcluster"))
+        return MockGKEClusterOperation(
+            operation=MockGCPOperation(name="createcluster"),
+            name="createcluster",
+        )
 
     def list_clusters(request: MockGKEListClusterRequest) -> MockGKEListClusterResponse:
         return MockGKEListClusterResponse()
@@ -76,7 +80,9 @@ class MockGKEClusterManagerClient(MagicMock):
     def delete_cluster(
         request: MockGKEDeleteClusterRequest,
     ) -> MockGKEClusterOperation:
-        return MockGKEClusterOperation(operation=MockGCPOperation(name="deletecluster"))
+        return MockGKEClusterOperation(
+            operation=MockGCPOperation(name="deletecluster"), name="deletecluster"
+        )
 
 
 class MockGKEServiceUsageClient(MagicMock):

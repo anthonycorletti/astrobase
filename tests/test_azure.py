@@ -1,19 +1,14 @@
 import os
 from unittest import mock
 
+import pytest
+from fastapi.exceptions import HTTPException
 from fastapi.testclient import TestClient
 
 from tests.factories import ClusterFactory
 from tests.mocks import MockAzureContainerClient, MockFailAzureContainerClient
 
 cluster_examples = ClusterFactory()
-
-
-def test_container_client_fails_without_credentails() -> None:
-    from astrobase.providers.azure import AzureProvider
-
-    azure_provider = AzureProvider()
-    assert not azure_provider.container_client()
 
 
 @mock.patch.dict(
@@ -32,7 +27,8 @@ def test_container_client_successful_creation() -> None:
     azure_provider = AzureProvider()
     # this will still fail because we cant initialize a client
     # without legitimate credentials
-    assert not azure_provider.container_client()
+    with pytest.raises(HTTPException):
+        assert not azure_provider.container_client()
 
 
 @mock.patch(
