@@ -14,17 +14,20 @@ jobs:
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
+
       - name: set up python
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-      - name: install flit
-        run: pip install flit
-      - name: install dependencies
+
+      - name: install
         run: scripts/install.sh
+
       - name: test
         run: scripts/test.sh
+
       - name: upload coverage
         uses: codecov/codecov-action@v1
         with:
