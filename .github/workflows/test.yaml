@@ -2,6 +2,8 @@ name: test
 
 on:
   push:
+    branches:
+      - main
   pull_request:
     types: [opened, synchronize]
 
@@ -10,21 +12,24 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [3.9]
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
       fail-fast: false
 
     steps:
-      - uses: actions/checkout@v2
+      - name: checkout
+        uses: actions/checkout@v2
+
       - name: set up python
         uses: actions/setup-python@v1
         with:
           python-version: ${{ matrix.python-version }}
-      - name: install flit
-        run: pip install flit
-      - name: install dependencies
+
+      - name: install
         run: scripts/install.sh
+
       - name: test
         run: scripts/test.sh
+
       - name: upload coverage
         uses: codecov/codecov-action@v1
         with:

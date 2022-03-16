@@ -1,0 +1,17 @@
+---
+cluster:
+  name: my-eks-cluster
+  provider: eks
+  region: us-east-1
+  tags:
+    cluster_key: cluster_value
+    cluster_key_2: cluster_value_2
+  nodegroups:
+    - nodegroupName: main
+      scalingConfig:
+        minSize: 1
+        maxSize: 3
+        desiredSize: 1
+      tags:
+        cluster_key: cluster_value
+        cluster_key_2: cluster_value_2

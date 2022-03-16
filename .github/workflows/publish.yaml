@@ -5,29 +5,20 @@ on:
     types:
       - created
 
-env:
-  IMAGE_NAME: "astrobasecloud/astrobase"
-  REGISTRY_HOST: gcr.io
-
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: google-github-actions/setup-gcloud@master
+      - name: cehckout
+        uses: actions/checkout@v2
+
+      - name: set up python
+        uses: actions/setup-python@v1
         with:
-          service_account_key: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
-      - run: |
-          # Set up docker to authenticate
-          # via gcloud command-line tool.
-          gcloud auth configure-docker
-      - name: set version tag
-        run: echo VERSION_TAG=$(python -c "import astrobase; print(astrobase.__version__)") >> $GITHUB_ENV
-      - name: build
-        run: |
-          docker build -t "$REGISTRY_HOST"/"$IMAGE_NAME":"${{ env.VERSION_TAG }}" .
-      - name: push
-        run: |
-          docker push "$REGISTRY_HOST"/"$IMAGE_NAME":"${{ env.VERSION_TAG }}"
-          docker tag "$REGISTRY_HOST"/"$IMAGE_NAME":"${{ env.VERSION_TAG }}" "$REGISTRY_HOST"/"$IMAGE_NAME":latest
-          docker push "$REGISTRY_HOST"/"$IMAGE_NAME":latest
+          python-version: "3.9"
+
+      - name: publish pypi
+        env:
+          FLIT_USERNAME: ${{ secrets.FLIT_USERNAME }}
+          FLIT_PASSWORD: ${{ secrets.FLIT_PASSWORD }}
+        run: scripts/publish.sh

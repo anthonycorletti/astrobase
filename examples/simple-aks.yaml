@@ -1,0 +1,18 @@
+---
+cluster:
+  name: my-aks-cluster
+  provider: azure
+  location: eastus
+  dns_prefix: my-aks-cluster
+  tags:
+    name: my-aks-cluster
+    env: dev
+  agent_pool_profiles:
+    - name: cpu
+      mode: System
+      tags:
+        name: my-aks-cluster
+        env: dev
+      node_labels:
+        name: cpu
+        env: dev

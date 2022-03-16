@@ -1,0 +1,20 @@
+---
+cluster:
+  name: my-gke-cluster
+  provider: gcp
+  location: us-central1-c
+  resource_labels:
+    resource_label_key: resource_label_value
+    resource_env: dev
+  node_pools:
+    - name: my-nodepool
+      initial_node_count: 1
+      autoscaling:
+        enabled: true
+        min_node_count: 1
+        max_node_count: 3
+      config:
+        metadata:
+          gce_key: gce_value
+        labels:
+          kube_node_key: kube_node_value

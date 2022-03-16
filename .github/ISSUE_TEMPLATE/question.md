@@ -1,20 +1,18 @@
 ---
-name: Question
+name: ❓ Question
 about: Ask a question
 title: "[QUESTION]"
 labels: question
 assignees: ''
 ---
 
-### First check
+* [ ] I used GitHub search to find a similar issue and didn't find what I was looking for.
+* [ ] I searched the available documentation for this project via integrated search.
+* [ ] I already searched in Google for what I was looking for and didn't find any information.
 
-* [ ] I used the GitHub search to find a similar issue and didn't find it.
-* [ ] I searched the Astrobase documentation via integrated search.
-* [ ] I already searched in Google "How to do X with Astrobase" and didn't find any information.
+### Question
 
-### Description
-
-How can I [...]?
+Who|What|Where|When|Why|How [...]?
 
 Is it possible to [...]?
 
