@@ -2,7 +2,7 @@
   <a href="https://astrobase.cloud"><img src="https://github.com/astrobase/brand/blob/main/logos/space-logo.png?raw=true" alt="Astrobase"></a>
 </p>
 <p align="center">
-    <em>Astrobase; simple multi-cloud Kubernetes cluster management.</em>
+    <em>Astrobase; simple, fast, and secure deployments anywhere.</em>
 </p>
 <p align="center">
 <a href="https://github.com/astrobase/astrobase/actions?query=workflow%3Atest" target="_blank">
@@ -14,12 +14,6 @@
 <a href="https://codecov.io/gh/astrobase/astrobase" target="_blank">
     <img src="https://img.shields.io/codecov/c/github/astrobase/astrobase?color=%2334D058" alt="Coverage">
 </a>
-<a href="https://pypi.org/project/astrobasecloud" target="_blank">
-    <img src="https://img.shields.io/pypi/v/astrobasecloud?color=%2334D058&label=pypi%20package" alt="Package version">
-</a>
-<a href="https://pypi.org/project/astrobasecloud" target="_blank">
-    <img src="https://img.shields.io/pypi/pyversions/astrobasecloud.svg?color=%2334D058" alt="Supported Python versions">
-</a>
 </p>
 
 ---
@@ -30,7 +24,7 @@
 
 ---
 
-Astrobase is for developers that want to create and manage Kubernetes clusters across cloud providers.
+Astrobase is best for developers who create and manage reproducible environments across cloud providers with Kubernetes.
 
 The key features are:
 
