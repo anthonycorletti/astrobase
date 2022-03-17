@@ -40,8 +40,7 @@ nav:
       - Amazon Web Services:
           - Amazon Web Services - Intro: tutorial/aws/intro.md
           - Amazon Web Services - EKS: tutorial/aws/eks.md
-      - DigitalOcean: tutorial/do/coming-soon.md
-      - DIY Kubernetes: tutorial/diy-k8s/coming-soon.md
+      - Astrobase Kubernetes Engine: tutorial/abke/coming-soon.md
   - Alternatives, Inspiration, and Comparisons: alternatives.md
   - Help Astrobase & Get Help: help.md
   - Development & Contributing: contributing.md
