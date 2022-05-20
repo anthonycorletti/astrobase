@@ -132,3 +132,6 @@ class AzureProvider(Provider):
         return self.container_client().managed_clusters.begin_delete(
             resource_group_name=resource_group_name, resource_name=cluster_name
         )
+
+
+azure_provider = AzureProvider()

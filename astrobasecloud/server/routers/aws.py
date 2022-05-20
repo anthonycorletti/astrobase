@@ -1,6 +1,6 @@
 from fastapi import APIRouter, BackgroundTasks, Body
 
-from astrobasecloud.providers.aws import AWSProvider
+from astrobasecloud.providers.aws import aws_provider
 from astrobasecloud.types.aws import (
     EKSCluster,
     EKSClusterDescribeClusterResponse,
@@ -19,7 +19,6 @@ def create_eks_cluster(
     background_tasks: BackgroundTasks,
     eks_cluster: EKSCluster = Body(...),
 ) -> EKSClusterOperationResponse:
-    aws_provider = AWSProvider(region=eks_cluster.region)
     background_tasks.add_task(aws_provider.create, eks_cluster)
     return EKSClusterOperationResponse(
         message=f"EKS create request submitted for {eks_cluster.name}"
@@ -28,16 +27,14 @@ def create_eks_cluster(
 
 @router.get("/cluster", response_model=EKSClusterListClustersResponse)
 def get_eks_clusters(region: str) -> EKSClusterListClustersResponse:
-    aws_provider = AWSProvider(region=region)
-    return aws_provider.get()
+    return aws_provider.get(region=region)
 
 
 @router.get("/cluster/{cluster_name}", response_model=EKSClusterDescribeClusterResponse)
 def describe_eks_cluster(
     cluster_name: str, region: str
 ) -> EKSClusterDescribeClusterResponse:
-    aws_provider = AWSProvider(region=region)
-    return aws_provider.describe(cluster_name=cluster_name)
+    return aws_provider.describe(cluster_name=cluster_name, region=region)
 
 
 @router.get(
@@ -47,8 +44,9 @@ def describe_eks_cluster(
 def list_eks_cluster_nodegroups(
     cluster_name: str, region: str
 ) -> EKSClusterListNodegroupsResponse:
-    aws_provider = AWSProvider(region=region)
-    return aws_provider.list_cluster_nodegroups(cluster_name=cluster_name)
+    return aws_provider.list_cluster_nodegroups(
+        cluster_name=cluster_name, region=region
+    )
 
 
 @router.get(
@@ -58,9 +56,8 @@ def list_eks_cluster_nodegroups(
 def describe_eks_cluster_nodegroup(
     cluster_name: str, nodegroup_name: str, region: str
 ) -> EKSClusterDescribeNodegroupResponse:
-    aws_provider = AWSProvider(region=region)
     return aws_provider.describe_cluster_nodegroup(
-        cluster_name=cluster_name, nodegroup_name=nodegroup_name
+        cluster_name=cluster_name, nodegroup_name=nodegroup_name, region=region
     )
 
 
@@ -68,12 +65,12 @@ def describe_eks_cluster_nodegroup(
 def delete_eks_cluster(
     background_tasks: BackgroundTasks, eks_cluster: EKSCluster = Body(...)
 ) -> EKSClusterOperationResponse:
-    aws_provider = AWSProvider(region=eks_cluster.region)
     nodegroup_names = [ng.nodegroupName for ng in eks_cluster.nodegroups]
     background_tasks.add_task(
         aws_provider.delete,
         cluster_name=eks_cluster.name,
         nodegroup_names=nodegroup_names,
+        region=eks_cluster.region,
     )
     return EKSClusterOperationResponse(
         message=f"EKS delete request submitted for {eks_cluster.name} cluster"

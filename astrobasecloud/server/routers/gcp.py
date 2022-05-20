@@ -3,7 +3,7 @@ from typing import List
 from fastapi import APIRouter, Body
 from google.cloud.container_v1.types import Cluster
 
-from astrobasecloud.providers.gcp import GCPProvider
+from astrobasecloud.providers.gcp import gcp_provider
 from astrobasecloud.types.gcp import (
     GCPProjectCreateOperationResponse,
     GCPSetupSpec,
@@ -15,7 +15,6 @@ from astrobasecloud.types.gcp import (
 from astrobasecloud.types.provider import ProviderName
 
 router = APIRouter(tags=[ProviderName.gcp], prefix="/gcp")
-gcp_provider = GCPProvider()
 
 
 @router.post(path="/setup", response_model=GCPProjectCreateOperationResponse)

@@ -19,7 +19,7 @@ from astrobasecloud.types.gcp import GCPSetupSpec
 
 class GCPProvider(Provider):
     def __init__(self) -> None:
-        super().__init__()
+        pass
 
     def _cluster_manager_client(self) -> ClusterManagerClient:
         return ClusterManagerClient()  # pragma: no cover
@@ -108,3 +108,6 @@ class GCPProvider(Provider):
             if e.code is None:
                 e.code = 500
             raise HTTPException(status_code=e.code, detail=e.message)
+
+
+gcp_provider = GCPProvider()

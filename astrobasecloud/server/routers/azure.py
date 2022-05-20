@@ -2,12 +2,11 @@ from typing import List
 
 from fastapi import APIRouter, Body
 
-from astrobasecloud.providers.azure import AzureProvider
+from astrobasecloud.providers.azure import azure_provider
 from astrobasecloud.types.azure import AKSCluster, AKSClusterOperationResponse
 from astrobasecloud.types.provider import ProviderName
 
 router = APIRouter(tags=[ProviderName.azure], prefix="/azure")
-azure_provider = AzureProvider()
 
 
 @router.post("/cluster", response_model=AKSClusterOperationResponse)
