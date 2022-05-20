@@ -22,7 +22,7 @@ class AWSProvider(Provider):
     RETRY_WAIT_SECONDS = 60
 
     def __init__(self) -> None:
-        pass
+        super().__init__()
 
     def eks_client(self, region: str) -> boto3.client:
         return boto3.client("eks", region_name=region)

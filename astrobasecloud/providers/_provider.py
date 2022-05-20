@@ -1,2 +1,5 @@
-class Provider:
+from abc import ABC
+
+
+class Provider(ABC):
     ...

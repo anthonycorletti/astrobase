@@ -19,7 +19,7 @@ from astrobasecloud.types.gcp import GCPSetupSpec
 
 class GCPProvider(Provider):
     def __init__(self) -> None:
-        pass
+        super().__init__()
 
     def _cluster_manager_client(self) -> ClusterManagerClient:
         return ClusterManagerClient()  # pragma: no cover
@@ -63,7 +63,7 @@ class GCPProvider(Provider):
         response = self._enable_service(setup_spec=setup_spec)
         return response
 
-    def create_cluster(self, project_id: str, cluster: Cluster) -> Operation:
+    def create(self, project_id: str, cluster: Cluster) -> Operation:
         parent = self._parent(project_id=project_id, location=cluster.location)
         request = CreateClusterRequest(parent=parent, cluster=cluster)
         try:
@@ -98,7 +98,7 @@ class GCPProvider(Provider):
                 e.code = 500
             raise HTTPException(status_code=e.code, detail=e.message)
 
-    def delete_cluster(self, project_id: str, cluster: Cluster) -> Operation:
+    def delete(self, project_id: str, cluster: Cluster) -> Operation:
         parent = self._parent(project_id=project_id, location=cluster.location)
         request = DeleteClusterRequest(name=f"{parent}/clusters/{cluster.name}")
         try:

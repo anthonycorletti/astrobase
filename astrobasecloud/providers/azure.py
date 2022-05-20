@@ -15,7 +15,7 @@ from astrobasecloud.types.azure import AKSCluster, AKSClusterOperationResponse
 
 class AzureProvider(Provider):
     def __init__(self) -> None:
-        pass
+        super().__init__()
 
     def container_client(self) -> ContainerServiceClient:
         AZURE_SUBSCRIPTION_ID = os.getenv("AZURE_SUBSCRIPTION_ID")
