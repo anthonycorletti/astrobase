@@ -32,7 +32,7 @@ def _setup_gcp(
 def _create_gke_cluster(
     cluster: GKECluster = Body(...),
 ) -> GKEClusterOperationResponse:
-    result = gcp_provider.create_cluster(
+    result = gcp_provider.create(
         project_id=cluster.project_id,
         cluster=Cluster(**GKEClusterApiFilter(**cluster.dict()).dict()),
     )
@@ -75,7 +75,7 @@ def _describe_gke_cluster(
 def _delete_gke_cluster(
     cluster: GKECluster = Body(...),
 ) -> GKEClusterOperationResponse:
-    result = gcp_provider.delete_cluster(
+    result = gcp_provider.delete(
         project_id=cluster.project_id,
         cluster=Cluster(**GKEClusterApiFilter(**cluster.dict()).dict()),
     )
