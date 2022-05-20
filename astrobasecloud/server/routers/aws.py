@@ -67,7 +67,7 @@ def delete_eks_cluster(
 ) -> EKSClusterOperationResponse:
     nodegroup_names = [ng.nodegroupName for ng in eks_cluster.nodegroups]
     background_tasks.add_task(
-        aws_provider.delete,
+        func=aws_provider.delete,
         cluster_name=eks_cluster.name,
         nodegroup_names=nodegroup_names,
         region=eks_cluster.region,

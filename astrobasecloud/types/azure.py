@@ -23,7 +23,9 @@ class AgentPoolProfiles(BaseModel):
     os_disk_size_gb: int = 100
     enable_auto_scaling: bool = True
     node_labels: Dict[str, str] = {}
-    vm_size: ContainerServiceVMSizeTypes = "Standard_DS2_v2"
+    vm_size: ContainerServiceVMSizeTypes = ContainerServiceVMSizeTypes(
+        "Standard_DS2_v2"
+    )
 
 
 class AKSBase(BaseModel):

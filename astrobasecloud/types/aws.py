@@ -1,9 +1,7 @@
 from enum import Enum, unique
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel, Field, validator
-
-from astrobasecloud.utils.name import random_name
+from pydantic import BaseModel, validator
 
 
 class EKSNodegroupScalingConfig(BaseModel):
@@ -26,7 +24,7 @@ class EKSNodegroupCapacityType(str, Enum):
 
 
 class EKSNodegroup(BaseModel):
-    clusterName: Optional[str]
+    clusterName: str
     nodegroupName: str
     scalingConfig: EKSNodegroupScalingConfig
     diskSize: int = 100
@@ -66,7 +64,7 @@ class ClusterLogging(BaseModel):
 
 
 class EKSBase(BaseModel):
-    name: Optional[str] = Field(default_factory=random_name)
+    name: str
     region: str
     roleArn: str
     resourcesVpcConfig: ResourcesVpcConfig

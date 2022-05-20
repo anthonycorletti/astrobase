@@ -1,5 +1,5 @@
 import os
-from typing import List
+from typing import Iterable, List
 
 from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
 from azure.core.polling import LROPoller
@@ -85,7 +85,9 @@ class AzureProvider(Provider):
             logger.error(msg)
             raise HTTPException(detail=msg, status_code=400)
 
-    def make_get_request(self, resource_group_name: str) -> ManagedClusterListResult:
+    def make_get_request(
+        self, resource_group_name: str
+    ) -> Iterable[ManagedClusterListResult]:
         return self.container_client().managed_clusters.list_by_resource_group(
             resource_group_name=resource_group_name
         )

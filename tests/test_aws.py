@@ -95,10 +95,8 @@ def test_create_cluster_failed_eventually(
 
 def test_create_cluster_random_cluster_name() -> None:
     example = cluster_examples.eks_example_complete_spec()
-    del example["name"]
     eks_create = EKSCluster(**example)
-    assert eks_create.name is not None
-    assert eks_create.name != cluster_examples.eks_example()["name"]
+    assert eks_create.name == "my-eks-cluster"
 
 
 def test_get_clusters(client: TestClient, mock_eks_client: Any) -> None:

@@ -1,9 +1,7 @@
 from enum import Enum, unique
 from typing import Dict, List, Optional
 
-from pydantic import BaseModel, Field
-
-from astrobasecloud.utils.name import random_name
+from pydantic import BaseModel
 
 
 @unique
@@ -80,7 +78,7 @@ class GKENodePool(BaseModel):
 
 
 class GKEBase(BaseModel):
-    name: Optional[str] = Field(default_factory=random_name)
+    name: str
     location: str
     node_pools: List[GKENodePool]
     release_channel: GKEReleaseChannel = GKEReleaseChannel()
