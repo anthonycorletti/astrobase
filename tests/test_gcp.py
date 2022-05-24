@@ -50,14 +50,20 @@ def test_get_clusters(
     "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerClient,
 )
+@mock.patch(
+    "astrobasecloud.providers.gcp.MessageToDict",
+    return_value=cluster_examples.gke_example_complete_spec(),
+)
 def test_describe_cluster(
-    mock_cluster_manager_client: mock.MagicMock, client: TestClient
+    mock_cluster: mock.MagicMock,
+    mock_cluster_manager_client: mock.MagicMock,
+    client: TestClient,
 ) -> None:
     response = client.get(
         "/gcp/cluster/my-test-cluster?project_id=test&location=us-central1",
     )
     assert response.status_code == 200
-    assert response.json().get("name") == "my-test-cluster"
+    assert response.json().get("name") == "my-gke-cluster"
 
 
 @mock.patch(

@@ -37,6 +37,7 @@ class MockGKEClusterOperation:
 class MockGKECluster:
     def __init__(self, name: str = None) -> None:
         self.name = "my-test-cluster"
+        self._pb = None
 
 
 class MockGKECreateClusterRequest:

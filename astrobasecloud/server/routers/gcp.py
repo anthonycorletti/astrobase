@@ -57,17 +57,12 @@ def _get_gke_cluster(project_id: str, location: str) -> List[GKEClusterRead]:
     return data
 
 
-@router.get(path="/cluster/{cluster_name}", response_model=GKEClusterRead)
+@router.get(path="/cluster/{cluster_name}", response_model=GKEClusterApiFilter)
 def _describe_gke_cluster(
     project_id: str, location: str, cluster_name: str
-) -> GKEClusterRead:
-    result = gcp_provider.describe(
+) -> GKEClusterApiFilter:
+    return gcp_provider.describe(
         project_id=project_id, location=location, cluster_name=cluster_name
-    )
-    return GKEClusterRead(
-        name=result.name,
-        location=location,
-        project_id=project_id,
     )
 
 

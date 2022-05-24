@@ -12,9 +12,10 @@ from google.cloud.container_v1 import (
 from google.cloud.container_v1.types import Cluster, Operation
 from google.cloud.service_usage_v1.services.service_usage import ServiceUsageClient
 from google.cloud.service_usage_v1.types.serviceusage import EnableServiceRequest
+from google.protobuf.json_format import MessageToDict  # type: ignore
 
 from astrobasecloud.providers._provider import Provider
-from astrobasecloud.types.gcp import GCPSetupSpec
+from astrobasecloud.types.gcp import GCPSetupSpec, GKEClusterApiFilter
 
 
 class GCPProvider(Provider):
@@ -85,14 +86,17 @@ class GCPProvider(Provider):
                 e.code = 500
             raise HTTPException(status_code=e.code, detail=e.message)
 
-    def describe(self, project_id: str, location: str, cluster_name: str) -> Cluster:
+    def describe(
+        self, project_id: str, location: str, cluster_name: str
+    ) -> GKEClusterApiFilter:
         name = self._name(
             project_id=project_id, location=location, cluster_id=cluster_name
         )
         request = GetClusterRequest(name=name)
         try:
             response = self._cluster_manager_client().get_cluster(request=request)
-            return response
+            data = MessageToDict(message=response._pb, preserving_proto_field_name=True)
+            return GKEClusterApiFilter(**data)
         except GoogleAPICallError as e:
             if e.code is None:
                 e.code = 500
