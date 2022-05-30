@@ -32,11 +32,12 @@ def describe_aks_cluster(cluster_name: str, resource_group_name: str) -> AKSClus
     )
 
 
-@router.delete("/cluster", response_model=AKSClusterOperationResponse)
+@router.delete("/cluster/{cluster_name}", response_model=AKSClusterOperationResponse)
 def delete_aks_cluster(
-    cluster_create: AKSCluster = Body(...),
+    cluster_name: str,
+    resource_group_name: str,
 ) -> AKSClusterOperationResponse:
     return azure_provider.begin_delete(
-        resource_group_name=cluster_create.resource_group_name,
-        cluster_name=cluster_create.name,
+        resource_group_name=resource_group_name,
+        cluster_name=cluster_name,
     )

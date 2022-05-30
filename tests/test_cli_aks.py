@@ -48,8 +48,8 @@ def test_cluster_aks_delete(
             "delete",
             "--resource-group-name",
             "my-rg",
-            "-f",
-            f"{TEST_ASSET_DIR}/simple-aks.yaml",
+            "--cluster-name",
+            "my-cluster",
         ],
     )
     assert result.exit_code == 0

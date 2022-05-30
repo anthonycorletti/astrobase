@@ -57,7 +57,7 @@ class AstrobaseAWSClient:
 
     def delete_cluster(self, cluster_spec: Dict) -> None:
         res = requests.delete(
-            f"{self.url}/{ProviderName.aws}/cluster",
+            f"{self.url}/{ProviderName.aws}/cluster/{cluster_spec['name']}",
             json=cluster_spec,
         )
         self._echo_response(res.json())
@@ -78,9 +78,9 @@ class AstrobaseAzureClient:
         )
         self._echo_response(res.json())
 
-    def delete_cluster(self, cluster_spec: Dict) -> None:
+    def delete_cluster(self, cluster_name: str, resource_group_name: str) -> None:
         res = requests.delete(
-            f"{self.url}/{ProviderName.azure}/cluster",
-            json=cluster_spec,
+            f"{self.url}/{ProviderName.azure}/cluster/{cluster_name}"
+            f"?resource_group_name={resource_group_name}",
         )
         self._echo_response(res.json())

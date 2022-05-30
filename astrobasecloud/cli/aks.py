@@ -25,16 +25,11 @@ def _create(
 
 @app.command("delete")
 def _delete(
+    cluster_name: str = typer.Option(...),
     resource_group_name: str = typer.Option(...),
-    spec_filepath: str = typer.Option(
-        ..., "--file", "-f", help="Path to an Astrobase cluster spec."
-    ),
 ) -> None:
     """Delete one or many Kubernetes clusters."""
     ab_client = AstrobaseAzureClient()
-    with open(spec_filepath, "r") as spec_file:
-        spec_data = yaml.safe_load_all(spec_file)
-        for spec in spec_data:
-            cluster_spec = spec["cluster"]
-            cluster_spec["resource_group_name"] = resource_group_name
-            ab_client.delete_cluster(cluster_spec=cluster_spec)
+    ab_client.delete_cluster(
+        cluster_name=cluster_name, resource_group_name=resource_group_name
+    )

@@ -9,7 +9,7 @@ For this example we'll deploy a cluster to Azure Kubernetes Engine.
 #### Configure your Azure Resource Group
 
 ```sh
-$ az group create --name astrobase --location eastus
+$ az group create --name my-resource-group --location eastus
 ```
 
 #### Create an Azure Active Directory Application and Register the Application to manage resources
@@ -79,7 +79,7 @@ cluster:
 
 ```sh
 astrobase cluster aks create \
---resource-group-name astrobase \
+--resource-group-name my-resource-group \
 --file aks-cluster.yaml
 ```
 
@@ -87,6 +87,6 @@ astrobase cluster aks create \
 
 ```sh
 astrobase cluster aks delete \
---resource-group-name astrobase \
---file aks-cluster.yaml
+--resource-group-name my-resource-group \
+--cluster-name astrobase-quickstart
 ```

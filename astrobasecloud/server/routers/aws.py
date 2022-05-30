@@ -61,14 +61,16 @@ def describe_eks_cluster_nodegroup(
     )
 
 
-@router.delete("/cluster", response_model=EKSClusterOperationResponse)
+@router.delete("/cluster/{cluster_name}", response_model=EKSClusterOperationResponse)
 def delete_eks_cluster(
-    background_tasks: BackgroundTasks, eks_cluster: EKSCluster = Body(...)
+    cluster_name: str,
+    background_tasks: BackgroundTasks,
+    eks_cluster: EKSCluster = Body(...),
 ) -> EKSClusterOperationResponse:
     nodegroup_names = [ng.nodegroupName for ng in eks_cluster.nodegroups]
     background_tasks.add_task(
         func=aws_provider.delete,
-        cluster_name=eks_cluster.name,
+        cluster_name=cluster_name,
         nodegroup_names=nodegroup_names,
         region=eks_cluster.region,
     )

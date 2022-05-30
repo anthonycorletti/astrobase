@@ -118,7 +118,7 @@ def test_delete_cluster(
     mock_azure_container_client: mock.MagicMock, client: TestClient
 ) -> None:
     response = client.delete(
-        "/azure/cluster", json=cluster_examples.aks_example_complete_spec()
+        "/azure/cluster/my-aks-cluster?resource_group_name=test-rg"
     )
     assert response.status_code == 200
     assert (
@@ -135,7 +135,7 @@ def test_delete_cluster_failure(
     mock_azure_container_client: mock.MagicMock, client: TestClient
 ) -> None:
     response = client.delete(
-        "/azure/cluster", json=cluster_examples.aks_example_complete_spec()
+        "/azure/cluster/my-aks-cluster?resource_group_name=test-rg"
     )
     assert response.status_code == 400
     assert response.json()["detail"].startswith("Delete AKS cluster failed for cluster")
