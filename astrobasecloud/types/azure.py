@@ -34,12 +34,15 @@ class AKSBase(BaseModel):
     dns_prefix: str
     resource_group_name: str
     enable_rbac: bool = True
-    service_principal_profile: ServicePrincipalProfile = ServicePrincipalProfile()
     agent_pool_profiles: List[AgentPoolProfiles]
     tags: Dict[str, str] = {}
 
 
 class AKSCluster(AKSBase):
+    service_principal_profile: ServicePrincipalProfile = ServicePrincipalProfile()
+
+
+class AKSClusterFiltered(AKSBase):
     pass
 
 

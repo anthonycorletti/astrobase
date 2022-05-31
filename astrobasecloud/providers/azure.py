@@ -10,7 +10,11 @@ from fastapi import HTTPException
 
 from astrobasecloud.providers._provider import Provider
 from astrobasecloud.server.logger import logger
-from astrobasecloud.types.azure import AKSCluster, AKSClusterOperationResponse
+from astrobasecloud.types.azure import (
+    AKSCluster,
+    AKSClusterFiltered,
+    AKSClusterOperationResponse,
+)
 
 
 class AzureProvider(Provider):
@@ -69,10 +73,10 @@ class AzureProvider(Provider):
             parameters=cluster_create.dict(),
         )
 
-    def get(self, resource_group_name: str) -> List[AKSCluster]:
+    def get(self, resource_group_name: str) -> List[AKSClusterFiltered]:
         try:
             return [
-                AKSCluster(**cluster.as_dict())
+                AKSClusterFiltered(**cluster.as_dict())
                 for cluster in self.make_get_request(
                     resource_group_name=resource_group_name
                 )
@@ -92,16 +96,20 @@ class AzureProvider(Provider):
             resource_group_name=resource_group_name
         )
 
-    def describe(self, resource_group_name: str, cluster_name: str) -> AKSCluster:
+    def describe(
+        self, resource_group_name: str, cluster_name: str
+    ) -> AKSClusterFiltered:
         try:
-            return AKSCluster(
-                **self.container_client()
+            content = (
+                self.container_client()
                 .managed_clusters.get(
                     resource_group_name=resource_group_name,
                     resource_name=cluster_name,
                 )
                 .as_dict()
             )
+            content["resource_group_name"] = resource_group_name
+            return AKSClusterFiltered(**content)
         except ResourceNotFoundError as e:
             msg = (
                 f"Get AKS cluster failed for cluster {cluster_name} in resource "
