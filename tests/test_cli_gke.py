@@ -45,8 +45,10 @@ def test_cluster_gke_delete(
             "delete",
             "--project-id",
             "my-test-project",
-            "-f",
-            f"{TEST_ASSET_DIR}/simple-gke.yaml",
+            "--cluster-name",
+            "my-gke-cluster",
+            "--location",
+            "us-central1-a",
         ],
     )
     assert result.exit_code == 0

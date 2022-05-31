@@ -82,7 +82,8 @@ astrobase cluster gke create \
 ```sh
 astrobase cluster gke delete \
 --project-id $(gcloud config get-value project) \
---file "gke-cluster.yaml"
+--cluster-name astrobase-quickstart \
+--location us-central1-c
 ```
 
 Delete the project in GCP

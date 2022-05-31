@@ -1,5 +1,5 @@
 import json
-from typing import Dict
+from typing import Dict, List
 
 import requests
 import typer
@@ -25,10 +25,10 @@ class AstrobaseGCPClient:
         )
         self._echo_response(res.json())
 
-    def delete_cluster(self, cluster_spec: GKECluster) -> None:
+    def delete_cluster(self, cluster_name: str, project_id: str, location: str) -> None:
         res = requests.delete(
-            f"{self.url}/{ProviderName.gcp}/cluster",
-            json=json.loads(cluster_spec.json()),
+            f"{self.url}/{ProviderName.gcp}/cluster/{cluster_name}"
+            f"?project_id={project_id}&location={location}",
         )
         self._echo_response(res.json())
 
@@ -55,10 +55,12 @@ class AstrobaseAWSClient:
         )
         self._echo_response(res.json())
 
-    def delete_cluster(self, cluster_spec: Dict) -> None:
+    def delete_cluster(
+        self, cluster_name: str, nodegroup_names: List[str], region: str
+    ) -> None:
         res = requests.delete(
-            f"{self.url}/{ProviderName.aws}/cluster/{cluster_spec['name']}",
-            json=cluster_spec,
+            f"{self.url}/{ProviderName.aws}/cluster/{cluster_name}"
+            f"?region={region}&nodegroup_names={','.join(nodegroup_names)}",
         )
         self._echo_response(res.json())
 

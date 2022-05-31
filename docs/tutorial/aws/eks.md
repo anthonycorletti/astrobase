@@ -103,10 +103,7 @@ astrobase cluster eks create \
 
 ```sh
 astrobase cluster eks delete \
---kubernetes-control-plane-arn=$CLUSTER_ROLE_ARN \
---cluster-subnet-id=$SUBNET_ID_0 \
---cluster-subnet-id=$SUBNET_ID_1 \
---cluster-security-group-id=$SECURITY_GROUP \
---nodegroup-noderole-mapping="default=$NODE_ROLE_ARN" \
---file "eks-cluster.yaml"
+--cluster-name astrobase-quickstart \
+--region us-east-1 \
+--nodegroup_names default
 ```
