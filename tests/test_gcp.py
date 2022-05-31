@@ -70,11 +70,11 @@ def test_describe_cluster(
     "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerClient,
 )
-def test_delete_clister(
+def test_delete_cluster(
     mock_cluster_manager_client: mock.MagicMock, client: TestClient
 ) -> None:
     response = client.delete(
-        "/gcp/cluster", json=cluster_examples.gke_example_complete_spec()
+        "/gcp/cluster/my-gcp-cluster?location=us-central1-a&project_id=my-project-id",
     )
     assert response.status_code == 200
 
@@ -135,11 +135,11 @@ def test_describe_cluster_raises(
     "astrobasecloud.providers.gcp.GCPProvider._cluster_manager_client",
     return_value=MockGKEClusterManagerFailClient,
 )
-def test_delete_clister_raises(
+def test_delete_cluster_raises(
     mock_cluster_manager_client: mock.MagicMock, client: TestClient
 ) -> None:
     response = client.delete(
-        "/gcp/cluster", json=cluster_examples.gke_example_complete_spec()
+        "/gcp/cluster/my-gcp-cluster?location=us-central1-a&project_id=my-project-id",
     )
     assert response.status_code == 500
 

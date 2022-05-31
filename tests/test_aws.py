@@ -202,13 +202,13 @@ def test_delete_cluster(client: TestClient, mock_eks_client: Any) -> None:
     stubber.add_response("delete_cluster", {"cluster": {"name": "cluster-0"}})
     stubber.activate()
     response = client.delete(
-        "/aws/cluster/cluster-0", json=cluster_examples.eks_example_complete_spec()
+        "/aws/cluster/cluster-0?region=us-east-1&nodegroup_names=nodegroup-0"
     )
     stubber.deactivate()
     assert response.status_code == 200
     assert (
         response.json()["message"] == "EKS delete request submitted for "
-        "my-eks-cluster cluster and nodegroups: main"
+        "cluster-0 cluster and nodegroups: nodegroup-0"
     )
 
 
@@ -229,7 +229,7 @@ def test_delete_cluster_failed(
     stubber.activate()
     with pytest.raises(AstrobaseException):
         client.delete(
-            "/aws/cluster/cluster-0", json=cluster_examples.eks_example_complete_spec()
+            "/aws/cluster/cluster-0?region=us-east-1&nodegroup_names=nodegroup-0",
         )
     stubber.deactivate()
 
@@ -260,7 +260,7 @@ def test_delete_cluster_failed_eventually(
     stubber.activate()
     with pytest.raises(AstrobaseException):
         client.delete(
-            "/aws/cluster/cluster-0", json=cluster_examples.eks_example_complete_spec()
+            "/aws/cluster/cluster-0?region=us-east-1&nodegroup_names=nodegroup-0"
         )
     stubber.deactivate()
 
@@ -295,6 +295,6 @@ def test_delete_cluster_failed_eventually_with_response(
     stubber.activate()
     with pytest.raises(AstrobaseException):
         client.delete(
-            "/aws/cluster/cluster-0", json=cluster_examples.eks_example_complete_spec()
+            "/aws/cluster/cluster-0?region=us-east-1&nodegroup_names=nodegroup-0"
         )
     stubber.deactivate()

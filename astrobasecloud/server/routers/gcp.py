@@ -66,13 +66,18 @@ def _describe_gke_cluster(
     )
 
 
-@router.delete(path="/cluster", response_model=GKEClusterOperationResponse)
+@router.delete(
+    path="/cluster/{cluster_name}", response_model=GKEClusterOperationResponse
+)
 def _delete_gke_cluster(
-    cluster: GKECluster = Body(...),
+    cluster_name: str,
+    location: str,
+    project_id: str,
 ) -> GKEClusterOperationResponse:
     result = gcp_provider.delete(
-        project_id=cluster.project_id,
-        cluster=Cluster(**GKEClusterApiFilter(**cluster.dict()).dict()),
+        project_id=project_id,
+        location=location,
+        cluster_name=cluster_name,
     )
     return GKEClusterOperationResponse(
         operation=str(result.name),

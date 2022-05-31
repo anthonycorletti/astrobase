@@ -64,17 +64,18 @@ def describe_eks_cluster_nodegroup(
 @router.delete("/cluster/{cluster_name}", response_model=EKSClusterOperationResponse)
 def delete_eks_cluster(
     cluster_name: str,
+    nodegroup_names: str,
+    region: str,
     background_tasks: BackgroundTasks,
-    eks_cluster: EKSCluster = Body(...),
 ) -> EKSClusterOperationResponse:
-    nodegroup_names = [ng.nodegroupName for ng in eks_cluster.nodegroups]
+    _nodegroup_names = nodegroup_names.split(",")
     background_tasks.add_task(
         func=aws_provider.delete,
         cluster_name=cluster_name,
-        nodegroup_names=nodegroup_names,
-        region=eks_cluster.region,
+        nodegroup_names=_nodegroup_names,
+        region=region,
     )
     return EKSClusterOperationResponse(
-        message=f"EKS delete request submitted for {eks_cluster.name} cluster"
-        f" and nodegroups: {', '.join(nodegroup_names)}"
+        message=f"EKS delete request submitted for {cluster_name} cluster"
+        f" and nodegroups: {', '.join(_nodegroup_names)}"
     )

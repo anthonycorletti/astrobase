@@ -102,9 +102,9 @@ class GCPProvider(Provider):
                 e.code = 500
             raise HTTPException(status_code=e.code, detail=e.message)
 
-    def delete(self, project_id: str, cluster: Cluster) -> Operation:
-        parent = self._parent(project_id=project_id, location=cluster.location)
-        request = DeleteClusterRequest(name=f"{parent}/clusters/{cluster.name}")
+    def delete(self, project_id: str, location: str, cluster_name: str) -> Operation:
+        parent = self._parent(project_id=project_id, location=location)
+        request = DeleteClusterRequest(name=f"{parent}/clusters/{cluster_name}")
         try:
             response = self._cluster_manager_client().delete_cluster(request=request)
             return response
