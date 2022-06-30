@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://astrobase.corletti.xyz"><img src="https://github.com/anthonycorletti/astrobase/blob/main/logos/space-logo.png?raw=true" alt="Astrobase"></a>
+  <a href="https://astrobase.corletti.xyz"><img src="https://github.com/anthonycorletti/astrobase/blob/main/docs/img/space-logo.png?raw=true" alt="Astrobase"></a>
 </p>
 <p align="center">
     <em>Astrobase; simple, fast, and secure deployments anywhere.</em>
