@@ -4,7 +4,7 @@ build-backend = "flit_core.buildapi"
 
 [project]
 name = "astrobasecloud"
-authors = [{name = "Astrobase Inc.", email = "anthony@astrobase.cloud"}]
+authors = [{name = "Anthony Corletti", email = "anthcor@gmail.com"}]
 dynamic = ["version", "description"]
 readme = "README.md"
 requires-python = ">=3.7.5"
@@ -49,8 +49,8 @@ classifiers = [
 ]
 
 [project.urls]
-Home = "https://www.github.com/astrobase/astrobase"
-Documentation = "https://docs.astrobase.cloud"
+Home = "https://www.github.com/anthonycorletti/astrobase"
+Documentation = "https://astrobase.corletti.xyz"
 
 [project.scripts]
 astrobase = "astrobasecloud.cli.main:app"

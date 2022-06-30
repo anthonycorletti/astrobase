@@ -1,26 +1,26 @@
 <p align="center">
-  <a href="https://astrobase.cloud"><img src="https://github.com/astrobase/brand/blob/main/logos/space-logo.png?raw=true" alt="Astrobase"></a>
+  <a href="https://astrobase.corletti.xyz"><img src="https://github.com/anthonycorletti/astrobase/blob/main/logos/space-logo.png?raw=true" alt="Astrobase"></a>
 </p>
 <p align="center">
     <em>Astrobase; simple, fast, and secure deployments anywhere.</em>
 </p>
 <p align="center">
-<a href="https://github.com/astrobase/astrobase/actions?query=workflow%3Atest" target="_blank">
-    <img src="https://github.com/astrobase/astrobase/workflows/test/badge.svg" alt="Test">
+<a href="https://github.com/anthonycorletti/astrobase/actions?query=workflow%3Atest" target="_blank">
+    <img src="https://github.com/anthonycorletti/astrobase/workflows/test/badge.svg" alt="Test">
 </a>
-<a href="https://github.com/astrobase/astrobase/actions?query=workflow%3Apublish" target="_blank">
-    <img src="https://github.com/astrobase/astrobase/workflows/publish/badge.svg" alt="publish">
+<a href="https://github.com/anthonycorletti/astrobase/actions?query=workflow%3Apublish" target="_blank">
+    <img src="https://github.com/anthonycorletti/astrobase/workflows/publish/badge.svg" alt="publish">
 </a>
-<a href="https://codecov.io/gh/astrobase/astrobase" target="_blank">
-    <img src="https://img.shields.io/codecov/c/github/astrobase/astrobase?color=%2334D058" alt="Coverage">
+<a href="https://codecov.io/gh/anthonycorletti/astrobase" target="_blank">
+    <img src="https://img.shields.io/codecov/c/github/anthonycorletti/astrobase?color=%2334D058" alt="Coverage">
 </a>
 </p>
 
 ---
 
-**Documentation**: <a href="https://docs.astrobase.cloud" target="_blank">https://docs.astrobase.cloud</a>
+**Documentation**: <a href="https://astrobase.corletti.xyz" target="_blank">https://astrobase.corletti.xyz</a>
 
-**Source Code**: <a href="https://github.com/astrobase/astrobase" target="_blank">https://github.com/astrobase/astrobase</a>
+**Source Code**: <a href="https://github.com/anthonycorletti/astrobase" target="_blank">https://github.com/anthonycorletti/astrobase</a>
 
 ---
 
@@ -228,4 +228,4 @@ For a more complete example including more features and detail, [continue readin
 
 ## License
 
-This project is licensed under the [Apache 2.0 License](https://github.com/astrobase/astrobase/blob/main/LICENSE).
+This project is licensed under the [Apache 2.0 License](https://github.com/anthonycorletti/astrobase/blob/main/LICENSE).

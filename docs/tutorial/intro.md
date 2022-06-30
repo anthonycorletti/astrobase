@@ -11,7 +11,7 @@ Also, if you would prefer to not install with python, you can also build a docke
 Simply clone the repository;
 
 ```sh
-git clone https://github.com/astrobase/astrobase.git && cd astrobase
+git clone https://github.com/anthonycorletti/astrobase.git && cd astrobase
 ./scripts/docker-build.sh
 # and check that everything's working as expected
 ./scripts/docker-run.sh astrobase
@@ -31,4 +31,4 @@ Glad you asked. [Continue reading](../quickstart) for setup instructions and exa
 
 ### More questions before you get started?
 
-[Leave us a question!](https://github.com/astrobase/astrobase/issues/new?assignees=&labels=question&template=question.md&title=%5BQUESTION%5D)
+[Leave us a question!](https://github.com/anthonycorletti/astrobase/issues/new?assignees=&labels=question&template=question.md&title=%5BQUESTION%5D)

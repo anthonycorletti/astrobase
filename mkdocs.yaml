@@ -1,6 +1,6 @@
 site_name: Astrobase
 site_description: A simple tool for creating and managing Kubernetes clusters anywhere.
-site_url: https://docs.astrobase.cloud
+site_url: https://astrobase.corletti.xyz
 
 theme:
   name: material
@@ -19,11 +19,11 @@ theme:
         name: Switch to light mode
   icon:
     repo: fontawesome/brands/github-alt
-  logo: https://raw.githubusercontent.com/astrobase/brand/main/logos/sq-white-trnsp-hex.png
-  favicon: https://raw.githubusercontent.com/astrobase/brand/main/logos/favicon.ico
+  logo: https://raw.githubusercontent.com/anthonycorletti/astrobase/main/docs/img/sq-white-trnsp-hex.png
+  favicon: https://raw.githubusercontent.com/anthonycorletti/astrobase/main/docs/img/favicon.ico
 
-repo_name: astrobase/astrobase
-repo_url: https://github.com/astrobase/astrobase
+repo_name: anthonycorletti/astrobase
+repo_url: https://github.com/anthonycorletti/astrobase
 edit_uri: ""
 
 nav:
@@ -71,8 +71,8 @@ extra:
     property: UA-ABC1234567-1
   social:
     - icon: fontawesome/brands/github-alt
-      link: https://github.com/astrobase/astrobase
+      link: https://github.com/anthonycorletti/astrobase
     - icon: fontawesome/brands/twitter
       link: https://twitter.com/astrobasecloud
     - icon: fontawesome/solid/globe
-      link: https://astrobase.cloud
+      link: https://astrobase.corletti.xyz
