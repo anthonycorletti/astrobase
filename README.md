@@ -2,7 +2,7 @@
   <a href="https://astrobase.corletti.xyz"><img src="https://github.com/anthonycorletti/astrobase/blob/main/docs/img/space-logo.png?raw=true" alt="Astrobase"></a>
 </p>
 <p align="center">
-    <em>Astrobase; simple, fast, and secure deployments anywhere.</em>
+    <em>Astrobase; Create kubernetes clusters quickly on GCP, AWS, or Azure.</em>
 </p>
 <p align="center">
 <a href="https://github.com/anthonycorletti/astrobase/actions?query=workflow%3Atest" target="_blank">
