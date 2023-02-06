@@ -1,13 +1,18 @@
 from typing import Generator
+from unittest import mock
 
 from typer.testing import CliRunner
 
 from astrobasecloud.cli.main import app
 from tests.factories import TEST_ASSET_DIR
+from tests.mocks import MockJsonResponse
 
 
+@mock.patch("requests.post", return_value=MockJsonResponse(response={"mock": "value"}))
 def test_cluster_eks_create(
-    astrobase_cli_runner: CliRunner, astrobase_server: Generator
+    mock_request_post: mock.MagicMock,
+    astrobase_cli_runner: CliRunner,
+    astrobase_server: Generator,
 ) -> None:
     result = astrobase_cli_runner.invoke(
         app,
@@ -32,8 +37,11 @@ def test_cluster_eks_create(
     assert result.exit_code == 0
 
 
+@mock.patch("requests.post", return_value=MockJsonResponse(response={"mock": "value"}))
 def test_cluster_eks_delete(
-    astrobase_cli_runner: CliRunner, astrobase_server: Generator
+    mock_request_post: mock.MagicMock,
+    astrobase_cli_runner: CliRunner,
+    astrobase_server: Generator,
 ) -> None:
     result = astrobase_cli_runner.invoke(
         app,
