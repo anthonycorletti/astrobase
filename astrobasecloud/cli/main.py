@@ -28,7 +28,7 @@ def _version() -> None:
 
 
 @app.command("server")
-def _server() -> None:
+def _server() -> None:  # pragma: no cover
     """Start the Astrobase server."""
     from astrobasecloud.server.main import api
 
