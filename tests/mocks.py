@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Optional
 from unittest.mock import MagicMock
 
 from azure.core.exceptions import ResourceExistsError, ResourceNotFoundError
@@ -11,23 +11,23 @@ cluster_factory = ClusterFactory()
 
 
 class MockGCPOperation:
-    def __init__(self, name: str = None, done: str = None) -> None:
+    def __init__(self, name: Optional[str] = None, done: Optional[str] = None) -> None:
         self.name = name
         self.done = done
 
 
 class MockGKECoreOperation:
-    def __init__(self, operation: MockGCPOperation = None) -> None:
+    def __init__(self, operation: Optional[MockGCPOperation] = None) -> None:
         self.operation = operation
 
 
 class MockGKEClusterOperation:
     def __init__(
         self,
-        operation: MockGCPOperation = None,
-        name: str = None,
-        self_link: str = None,
-        target_link: str = None,
+        operation: Optional[MockGCPOperation] = None,
+        name: Optional[str] = None,
+        self_link: Optional[str] = None,
+        target_link: Optional[str] = None,
     ) -> None:
         self.name = name
         self.self_link = self_link or "https://google.com"
@@ -35,7 +35,7 @@ class MockGKEClusterOperation:
 
 
 class MockGKECluster:
-    def __init__(self, name: str = None) -> None:
+    def __init__(self, name: Optional[str] = None) -> None:
         self.name = "my-test-cluster"
         self._pb = None
 
@@ -61,7 +61,7 @@ class MockGKEDeleteClusterRequest:
 
 
 class MockGKEListClusterResponse:
-    def __init__(self, clusters: List[MockGKECluster] = None) -> None:
+    def __init__(self, clusters: Optional[List[MockGKECluster]] = None) -> None:
         self.clusters = [MockGKECluster()]
 
 
@@ -121,7 +121,7 @@ class MockManagedCluster:
         location: str = "eastus",
         dns_prefix: str = "test",
         resource_group_name: str = "test-rg",
-        agent_pool_profiles: List[AgentPoolProfiles] = None,
+        agent_pool_profiles: Optional[List[AgentPoolProfiles]] = None,
     ) -> None:
         self.name = name
         self.location = location
@@ -160,7 +160,9 @@ class MockAzureManagedClustersClient(MagicMock):
 
 
 class MockAzureContainerClient(MagicMock):
-    def __init__(self, managed_clusters: MockAzureManagedClustersClient = None) -> None:
+    def __init__(
+        self, managed_clusters: Optional[MockAzureManagedClustersClient] = None
+    ) -> None:
         super().__init__()
         self.managed_clusters = MockAzureManagedClustersClient()
 
@@ -185,7 +187,7 @@ class MockFailAzureManagedClustersClient(MagicMock):
 
 class MockFailAzureContainerClient(MagicMock):
     def __init__(
-        self, managed_clusters: MockFailAzureManagedClustersClient = None
+        self, managed_clusters: Optional[MockFailAzureManagedClustersClient] = None
     ) -> None:
         super().__init__()
         self.managed_clusters = MockFailAzureManagedClustersClient()

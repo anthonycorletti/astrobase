@@ -63,7 +63,8 @@ test = [
     "pytest-cov>=3.0.0",
     "requests-mock>=1.9.3",
     "types-PyYAML>=6.0.3",
-    "types-requests>=2.27.8"
+    "types-requests>=2.27.8",
+    "httpx>=0.21.1",
 ]
 doc = [
     "mkdocs>=1.1.2,<2.0.0",
