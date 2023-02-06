@@ -37,9 +37,11 @@ def test_cluster_eks_create(
     assert result.exit_code == 0
 
 
-@mock.patch("requests.post", return_value=MockJsonResponse(response={"mock": "value"}))
+@mock.patch(
+    "requests.delete", return_value=MockJsonResponse(response={"mock": "value"})
+)
 def test_cluster_eks_delete(
-    mock_request_post: mock.MagicMock,
+    mock_request_delete: mock.MagicMock,
     astrobase_cli_runner: CliRunner,
     astrobase_server: Generator,
 ) -> None:
